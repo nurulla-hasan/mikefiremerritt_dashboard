@@ -1,6 +1,6 @@
-"use client";
 
-import { Table } from "@tanstack/react-table";
+import type { Table } from "@tanstack/react-table";
+
 import {
   Pagination,
   PaginationContent,
@@ -9,9 +9,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -27,18 +26,31 @@ export function DataTablePagination<TData>({
   table,
   meta,
 }: DataTablePaginationProps<TData>) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // Handle server-side pagination URL updates
+  // Simple helper: just sync TanStack page index.
   const handlePageChange = (page: number) => {
-    if (meta) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("page", page.toString());
-      router.push(`${pathname}?${params.toString()}`);
-    }
+    table.setPageIndex(page - 1);
   };
+
+  const currentPage = table.getState().pagination.pageIndex + 1;
+  const totalPages = table.getPageCount();
+
+  // Build page number list with ellipsis
+  const pages: (number | string)[] = [];
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (currentPage > 3) pages.push("...");
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      pages.push(i);
+    }
+    if (currentPage < totalPages - 2) pages.push("...");
+    pages.push(totalPages);
+  }
 
   return (
     <div className="flex items-center justify-between px-2">
@@ -51,17 +63,17 @@ export function DataTablePagination<TData>({
           </>
         )}
       </div>
+
       <div className="flex items-center space-x-6 lg:space-x-8">
         <Pagination>
           <PaginationContent>
+            {/* Previous */}
             <PaginationItem>
               <PaginationPrevious
                 onClick={(e) => {
                   e.preventDefault();
-                  if (meta) {
-                    if (meta.page > 1) handlePageChange(meta.page - 1);
-                  } else {
-                    table.previousPage();
+                  if (currentPage > 1) {
+                    handlePageChange(currentPage - 1);
                   }
                 }}
                 className={cn(
@@ -72,72 +84,42 @@ export function DataTablePagination<TData>({
               />
             </PaginationItem>
 
-            {(() => {
-              const currentPage = table.getState().pagination.pageIndex + 1;
-              const totalPages = table.getPageCount();
-              const pages: (number | string)[] = [];
-
-              if (totalPages <= 5) {
-                for (let i = 1; i <= totalPages; i++) {
-                  pages.push(i);
-                }
-              } else {
-                pages.push(1);
-                if (currentPage > 3) pages.push("...");
-                for (
-                  let i = Math.max(2, currentPage - 1);
-                  i <= Math.min(totalPages - 1, currentPage + 1);
-                  i++
-                ) {
-                  pages.push(i);
-                }
-                if (currentPage < totalPages - 2) pages.push("...");
-                pages.push(totalPages);
-              }
-
-              return pages.map((page, idx) => {
-                if (page === "...") {
-                  return (
-                    <PaginationItem key={`ellipsis-${idx}`}>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  );
-                }
-
-                const pageNum = page as number;
-                const isActive = pageNum === currentPage;
-
+            {/* Page numbers + ellipsis */}
+            {pages.map((page, idx) => {
+              if (page === "...") {
                 return (
-                  <PaginationItem key={pageNum}>
-                    <PaginationLink
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (meta) {
-                          handlePageChange(pageNum);
-                        } else {
-                          table.setPageIndex(pageNum - 1);
-                        }
-                      }}
-                      isActive={isActive}
-                      className="rounded-full cursor-pointer"
-                    >
-                      {pageNum}
-                    </PaginationLink>
+                  <PaginationItem key={`ellipsis-${idx}`}>
+                    <PaginationEllipsis />
                   </PaginationItem>
                 );
-              });
-            })()}
+              }
 
+              const pageNum = page as number;
+              const isActive = pageNum === currentPage;
+
+              return (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePageChange(pageNum);
+                    }}
+                    isActive={isActive}
+                    className="rounded-full cursor-pointer"
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            })}
+
+            {/* Next */}
             <PaginationItem>
               <PaginationNext
                 onClick={(e) => {
                   e.preventDefault();
-                  if (meta) {
-                    const totalPages =
-                      meta.totalPages ?? Math.ceil(meta.total / meta.limit);
-                    if (meta.page < totalPages) handlePageChange(meta.page + 1);
-                  } else {
-                    table.nextPage();
+                  if (currentPage < totalPages) {
+                    handlePageChange(currentPage + 1);
                   }
                 }}
                 className={cn(

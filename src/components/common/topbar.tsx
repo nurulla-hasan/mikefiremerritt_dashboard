@@ -54,8 +54,8 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
         <div className="absolute left-1/2 top-0 -translate-x-1/2 h-14 flex items-center justify-center pointer-events-none">
           <div className="relative w-70 h-full bg-card notch-shape flex items-center justify-center pointer-events-auto">
             <div className="flex items-center gap-4">
-              <img src="/logo.png" alt="Logo" className="h-14 w-auto" />
-              <span className="text-xl font-medium text-foreground">
+              <img src="/logo.png" alt="Logo" className="h-12 w-auto" />
+              <span className="text-2xl font-medium font-crimson text-foreground">
                 VitaKinetic
               </span>
             </div>
@@ -102,7 +102,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                     <AvatarFallback>{getInitials(admin?.name)}</AvatarFallback>
                   </Avatar>
                   <span
-                    className="text-xs font-medium truncate max-w-45"
+                    className="text-sm font-medium truncate max-w-45"
                     title={admin?.name || "user"}
                   >
                     {admin?.name || "user"}

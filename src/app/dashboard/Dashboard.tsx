@@ -1,9 +1,19 @@
 import PageLayout from "@/components/common/page-layout";
+import Stats from "@/components/dashboard/stats";
+import EarningGrowthChart from "@/components/dashboard/earning-growth";
+import UserGrowthChart from "@/components/dashboard/user-growth";
 
 const Dashboard = () => {
   return (
     <PageLayout pagination={null}>
-      <h1 className="text-xl font-semibold mb-4">Dashboard</h1>
+      <div className="space-y-6">
+        <Stats />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <EarningGrowthChart />
+          <UserGrowthChart />
+        </div>
+      </div>
     </PageLayout>
   );
 };

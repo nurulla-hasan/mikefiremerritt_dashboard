@@ -1,15 +1,14 @@
-"use client";
 
 import * as React from "react";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
-  useReactTable,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
+  useReactTable,
+  type SortingState,
 } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 
 import {
@@ -130,6 +129,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="h-14"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -157,7 +157,7 @@ export function DataTable<TData, TValue>({
       </ScrollArea>
 
       <React.Suspense fallback={null}>
-        {meta && meta.totalPages && meta.totalPages > 1 && (
+        {meta && (
           <DataTablePagination table={table} meta={meta} />
         )}
       </React.Suspense>
