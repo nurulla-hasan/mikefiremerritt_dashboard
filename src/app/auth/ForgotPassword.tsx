@@ -1,13 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Mail, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Link, useNavigate } from "react-router-dom";
+import { Mail, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,9 +14,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { forgotPassword } from "@/services/auth"
-import { SuccessToast, ErrorToast } from "@/lib/utils"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+// import { forgotPassword } from "@/services/auth";
+// import { SuccessToast, ErrorToast } from "@/lib/utils";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email({
@@ -27,37 +24,37 @@ const forgotPasswordSchema = z.object({
   }),
 })
 
-type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
+type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
-export default function ForgotPasswordForm() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+export default function ForgotPassword() {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
       email: "",
     },
-  })
+  });
 
   async function onSubmit(data: ForgotPasswordFormValues) {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await forgotPassword(data.email)
-      
-      if (result?.success) {
-        SuccessToast("Verification code sent! Please check your email.")
-        
-        // Redirect to verify code page
-        router.push("/auth/verify-code")
-      } else {
-        ErrorToast(result?.message || "Failed to send code. Please try again.")
-      }
+      // const result = await forgotPassword(data.email);
+      // if (result?.success) {
+      //   SuccessToast("Verification code sent! Please check your email.");
+      //   navigate("/auth/verify");
+      // } else {
+      //   ErrorToast(result?.message || "Failed to send code. Please try again.");
+      // }
+
+      console.log("Forgot password submitted (API disabled)", data);
+      navigate("/auth/verify");
     } catch (error) {
-      console.error("Password reset failed:", error)
-      ErrorToast("An unexpected error occurred. Please try again.")
+      // ErrorToast("An unexpected error occurred. Please try again.");
+      console.error("Password reset failed:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -93,10 +90,10 @@ export default function ForgotPasswordForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" loading={isLoading} loadingText="Sending...">
+            <Button type="submit" className="w-full" disabled={isLoading}>
               Send Reset Link
             </Button>
-            <Link href="/auth/login">
+            <Link to="/auth/login">
               <Button variant="ghost" className="w-full">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Login

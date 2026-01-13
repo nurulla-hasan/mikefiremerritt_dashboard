@@ -1,13 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Eye, EyeOff, Lock, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,11 +12,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { signInUser } from "@/services/auth"
-import { SuccessToast, ErrorToast } from "@/lib/utils"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+// import { signInUser } from "@/services/auth";
+// import { SuccessToast, ErrorToast } from "@/lib/utils";
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -30,12 +33,12 @@ const loginSchema = z.object({
   }),
 })
 
-type LoginFormValues = z.infer<typeof loginSchema>
+type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function LoginForm() {
-  const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+export default function Login() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -43,29 +46,28 @@ export default function LoginForm() {
       email: "",
       password: "",
     },
-  })
+  });
 
   async function onSubmit(data: LoginFormValues) {
-    console.log(data)
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await signInUser(data)
-      
-      if (result?.success) {
-        SuccessToast("Login successful! Welcome back!")
-        
-        // Redirect to dashboard after successful login
-        setTimeout(() => {
-          router.push("/")
-        }, 1000)
-      } else {
-        ErrorToast(result?.message || "Invalid email or password. Please try again.")
-      }
+      // const result = await signInUser(data);
+
+      // if (result?.success) {
+      //   SuccessToast("Login successful! Welcome back!");
+      //   navigate("/");
+      // } else {
+      //   ErrorToast(result?.message || "Invalid email or password. Please try again.");
+      // }
+
+      // Temporary: just log and navigate without real API
+      console.log("Login submitted (API disabled)", data);
+      navigate("/");
     } catch (error) {
-      console.error("Login failed:", error)
-      ErrorToast("An unexpected error occurred. Please try again.")
+      // ErrorToast("An unexpected error occurred. Please try again.");
+      console.error("Login failed:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -134,14 +136,18 @@ export default function LoginForm() {
               )}
             />
             <div className="flex justify-end">
-              <Link 
-                href="/auth/forgot-password" 
+              <Link
+                to="/auth/forgot-password"
                 className="text-sm text-primary hover:underline"
               >
                 Forgot Password?
               </Link>
             </div>
-            <Button type="submit" className="w-full" loading={isLoading} loadingText="Signing in...">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading}
+            >
               Sign In
             </Button>
           </form>

@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         path: "/auth",
         element: <AuthLayout />,
         children: [
-            { index: true, element: <Login /> },
+            { path: "login", element: <Login /> },
             { path: "forgot-password", element: <ForgotPassword /> },
             { path: "reset-password", element: <ResetPassword /> },
             { path: "verify", element: <CodeVerification /> },

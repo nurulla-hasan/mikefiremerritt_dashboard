@@ -1,72 +1,71 @@
-"use client"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+// import { verifyOtpForForgotPassword, sendForgotPasswordOtpAgain } from "@/services/auth";
+// import { SuccessToast, ErrorToast } from "@/lib/utils";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
-import { verifyOtpForForgotPassword, sendForgotPasswordOtpAgain } from "@/services/auth"
-import { SuccessToast, ErrorToast } from "@/lib/utils"
-
-export default function CodeVerificationForm() {
-  const router = useRouter()
-  const [code, setCode] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+export default function CodeVerification() {
+  const navigate = useNavigate();
+  const [code, setCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleResend = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await sendForgotPasswordOtpAgain()
-      
-      if (result?.success) {
-        SuccessToast("Code resent! A new verification code has been sent to your email.")
-        setError("")
-        setCode("")
-      } else {
-        ErrorToast(result?.message || "Failed to resend code. Please try again.")
-      }
+      // const result = await sendForgotPasswordOtpAgain();
+      // if (result?.success) {
+      //   SuccessToast("Code resent! A new verification code has been sent to your email.");
+      //   setError("");
+      //   setCode("");
+      // } else {
+      //   ErrorToast(result?.message || "Failed to resend code. Please try again.");
+      // }
+
+      console.log("Resend code (API disabled)");
+      setError("");
+      setCode("");
     } catch (error) {
-      console.error("Resend failed:", error)
-      ErrorToast("An unexpected error occurred. Please try again.")
+      // ErrorToast("An unexpected error occurred. Please try again.");
+      console.error("Resend failed:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleSubmit = async () => {
     if (code.length !== 6) {
-      setError("Please enter all 6 digits")
+      setError("Please enter all 6 digits");
       return
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await verifyOtpForForgotPassword(code)
-      
-      if (result?.success) {
-        SuccessToast("Code verified! Redirecting to reset password...")
-        
-        // Redirect to reset password page
-        setTimeout(() => {
-          router.push("/auth/reset-password")
-        }, 1000)
-      } else {
-        setError("Invalid verification code. Please try again.")
-        ErrorToast(result?.message || "Invalid code. Please try again.")
-        setCode("")
-      }
+      // const result = await verifyOtpForForgotPassword(code);
+      // if (result?.success) {
+      //   SuccessToast("Code verified! Redirecting to reset password...");
+      //   setTimeout(() => {
+      //     navigate("/auth/reset-password");
+      //   }, 1000);
+      // } else {
+      //   setError("Invalid verification code. Please try again.");
+      //   ErrorToast(result?.message || "Invalid code. Please try again.");
+      //   setCode("");
+      // }
+
+      console.log("Code verification (API disabled)", code);
+      navigate("/auth/reset-password");
     } catch (error) {
-      console.error("Verification failed:", error)
-      setError("Invalid verification code. Please try again.")
-      ErrorToast("An unexpected error occurred. Please try again.")
-      setCode("")
+      console.error("Verification failed:", error);
+      setError("Invalid verification code. Please try again.");
+      setCode("");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -82,7 +81,7 @@ export default function CodeVerificationForm() {
             <InputOTP
               maxLength={6}
               value={code}
-              onChange={(value) => {
+              onChange={(value: string) => {
                 setCode(value)
                 setError("")
               }}
@@ -127,7 +126,7 @@ export default function CodeVerificationForm() {
             </Button>
           </div>
 
-          <Link href="/auth/forgot-password">
+          <Link to="/auth/forgot-password">
             <Button variant="ghost" className="w-full">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back

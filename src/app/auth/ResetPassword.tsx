@@ -1,12 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { useRouter } from "next/navigation"
-import { Eye, EyeOff, Lock, CheckCircle2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff, Lock, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,10 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { setNewPassword } from "@/services/auth"
-import { SuccessToast, ErrorToast } from "@/lib/utils"
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+// import { setNewPassword } from "@/services/auth";
+// import { SuccessToast, ErrorToast } from "@/lib/utils";
 
 const resetPasswordSchema = z.object({
   password: z.string()
@@ -32,14 +30,14 @@ const resetPasswordSchema = z.object({
   path: ["confirmPassword"],
 })
 
-type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>
+type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
-export default function ResetPasswordForm() {
-  const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+export default function ResetPassword() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
@@ -47,30 +45,32 @@ export default function ResetPasswordForm() {
       password: "",
       confirmPassword: "",
     },
-  })
+  });
 
   async function onSubmit(data: ResetPasswordFormValues) {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await setNewPassword(data.password)
-      
-      if (result?.success) {
-        SuccessToast("Password reset successful! Your password has been successfully reset.")
-        
-        setIsSuccess(true)
-        
-        // Redirect to login after 2 seconds
-        setTimeout(() => {
-          router.push("/auth/login")
-        }, 2000)
-      } else {
-        ErrorToast(result?.message || "Password reset failed. Please try again.")
-      }
+      // const result = await setNewPassword(data.password);
+      // if (result?.success) {
+      //   SuccessToast("Password reset successful! Your password has been successfully reset.");
+      //   setIsSuccess(true);
+      //   setTimeout(() => {
+      //     navigate("/auth/login");
+      //   }, 2000);
+      // } else {
+      //   ErrorToast(result?.message || "Password reset failed. Please try again.");
+      // }
+
+      console.log("Reset password submitted (API disabled)", data);
+      setIsSuccess(true);
+      setTimeout(() => {
+        navigate("/auth/login");
+      }, 2000);
     } catch (error) {
-      console.error("Password reset failed:", error)
-      ErrorToast("An unexpected error occurred. Please try again.")
+      // ErrorToast("An unexpected error occurred. Please try again.");
+      console.error("Password reset failed:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -203,7 +203,7 @@ export default function ResetPasswordForm() {
               )}
             />
 
-            <Button type="submit" className="w-full" loading={isLoading} loadingText="Resetting Password...">
+            <Button type="submit" className="w-full" disabled={isLoading}>
               Reset Password
             </Button>
           </form>
