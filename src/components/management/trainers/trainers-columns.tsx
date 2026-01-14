@@ -22,10 +22,8 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">
-          Select All
-        </span>
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">Select All</span>
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value: boolean) =>
@@ -33,7 +31,7 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
           }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -44,7 +42,6 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "image",
@@ -116,16 +113,10 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <TrainerViewModal />
-        <Button
-          variant="outline"
-          size="icon"
-        >
+        <Button variant="outline" size="icon">
           <UserIcon className="h-4 w-4" />
         </Button>
-        <Button
-          variant="outline"
-          size="icon"
-        >
+        <Button variant="outline" size="icon">
           <DollarSign className="h-4 w-4" />
         </Button>
         <Button

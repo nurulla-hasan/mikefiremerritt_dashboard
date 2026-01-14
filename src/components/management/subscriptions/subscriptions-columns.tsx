@@ -22,7 +22,7 @@ export const subscriptionsColumns: ColumnDef<Subscription>[] = [
     header: "Profile",
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
-        <Avatar>
+        <Avatar> 
           <AvatarImage src={row.original.avatar} alt={row.original.name} />
           <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
         </Avatar>

@@ -20,10 +20,8 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">
-          Select All
-        </span>
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">Select All</span>
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value: boolean) =>
@@ -31,7 +29,7 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
           }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -42,7 +40,6 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "ticketId",

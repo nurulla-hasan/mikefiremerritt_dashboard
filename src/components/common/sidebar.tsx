@@ -24,7 +24,7 @@ import {
   MessageSquareQuote,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 // import { useDispatch } from "react-redux";
 // import { setAccessToken, setAdmin } from "@/redux/feature/auth/authSlice";
@@ -246,10 +246,12 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
         </nav>
       </ScrollArea>
       <div className="border-t p-4">
-        <Button variant="outline" className="justify-start w-full">
-          <LogOut />
-          Logout
-        </Button>
+        <Link to="/auth/login" className="block w-full text-center">
+          <Button variant="outline" className="justify-start w-full">
+            <LogOut />
+            Logout
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -22,10 +22,8 @@ export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">
-          Select All
-        </span>
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">Select All</span>
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
           onCheckedChange={(value: boolean) =>
@@ -33,7 +31,7 @@ export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
           }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -44,7 +42,6 @@ export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "avatar",
@@ -78,9 +75,7 @@ export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        {row.original.date}
-      </span>
+      <span className="text-sm text-muted-foreground">{row.original.date}</span>
     ),
   },
   {
@@ -134,4 +129,3 @@ export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
     enableHiding: false,
   },
 ];
-

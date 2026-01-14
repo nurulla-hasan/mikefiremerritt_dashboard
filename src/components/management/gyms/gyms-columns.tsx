@@ -12,21 +12,23 @@ export type Gym = {
   name: string;
   location: string;
   views: string;
-  status: "Active" | "Unavailable"; 
+  status: "Active" | "Unavailable";
 };
 
 export const gymsColumns: ColumnDef<Gym>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">Select All</span>
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">Select All</span>
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value: boolean) =>
+            table.toggleAllPageRowsSelected(!!value)
+          }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -37,27 +39,32 @@ export const gymsColumns: ColumnDef<Gym>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "name",
     header: "Gym Name",
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-foreground">{row.original.name}</span>
+      <span className="text-sm font-medium text-foreground">
+        {row.original.name}
+      </span>
     ),
   },
   {
     accessorKey: "location",
     header: "Gym Location",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.location}</span>
+      <span className="text-sm text-muted-foreground">
+        {row.original.location}
+      </span>
     ),
   },
   {
     accessorKey: "views",
     header: "Views",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.views}</span>
+      <span className="text-sm text-muted-foreground">
+        {row.original.views}
+      </span>
     ),
   },
   {
@@ -82,7 +89,11 @@ export const gymsColumns: ColumnDef<Gym>[] = [
         <Button variant="outline" size="icon">
           <Pencil />
         </Button>
-        <Button variant="outline" size="icon" className="text-red-500 hover:text-red-600">
+        <Button
+          variant="outline"
+          size="icon"
+          className="text-red-500 hover:text-red-600"
+        >
           <Trash2 />
         </Button>
       </div>

@@ -19,8 +19,8 @@ export const usersColumns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">
           Select All
         </span>
         <Checkbox
@@ -30,7 +30,7 @@ export const usersColumns: ColumnDef<User>[] = [
           }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -41,7 +41,6 @@ export const usersColumns: ColumnDef<User>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "name",
@@ -91,7 +90,7 @@ export const usersColumns: ColumnDef<User>[] = [
     header: () => <div className="text-right pr-8">Actions</div>,
     cell: () => (
       <div className="flex items-center justify-end gap-1">
-       <UserViewModal/>
+        <UserViewModal />
         <Button
           variant="outline"
           size="icon"

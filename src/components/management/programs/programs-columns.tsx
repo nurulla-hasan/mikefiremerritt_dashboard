@@ -20,14 +20,16 @@ export const programsColumns: ColumnDef<Program>[] = [
   {
     id: "select",
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-muted-foreground">Select All</span>
+      <label className="flex items-center gap-2 cursor-pointer select-none">
+        <span className="font-semibold">Select All</span>
         <Checkbox
           checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value: boolean) =>
+            table.toggleAllPageRowsSelected(!!value)
+          }
           aria-label="Select all"
         />
-      </div>
+      </label>
     ),
     cell: ({ row }) => (
       <Checkbox
@@ -38,34 +40,41 @@ export const programsColumns: ColumnDef<Program>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-    size: 60,
   },
   {
     accessorKey: "trainerName",
     header: "Trainer Name",
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-foreground">{row.original.trainerName}</span>
+      <span className="text-sm font-medium text-foreground">
+        {row.original.trainerName}
+      </span>
     ),
   },
   {
     accessorKey: "programName",
     header: "Program Name",
     cell: ({ row }) => (
-      <span className="text-sm text-foreground">{row.original.programName}</span>
+      <span className="text-sm text-foreground">
+        {row.original.programName}
+      </span>
     ),
   },
   {
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.price}</span>
+      <span className="text-sm text-muted-foreground">
+        {row.original.price}
+      </span>
     ),
   },
   {
     accessorKey: "views",
     header: "Views",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.views}</span>
+      <span className="text-sm text-muted-foreground">
+        {row.original.views}
+      </span>
     ),
   },
   {
@@ -92,7 +101,11 @@ export const programsColumns: ColumnDef<Program>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <ProgramViewModal />
-        <Button variant="outline" size="icon" className="text-red-500 hover:text-red-600">
+        <Button
+          variant="outline"
+          size="icon"
+          className="text-red-500 hover:text-red-600"
+        >
           <Trash2 />
         </Button>
       </div>
