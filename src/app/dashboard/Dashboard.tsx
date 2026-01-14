@@ -2,6 +2,8 @@ import PageLayout from "@/components/common/page-layout";
 import Stats from "@/components/dashboard/stats";
 import EarningGrowthChart from "@/components/dashboard/earning-growth";
 import UserGrowthChart from "@/components/dashboard/user-growth";
+import { DataTable } from "@/components/ui/data-table";
+import { usersColumns, type User } from "@/components/management/users/users-columns";
 
 const Dashboard = () => {
   return (
@@ -13,9 +15,50 @@ const Dashboard = () => {
           <EarningGrowthChart />
           <UserGrowthChart />
         </div>
+         <DataTable columns={usersColumns} data={users} />
       </div>
     </PageLayout>
   );
 };
 
 export default Dashboard;
+
+
+
+const users: User[] = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "Trainer",
+    status: "Approved",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    role: "Individual",
+    status: "Decline",
+  },
+  {
+    id: 3,
+    name: "Michael Johnson",
+    email: "michael.johnson@example.com",
+    role: "Trainer",
+    status: "Decline",
+  },
+  {
+    id: 4,
+    name: "Emily Brown",
+    email: "emily.brown@example.com",
+    role: "Individual",
+    status: "Approved",
+  },
+  {
+    id: 5,
+    name: "David Wilson",
+    email: "david.wilson@example.com",
+    role: "Individual",
+    status: "Approved",
+  },
+];

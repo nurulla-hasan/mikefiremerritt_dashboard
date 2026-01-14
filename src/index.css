@@ -124,6 +124,21 @@
   }
 }
 
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary rounded-full transition-colors;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/40;
+  }
+
+/* Notch Shape */
 .notch-shape {
   clip-path: polygon(
     0% 0%,
@@ -138,3 +153,5 @@
 .font-crimson {
   font-family: "Crimson Text", serif;
 }
+
+
