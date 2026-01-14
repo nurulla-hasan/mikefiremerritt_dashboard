@@ -1,22 +1,33 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ban, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import TicketViewModal from "./view-modal";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ReviewViewModal from "./view-modal";
 
-export type Ticket = {
+export type Review = {
   id: number;
-  ticketId: string;
-  userName: string;
+  name: string;
+  avatar: string;
   email: string;
-  date: string;
-  status: "Completed" | "In Progress" | "Pending";
+  review: string;
+  rating: number;
 };
 
-export const ticketsColumns: ColumnDef<Ticket>[] = [
+const renderStars = (rating: number) => {
+  const full = "★".repeat(rating);
+  const empty = "☆".repeat(5 - rating);
+  return (
+    <span className="text-amber-400 text-sm tracking-tight">
+      {full}
+      <span className="text-muted-foreground/40">{empty}</span>
+    </span>
+  );
+};
+
+export const reviewsColumns: ColumnDef<Review>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -45,18 +56,30 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     size: 60,
   },
   {
-    accessorKey: "ticketId",
-    header: "Ticket ID",
+    accessorKey: "avatar",
+    header: "Profile",
     cell: ({ row }) => (
-      <span className="text-sm text-foreground">{row.original.ticketId}</span>
+      <Avatar>
+        <AvatarImage src={row.original.avatar} alt={row.original.name} />
+        <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
+      </Avatar>
     ),
   },
   {
-    accessorKey: "userName",
+    accessorKey: "name",
     header: "User Name",
     cell: ({ row }) => (
       <span className="text-sm font-medium text-foreground">
-        {row.original.userName}
+        {row.original.name}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "review",
+    header: "Reviews",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground truncate max-w-xs">
+        {row.original.review}
       </span>
     ),
   },
@@ -70,43 +93,16 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     ),
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.date}</span>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const status = row.original.status;
-      const variant =
-        status === "Completed"
-          ? "success"
-          : status === "In Progress"
-          ? "warning"
-          : "muted";
-      return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1">
-          {status}
-        </Badge>
-      );
-    },
+    accessorKey: "rating",
+    header: "Rating",
+    cell: ({ row }) => renderStars(row.original.rating),
   },
   {
     id: "actions",
-    header: () => <div className="text-right pr-8">Actions</div>,
+    header: () => <div className="text-right pr-4">Actions</div>,
     cell: () => (
       <div className="flex items-center justify-end gap-1">
-        <TicketViewModal />
-        <Button
-          variant="outline"
-          size="icon"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban />
-        </Button>
+        <ReviewViewModal />
         <Button
           variant="outline"
           size="icon"
@@ -120,3 +116,4 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     enableHiding: false,
   },
 ];
+
