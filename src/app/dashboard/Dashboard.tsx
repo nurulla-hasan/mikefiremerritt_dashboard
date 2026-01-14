@@ -5,7 +5,7 @@ import UserGrowthChart from "@/components/dashboard/user-growth";
 
 const Dashboard = () => {
   return (
-    <PageLayout pagination={null}>
+    <PageLayout >
       <div className="space-y-6">
         <Stats />
 
