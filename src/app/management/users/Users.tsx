@@ -89,7 +89,7 @@ const meta = {
 const Users = () => {
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex flex-col md:flex-row md:justify-between gap-2">
         <PageHeader
           title="User Management"
           description="User all Platform Users"

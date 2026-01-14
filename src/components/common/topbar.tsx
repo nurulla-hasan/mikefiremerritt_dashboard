@@ -64,6 +64,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
 
         {/* Right: theme toggle + profile */}
         <div className="flex items-center space-x-5">
+          {/* Theme toggle */}
           <Toggle
             variant="outline"
             size="sm"
@@ -79,8 +80,13 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
             <Moon className="shrink-0 scale-0 opacity-0 transition-all group-data-[state=on]:scale-100 group-data-[state=on]:opacity-100" />
             <Sun className="absolute shrink-0 scale-100 opacity-100 transition-all group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0" />
           </Toggle>
+          {/* Notification icon */}
+          <Button variant="outline" size="icon-sm" className="rounded-full">
+            <Bell />
+          </Button>
 
           <div className="flex items-center">
+            {/* Profile link */}
             <Link
               to="/settings/profile"
               className="lg:flex items-center gap-3 hidden"
@@ -110,7 +116,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 </>
               )}
             </Link>
-
+              {/* Profile dropdown menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 {isLoading ? (
