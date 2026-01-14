@@ -35,7 +35,7 @@ const ProgramViewModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border-0 shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
           <div className="w-full h-44 md:h-60 bg-muted">
             <img
               src={fakeProgram.cover}

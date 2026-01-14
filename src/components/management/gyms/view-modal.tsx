@@ -40,7 +40,7 @@ const GymViewModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border-0 shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
           <div className="w-full h-40 md:h-56 bg-muted">
             <img
               src={fakeGym.cover}

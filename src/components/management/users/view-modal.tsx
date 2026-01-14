@@ -35,7 +35,7 @@ const UserViewModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-0 overflow-hidden border-0 shadow-2xl">
+        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl">
           {/* Top banner with avatar */}
           <div className="bg-primary/20 px-6 pb-8 pt-8 flex flex-col items-center">
             <div className="h-28 w-28 rounded-full border-[6px] border-background shadow-lg overflow-hidden bg-background">

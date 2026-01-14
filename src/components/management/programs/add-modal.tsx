@@ -22,7 +22,7 @@ const AddProgramModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border-0 shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
           <div className="w-full h-40 md:h-56 bg-muted">
             <img
               src="https://images.unsplash.com/photo-1758875570137-8691b7c55033?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

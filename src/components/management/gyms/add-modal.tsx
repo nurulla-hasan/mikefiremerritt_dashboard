@@ -24,7 +24,7 @@ const AddGymModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border-0 shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
           <div className="w-full h-40 md:h-56 bg-muted">
             <img
               src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop"
