@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,9 +46,9 @@ export const NewsfeedFilter = () => {
       </Select> */}
 
       <Button variant="outline" className="rounded-full">
+        <Download />
         Export
       </Button>
     </div>
   );
 };
-

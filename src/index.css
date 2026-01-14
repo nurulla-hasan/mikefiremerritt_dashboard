@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
@@ -153,5 +154,3 @@
 .font-crimson {
   font-family: "Crimson Text", serif;
 }
-
-

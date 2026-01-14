@@ -1,13 +1,141 @@
-;
+import "./tiptap-editor.css";
 
 import { useEditor, EditorContent } from "@tiptap/react";
+import { Node, mergeAttributes } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
-// import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
-// import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
-// import Code from "@tiptap/extension-code";
+
+// Custom Video Extension
+const Video = Node.create({
+  name: "video",
+  group: "block",
+  selectable: true,
+  draggable: true,
+  atom: true,
+
+  addAttributes() {
+    return {
+      src: {
+        default: null,
+      },
+      controls: {
+        default: true,
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "video",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "video",
+      mergeAttributes(HTMLAttributes, {
+        width: "100%",
+        height: "auto",
+        class: "rounded-lg border border-border my-4",
+      }),
+    ];
+  },
+});
+
+// Custom Audio Extension
+const Audio = Node.create({
+  name: "audio",
+  group: "block",
+  selectable: true,
+  draggable: true,
+  atom: true,
+
+  addAttributes() {
+    return {
+      src: {
+        default: null,
+      },
+      controls: {
+        default: true,
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "audio",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "audio",
+      mergeAttributes(HTMLAttributes, {
+        class: "w-full my-4",
+      }),
+    ];
+  },
+});
+
+// Custom File Attachment Extension
+const FileAttachment = Node.create({
+  name: "fileAttachment",
+  group: "block",
+  selectable: true,
+  draggable: true,
+  atom: true,
+
+  addAttributes() {
+    return {
+      href: {
+        default: null,
+      },
+      fileName: {
+        default: "Download File",
+      },
+      fileSize: {
+        default: "",
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: 'a[data-type="file-attachment"]',
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "a",
+      mergeAttributes(HTMLAttributes, {
+        "data-type": "file-attachment",
+        class:
+          "flex items-center gap-3 p-4 border border-border rounded-lg no-underline my-4 hover:bg-muted transition-colors",
+        target: "_blank",
+      }),
+      [
+        "span",
+        { class: "p-2 bg-primary/10 rounded-md text-primary" },
+        "📄", // Fallback icon
+      ],
+      [
+        "div",
+        { class: "flex flex-col gap-1" },
+        ["span", { class: "font-medium text-foreground" }, HTMLAttributes.fileName],
+        ["span", { class: "text-xs text-muted-foreground" }, HTMLAttributes.fileSize],
+      ],
+    ];
+  },
+});
 
 import {
   Bold,
@@ -27,7 +155,7 @@ import {
   Undo,
   Redo,
   Link as LinkIcon,
-  Image as ImageIcon,
+  Upload,
   Code as CodeIcon,
   Table as TableIcon,
   Plus,
@@ -36,6 +164,7 @@ import {
   Rows,
   Spline,
 } from "lucide-react";
+import { useRef } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -72,6 +201,8 @@ interface TiptapEditorProps {
 }
 
 const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -86,6 +217,9 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
         types: ["heading", "paragraph"],
       }),
       Image,
+      Video,
+      Audio,
+      FileAttachment,
       Placeholder.configure({
         placeholder: placeholder || "Type here…",
         includeChildren: true,
@@ -102,8 +236,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
     content: value,
     editorProps: {
       attributes: {
-        class:
-          "min-h-[500px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus:border focus:border-ring duration-300 disabled:cursor-not-allowed disabled:opacity-50 prose prose-sm max-w-none dark:prose-invert focus:outline-none",
+        class: "max-w-none outline-none",
       },
     },
     onUpdate: ({ editor }) => {
@@ -128,14 +261,53 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
-  const addImage = () => {
-    const url = window.prompt("Image URL");
-    if (!url) return;
-    editor.chain().focus().setImage({ src: url }).run();
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // In a real app, you would upload to a server here
+    // For now, we'll use URL.createObjectURL for preview
+    const url = URL.createObjectURL(file);
+    const fileSize = (file.size / 1024).toFixed(1) + " KB";
+
+    if (file.type.startsWith("image/")) {
+      editor.chain().focus().setImage({ src: url }).run();
+    } else if (file.type.startsWith("video/")) {
+      editor.chain().focus().insertContent(`<video src="${url}" controls></video>`).run();
+    } else if (file.type.startsWith("audio/")) {
+      editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
+    } else {
+      // For PDF, ZIP, etc.
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "fileAttachment",
+          attrs: {
+            href: url,
+            fileName: file.name,
+            fileSize: fileSize,
+          },
+        })
+        .run();
+    }
+
+    // Reset input
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const triggerFileUpload = () => {
+    fileInputRef.current?.click();
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        onChange={handleFileUpload}
+      />
       <TooltipProvider>
         {/* --- TOOLBAR --- */}
         <div className="border border-input bg-transparent rounded-md p-1 flex flex-wrap gap-1 items-center">
@@ -419,36 +591,30 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
             <TooltipContent>Inline Code</TooltipContent>
           </Tooltip>
 
-          {/* Image */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={addImage}
-                className="h-8 w-8 p-0"
-              >
-                <ImageIcon className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Image</TooltipContent>
-          </Tooltip>
-
           {/* Link */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
+              <Toggle
                 size="sm"
-                variant="ghost"
-                onClick={setLink}
-                className={`h-8 w-8 p-0 ${
-                  editor.isActive("link") ? "bg-accent" : ""
-                }`}
+                pressed={editor.isActive("link")}
+                onPressedChange={setLink}
               >
                 <LinkIcon className="h-4 w-4" />
+              </Toggle>
+            </TooltipTrigger>
+            <TooltipContent>Insert Link</TooltipContent>
+          </Tooltip>
+
+          <div className="w-px bg-border mx-1 h-6" />
+
+          {/* Universal Upload */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="sm" variant="ghost" onClick={triggerFileUpload} className="h-8 w-8 p-0">
+                <Upload className="h-4 w-4 text-primary" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Link</TooltipContent>
+            <TooltipContent>Upload Media or Files (Image, Video, PDF, etc.)</TooltipContent>
           </Tooltip>
 
           {/* Table */}

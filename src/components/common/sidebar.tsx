@@ -44,7 +44,7 @@ const section = location.pathname.split("/")[1] || "";
 const isSettingsPath = section === "settings";
 const isManagementPath = section === "management";
 
-const [isManagementOpen, setIsManagementOpen] = useState(isManagementPath);
+const [isManagementOpen, setIsManagementOpen] = useState(!isManagementPath);
 const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
 
   useEffect(() => {
@@ -149,7 +149,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           ))}
 
           {/* Management group */}
-          <Collapsible defaultOpen={true}>
+          <Collapsible defaultOpen={isManagementOpen}>
             <CollapsibleTrigger
               onClick={() => setIsManagementOpen(!isManagementOpen)}
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
@@ -197,7 +197,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           </Collapsible>
 
           {/* Settings group */}
-          <Collapsible defaultOpen={false}>
+          <Collapsible defaultOpen={isSettingsOpen}>
             <CollapsibleTrigger
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
