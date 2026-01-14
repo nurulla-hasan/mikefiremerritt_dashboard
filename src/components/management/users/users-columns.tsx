@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
 import { Trash2, Ban } from "lucide-react";
 
@@ -77,16 +78,11 @@ export const usersColumns: ColumnDef<User>[] = [
     header: "Status",
     cell: ({ row }) => {
       const approved = row.original.status === "Approved";
+      const variant = approved ? "success" : "destructive";
       return (
-        <div
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-            approved
-              ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"
-              : "bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400"
-          }`}
-        >
+        <Badge variant={variant as any} className="rounded-full px-3 py-1">
           {row.original.status}
-        </div>
+        </Badge>
       );
     },
   },

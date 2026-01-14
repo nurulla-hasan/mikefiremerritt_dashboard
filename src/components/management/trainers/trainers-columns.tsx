@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
 import { Ban, DollarSign, User as UserIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TrainerViewModal from "./view-modal";
 
@@ -95,23 +97,16 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.status;
-      let badgeClass = "";
-      
-      if (status === "Approved") {
-        badgeClass = "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800";
-      } else if (status === "Rejected") {
-        badgeClass = "bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 border-red-200 dark:border-red-800";
-      } else {
-        // Pending
-        badgeClass = "bg-amber-50 dark:bg-amber-900/20 text-amber-500 dark:text-amber-400 border-amber-200 dark:border-amber-800";
-      }
-
+      const variant =
+        status === "Approved"
+          ? "success"
+          : status === "Rejected"
+          ? "destructive"
+          : "warning";
       return (
-        <div
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium border ${badgeClass}`}
-        >
+        <Badge variant={variant as any} className="rounded-full px-3 py-1">
           {status}
-        </div>
+        </Badge>
       );
     },
   },

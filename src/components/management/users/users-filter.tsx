@@ -1,4 +1,4 @@
-"use client";
+;
 
 import { Download, Search } from "lucide-react";
 

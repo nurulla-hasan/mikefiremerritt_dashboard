@@ -1,4 +1,3 @@
-;
 
 import { useState } from "react";
 
@@ -12,23 +11,22 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
-const AddGymModal = () => {
+const AddProgramModal = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+ Add Gym</Button>
+        <Button className="rounded-full">+ Add Specialty</Button>
       </DialogTrigger>
 
       <DialogPortal>
         <DialogContent className="max-w-2xl p-0 overflow-hidden border-0 shadow-2xl">
           <div className="w-full h-40 md:h-56 bg-muted">
             <img
-              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop"
-              alt="Add Gym"
+              src="https://images.unsplash.com/photo-1758875570137-8691b7c55033?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="Add Program"
               className="h-full w-full object-cover"
             />
           </div>
@@ -36,22 +34,14 @@ const AddGymModal = () => {
           <div className="px-8 py-6 space-y-6">
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold font-crimson">
-                Add Gym
+                Add Specialty
               </DialogTitle>
             </DialogHeader>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <p className="text-sm font-medium">Gym Name</p>
-                <Input placeholder="Enter gym name" />
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm font-medium">Location</p>
-                <Input placeholder="Enter location" />
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm font-medium">Facilities</p>
-                <Textarea placeholder="List facilities, comma separated" />
+                <p className="text-sm font-medium">Specialty Name</p>
+                <Input placeholder="Enter specialty name" />
               </div>
             </div>
 
@@ -65,5 +55,4 @@ const AddGymModal = () => {
   );
 };
 
-export default AddGymModal;
-
+export default AddProgramModal;
