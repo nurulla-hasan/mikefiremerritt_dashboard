@@ -81,9 +81,12 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
             <Sun className="absolute shrink-0 scale-100 opacity-100 transition-all group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0" />
           </Toggle>
           {/* Notification icon */}
-          <Button variant="outline" size="icon-sm" className="rounded-full">
-            <Bell />
-          </Button>
+          <Link to="/notifications">
+            <Button variant="outline" size="icon-sm" className="rounded-full relative">
+              <Bell className="h-4 w-4" />
+              <span className="absolute top-0 right-0 h-2 w-2 bg-primary rounded-full border-2 border-background"></span>
+            </Button>
+          </Link>
 
           <div className="flex items-center">
             {/* Profile link */}

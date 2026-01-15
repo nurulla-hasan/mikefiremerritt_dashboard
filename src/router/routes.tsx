@@ -15,6 +15,7 @@ const Trainers = lazy(() => import("@/app/management/trainers/Trainers"));
 const Programs = lazy(() => import("@/app/management/programs/Programs"));
 const Gyms = lazy(() => import("@/app/management/gyms/Gyms"));
 const Newsfeed = lazy(() => import("@/app/management/newsfeed/Newsfeed"));
+const Notifications = lazy(() => import("@/app/notifications/Notifications"));
 const Subscriptions = lazy(() => import("@/app/management/subscriptions/Subscriptions"));
 const Tickets = lazy(() => import("@/app/management/tickets/Tickets"));
 const Reviews = lazy(() => import("@/app/management/reviews/Reviews"));
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
             { path: "management/subscriptions", element: <Subscriptions /> },
             { path: "management/tickets", element: <Tickets /> },
             { path: "management/reviews", element: <Reviews /> },
+            { path: "notifications", element: <Notifications /> },
             // Settings
             { path: "settings/profile", element: <Profile /> },
             { path: "settings/about", element: <About /> },
