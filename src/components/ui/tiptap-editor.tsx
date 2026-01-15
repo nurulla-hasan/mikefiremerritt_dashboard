@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./tiptap-editor.css";
 
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -38,8 +39,7 @@ const Video = Node.create({
     return [
       "video",
       mergeAttributes(HTMLAttributes, {
-        width: "100%",
-        height: "auto",
+        controls: true,
         class: "rounded-lg border border-border my-4",
       }),
     ];
@@ -137,6 +137,46 @@ const FileAttachment = Node.create({
   },
 });
 
+// Custom Youtube Extension
+const Youtube = Node.create({
+  name: "youtube",
+  group: "block",
+  selectable: true,
+  draggable: true,
+  atom: true,
+
+  addAttributes() {
+    return {
+      src: {
+        default: null,
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "iframe[src*='youtube.com'], iframe[src*='youtu.be']",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "div",
+      { class: "youtube-container my-4" },
+      [
+        "iframe",
+        mergeAttributes(HTMLAttributes, {
+          allowfullscreen: "true",
+          frameborder: "0",
+          class: "rounded-lg shadow-md",
+        }),
+      ],
+    ];
+  },
+});
+
 import {
   Bold,
   Italic,
@@ -163,8 +203,10 @@ import {
   Columns,
   Rows,
   Spline,
+  Youtube as YoutubeIcon,
+  Music,
 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -202,6 +244,44 @@ interface TiptapEditorProps {
 
 const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // REST API upload function (Backend Dev provided API)
+  const uploadFile = async (file: File): Promise<string> => {
+    setIsUploading(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append("file", file); // Key might be 'image' or 'file' depending on backend
+      
+      // Replace with your actual backend API endpoint
+      const API_URL = import.meta.env.VITE_API_UPLOAD_URL || "http://your-backend-api.com/upload";
+      
+      const response = await fetch(API_URL, {
+        method: "POST",
+        body: formData,
+        // If your API requires authentication, add headers here:
+        // headers: {
+        //   'Authorization': `Bearer ${token}`
+        // }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Upload failed");
+      }
+
+      const data = await response.json();
+      setIsUploading(false);
+      
+      // Adjust this based on your API response structure (e.g., data.url or data.data.url)
+      return data.url || data.secure_url || data.data?.url;
+    } catch (error: any) {
+      setIsUploading(false);
+      console.error("Upload error:", error);
+      throw error;
+    }
+  };
 
   const editor = useEditor({
     extensions: [
@@ -219,6 +299,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
       Image,
       Video,
       Audio,
+      Youtube,
       FileAttachment,
       Placeholder.configure({
         placeholder: placeholder || "Type here…",
@@ -261,35 +342,62 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const addAudioLink = () => {
+    const url = window.prompt("Enter Audio URL");
+    if (url) {
+      editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
+    }
+  };
+
+  const addYoutubeLink = () => {
+    const url = window.prompt("Enter YouTube URL (e.g., https://www.youtube.com/watch?v=...)");
+    if (url) {
+      // Basic conversion of watch?v= to embed/
+      let embedUrl = url;
+      if (url.includes("watch?v=")) {
+        embedUrl = url.replace("watch?v=", "embed/");
+      } else if (url.includes("youtu.be/")) {
+        embedUrl = url.replace("youtu.be/", "youtube.com/embed/");
+      }
+      editor.chain().focus().insertContent({
+        type: "youtube",
+        attrs: { src: embedUrl }
+      }).run();
+    }
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // In a real app, you would upload to a server here
-    // For now, we'll use URL.createObjectURL for preview
-    const url = URL.createObjectURL(file);
-    const fileSize = (file.size / 1024).toFixed(1) + " KB";
+    try {
+      const url = await uploadFile(file);
+      const fileSize = (file.size / 1024).toFixed(1) + " KB";
 
-    if (file.type.startsWith("image/")) {
-      editor.chain().focus().setImage({ src: url }).run();
-    } else if (file.type.startsWith("video/")) {
-      editor.chain().focus().insertContent(`<video src="${url}" controls></video>`).run();
-    } else if (file.type.startsWith("audio/")) {
-      editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
-    } else {
-      // For PDF, ZIP, etc.
-      editor
-        .chain()
-        .focus()
-        .insertContent({
-          type: "fileAttachment",
-          attrs: {
-            href: url,
-            fileName: file.name,
-            fileSize: fileSize,
-          },
-        })
-        .run();
+      if (file.type.startsWith("image/")) {
+        editor.chain().focus().setImage({ src: url }).run();
+      } else if (file.type.startsWith("video/")) {
+        editor.chain().focus().insertContent(`<video src="${url}" controls></video>`).run();
+      } else if (file.type.startsWith("audio/")) {
+        editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
+      } else {
+        // For PDF, ZIP, etc.
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: "fileAttachment",
+            attrs: {
+              href: url,
+              fileName: file.name,
+              fileSize: fileSize,
+            },
+          })
+          .run();
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+      alert("Failed to upload file. Please try again.");
     }
 
     // Reset input
@@ -306,6 +414,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
         type="file"
         ref={fileInputRef}
         className="hidden"
+        accept="image/*,application/pdf"
         onChange={handleFileUpload}
       />
       <TooltipProvider>
@@ -591,31 +700,62 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
             <TooltipContent>Inline Code</TooltipContent>
           </Tooltip>
 
-          {/* Link */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Toggle
-                size="sm"
-                pressed={editor.isActive("link")}
-                onPressedChange={setLink}
-              >
-                <LinkIcon className="h-4 w-4" />
-              </Toggle>
-            </TooltipTrigger>
-            <TooltipContent>Insert Link</TooltipContent>
-          </Tooltip>
-
-          <div className="w-px bg-border mx-1 h-6" />
-
-          {/* Universal Upload */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button size="sm" variant="ghost" onClick={triggerFileUpload} className="h-8 w-8 p-0">
-                <Upload className="h-4 w-4 text-primary" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Upload Media or Files (Image, Video, PDF, etc.)</TooltipContent>
-          </Tooltip>
+          {/* Links & Media */}
+          <div className="flex items-center gap-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Toggle
+                  size="sm"
+                  pressed={editor.isActive("link")}
+                  onPressedChange={setLink}
+                >
+                  <LinkIcon className="h-4 w-4" />
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent>Text Link</TooltipContent>
+            </Tooltip>
+            
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-2" align="start">
+                <div className="grid gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start gap-2 h-9"
+                    onClick={addAudioLink}
+                  >
+                    <Music className="h-4 w-4" />
+                    Audio Link
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start gap-2 h-9"
+                    onClick={addYoutubeLink}
+                  >
+                    <YoutubeIcon className="h-4 w-4" />
+                    YouTube Embed
+                  </Button>
+                  <div className="h-px bg-border my-1" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start gap-2 h-9"
+                    onClick={triggerFileUpload}
+                    disabled={isUploading}
+                  >
+                    <Upload className={`h-4 w-4 ${isUploading ? "animate-bounce" : ""}`} />
+                    {isUploading ? "Uploading..." : "Upload File"}
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
 
           {/* Table */}
           <Popover>
