@@ -16,7 +16,7 @@ import TiptapEditor from "@/components/ui/tiptap-editor";
 import { Save } from "lucide-react";
 import PageHeader from "../../../components/ui/page-header";
 
-type AboutFormValues = {
+type FormValues = {
   title: string;
   content: string;
 };
@@ -24,14 +24,14 @@ type AboutFormValues = {
 const About = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<AboutFormValues>({
+  const form = useForm<FormValues>({
     defaultValues: {
-      title: "About Us",
+      title: "About Mike Fire Merritt",
       content: "",
     },
   });
 
-  const onSubmit = async (data: AboutFormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log(data);
     try {
       setIsSubmitting(true);
