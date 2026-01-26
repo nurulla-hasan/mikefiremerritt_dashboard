@@ -8,8 +8,10 @@ import AuthLayout from "@/layout/auth-layout";
 const Dashboard = lazy(() => import("@/app/dashboard/Dashboard"));
 const Profile = lazy(() => import("@/app/settings/profile/Profile"));
 const Privacy = lazy(() => import("@/app/settings/privacy/Privacy"));
+const Disclaimers = lazy(() => import("@/app/settings/disclimers/Disclimers"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const About = lazy(() => import("@/app/settings/about-us/About"));
+const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 const Users = lazy(() => import("@/app/management/users/Users"));
 const Trainers = lazy(() => import("@/app/management/trainers/Trainers"));
 const Programs = lazy(() => import("@/app/management/programs/Programs"));
@@ -47,7 +49,9 @@ export const router = createBrowserRouter([
             { path: "settings/profile", element: <Profile /> },
             { path: "settings/about", element: <About /> },
             { path: "settings/terms", element: <Terms /> },
+            { path: "settings/disclaimers", element: <Disclaimers /> },
             { path: "settings/privacy", element: <Privacy /> },
+            { path: "settings/faq", element: <FAQ /> },
         ]
     },
     {

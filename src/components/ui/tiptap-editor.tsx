@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./tiptap-editor.css";
 
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -195,7 +195,7 @@ import {
   Undo,
   Redo,
   Link as LinkIcon,
-  Upload,
+  // Upload,
   Code as CodeIcon,
   Table as TableIcon,
   Plus,
@@ -203,10 +203,10 @@ import {
   Columns,
   Rows,
   Spline,
-  Youtube as YoutubeIcon,
-  Music,
+  // Youtube as YoutubeIcon,
+  // Music,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -244,44 +244,44 @@ interface TiptapEditorProps {
 
 const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  // const [isUploading, setIsUploading] = useState(false);
 
   // REST API upload function (Backend Dev provided API)
-  const uploadFile = async (file: File): Promise<string> => {
-    setIsUploading(true);
+  // const uploadFile = async (file: File): Promise<string> => {
+  //   setIsUploading(true);
     
-    try {
-      const formData = new FormData();
-      formData.append("file", file); // Key might be 'image' or 'file' depending on backend
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file); // Key might be 'image' or 'file' depending on backend
       
-      // Replace with your actual backend API endpoint
-      const API_URL = import.meta.env.VITE_API_UPLOAD_URL || "http://your-backend-api.com/upload";
+  //     // Replace with your actual backend API endpoint
+  //     const API_URL = import.meta.env.VITE_API_UPLOAD_URL || "http://your-backend-api.com/upload";
       
-      const response = await fetch(API_URL, {
-        method: "POST",
-        body: formData,
-        // If your API requires authentication, add headers here:
-        // headers: {
-        //   'Authorization': `Bearer ${token}`
-        // }
-      });
+  //     const response = await fetch(API_URL, {
+  //       method: "POST",
+  //       body: formData,
+  //       // If your API requires authentication, add headers here:
+  //       // headers: {
+  //       //   'Authorization': `Bearer ${token}`
+  //       // }
+  //     });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Upload failed");
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Upload failed");
+  //     }
 
-      const data = await response.json();
-      setIsUploading(false);
+  //     const data = await response.json();
+  //     setIsUploading(false);
       
-      // Adjust this based on your API response structure (e.g., data.url or data.data.url)
-      return data.url || data.secure_url || data.data?.url;
-    } catch (error: any) {
-      setIsUploading(false);
-      console.error("Upload error:", error);
-      throw error;
-    }
-  };
+  //     // Adjust this based on your API response structure (e.g., data.url or data.data.url)
+  //     return data.url || data.secure_url || data.data?.url;
+  //   } catch (error: any) {
+  //     setIsUploading(false);
+  //     console.error("Upload error:", error);
+  //     throw error;
+  //   }
+  // };
 
   const editor = useEditor({
     extensions: [
@@ -342,71 +342,71 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
-  const addAudioLink = () => {
-    const url = window.prompt("Enter Audio URL");
-    if (url) {
-      editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
-    }
-  };
+  // const addAudioLink = () => {
+  //   const url = window.prompt("Enter Audio URL");
+  //   if (url) {
+  //     editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
+  //   }
+  // };
 
-  const addYoutubeLink = () => {
-    const url = window.prompt("Enter YouTube URL (e.g., https://www.youtube.com/watch?v=...)");
-    if (url) {
-      // Basic conversion of watch?v= to embed/
-      let embedUrl = url;
-      if (url.includes("watch?v=")) {
-        embedUrl = url.replace("watch?v=", "embed/");
-      } else if (url.includes("youtu.be/")) {
-        embedUrl = url.replace("youtu.be/", "youtube.com/embed/");
-      }
-      editor.chain().focus().insertContent({
-        type: "youtube",
-        attrs: { src: embedUrl }
-      }).run();
-    }
-  };
+  // const addYoutubeLink = () => {
+  //   const url = window.prompt("Enter YouTube URL (e.g., https://www.youtube.com/watch?v=...)");
+  //   if (url) {
+  //     // Basic conversion of watch?v= to embed/
+  //     let embedUrl = url;
+  //     if (url.includes("watch?v=")) {
+  //       embedUrl = url.replace("watch?v=", "embed/");
+  //     } else if (url.includes("youtu.be/")) {
+  //       embedUrl = url.replace("youtu.be/", "youtube.com/embed/");
+  //     }
+  //     editor.chain().focus().insertContent({
+  //       type: "youtube",
+  //       attrs: { src: embedUrl }
+  //     }).run();
+  //   }
+  // };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  // const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (!file) return;
 
-    try {
-      const url = await uploadFile(file);
-      const fileSize = (file.size / 1024).toFixed(1) + " KB";
+  //   try {
+  //     const url = await uploadFile(file);
+  //     const fileSize = (file.size / 1024).toFixed(1) + " KB";
 
-      if (file.type.startsWith("image/")) {
-        editor.chain().focus().setImage({ src: url }).run();
-      } else if (file.type.startsWith("video/")) {
-        editor.chain().focus().insertContent(`<video src="${url}" controls></video>`).run();
-      } else if (file.type.startsWith("audio/")) {
-        editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
-      } else {
-        // For PDF, ZIP, etc.
-        editor
-          .chain()
-          .focus()
-          .insertContent({
-            type: "fileAttachment",
-            attrs: {
-              href: url,
-              fileName: file.name,
-              fileSize: fileSize,
-            },
-          })
-          .run();
-      }
-    } catch (error) {
-      console.error("Upload failed:", error);
-      alert("Failed to upload file. Please try again.");
-    }
+  //     if (file.type.startsWith("image/")) {
+  //       editor.chain().focus().setImage({ src: url }).run();
+  //     } else if (file.type.startsWith("video/")) {
+  //       editor.chain().focus().insertContent(`<video src="${url}" controls></video>`).run();
+  //     } else if (file.type.startsWith("audio/")) {
+  //       editor.chain().focus().insertContent(`<audio src="${url}" controls></audio>`).run();
+  //     } else {
+  //       // For PDF, ZIP, etc.
+  //       editor
+  //         .chain()
+  //         .focus()
+  //         .insertContent({
+  //           type: "fileAttachment",
+  //           attrs: {
+  //             href: url,
+  //             fileName: file.name,
+  //             fileSize: fileSize,
+  //           },
+  //         })
+  //         .run();
+  //     }
+  //   } catch (error) {
+  //     console.error("Upload failed:", error);
+  //     alert("Failed to upload file. Please try again.");
+  //   }
 
-    // Reset input
-    if (fileInputRef.current) fileInputRef.current.value = "";
-  };
+  //   // Reset input
+  //   if (fileInputRef.current) fileInputRef.current.value = "";
+  // };
 
-  const triggerFileUpload = () => {
-    fileInputRef.current?.click();
-  };
+  // const triggerFileUpload = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -415,7 +415,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
         ref={fileInputRef}
         className="hidden"
         accept="image/*,application/pdf"
-        onChange={handleFileUpload}
+        // onChange={handleFileUpload}
       />
       <TooltipProvider>
         {/* --- TOOLBAR --- */}
@@ -715,7 +715,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
               <TooltipContent>Text Link</TooltipContent>
             </Tooltip>
             
-            <Popover>
+            {/* <Popover>
               <PopoverTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                   <Plus className="h-4 w-4" />
@@ -754,7 +754,7 @@ const TiptapEditor = ({ value, onChange, placeholder }: TiptapEditorProps) => {
                   </Button>
                 </div>
               </PopoverContent>
-            </Popover>
+            </Popover> */}
           </div>
 
           {/* Table */}

@@ -22,6 +22,7 @@ import {
   Wallet,
   Ticket,
   MessageSquareQuote,
+  MessageCircleQuestion,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -110,7 +111,9 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
       { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
       { name: "About", icon: BadgeInfo, href: "/settings/about" },
       { name: "Terms", icon: ReceiptText, href: "/settings/terms" },
+      { name: "Disclaimers", icon: ListOrdered, href: "/settings/disclaimers" },
       { name: "Privacy", icon: GlobeLock, href: "/settings/privacy" },
+      { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
     ],
     []
   );
