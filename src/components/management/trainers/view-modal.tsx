@@ -56,7 +56,7 @@ const TrainerViewModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl flex flex-col max-h-[80vh]">
+        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl">
           <div className="bg-primary/20 px-6 pb-8 pt-8 flex flex-col items-center shrink-0">
             <div className="h-28 w-28 rounded-full border-[6px] border-background shadow-lg overflow-hidden bg-background">
               <img
@@ -73,7 +73,7 @@ const TrainerViewModal = () => {
             </DialogHeader>
           </div>
 
-          <ScrollArea className="flex-1 overflow-y-auto">
+          <ScrollArea className="max-h-[40vh] whitespace-nowrap">
             <div className="px-8 py-6 space-y-4 text-sm">
               <InfoRow label="Status">
                 <span className="text-emerald-600 font-medium">

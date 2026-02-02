@@ -4,6 +4,7 @@ import { Download, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 // import {
 //   Select,
 //   SelectContent,
@@ -16,16 +17,6 @@ export const TrainersFilter = () => {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       {/* Left Filters */}
-      {/* <Select defaultValue="default">
-        <SelectTrigger className="w-fit rounded-full">
-          <SelectValue placeholder="Sort" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="default">Sort</SelectItem>
-          <SelectItem value="asc">Ascending</SelectItem>
-          <SelectItem value="desc">Descending</SelectItem>
-        </SelectContent>
-      </Select>
 
       <Select defaultValue="all">
         <SelectTrigger className="w-fit rounded-full">
@@ -33,21 +24,11 @@ export const TrainersFilter = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Trainer Filter</SelectItem>
-          <SelectItem value="active">Active</SelectItem>
-          <SelectItem value="inactive">Inactive</SelectItem>
+          <SelectItem value="active">Approved</SelectItem>
+          <SelectItem value="inactive">Pending</SelectItem>
+          <SelectItem value="decline">Rejected</SelectItem>
         </SelectContent>
       </Select>
-
-      <Select defaultValue="recent">
-        <SelectTrigger className="w-fit rounded-full">
-          <SelectValue placeholder="Sort" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="recent">Sort</SelectItem>
-          <SelectItem value="newest">Newest</SelectItem>
-          <SelectItem value="oldest">Oldest</SelectItem>
-        </SelectContent>
-      </Select> */}
 
         {/* Search with Filter Icon */}
         <div className="relative w-full md:w-65">

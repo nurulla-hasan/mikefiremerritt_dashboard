@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ban, DollarSign, User as UserIcon } from "lucide-react";
+import { Ban, User as UserIcon } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TrainerViewModal from "./view-modal";
+import SubscriptionFeeModal from "./subscription-fee-modal";
 
 export type Trainer = {
   id: number;
@@ -116,9 +117,7 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
         <Button variant="outline" size="icon">
           <UserIcon className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon">
-          <DollarSign className="h-4 w-4" />
-        </Button>
+        <SubscriptionFeeModal />
         <Button
           variant="outline"
           size="icon"
