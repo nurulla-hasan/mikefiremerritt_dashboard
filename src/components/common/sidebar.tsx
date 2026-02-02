@@ -45,7 +45,7 @@ const section = location.pathname.split("/")[1] || "";
 const isSettingsPath = section === "settings";
 const isManagementPath = section === "management";
 
-const [isManagementOpen, setIsManagementOpen] = useState(isManagementPath);
+const [isManagementOpen, setIsManagementOpen] = useState(!isManagementPath);
 const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
 
   useEffect(() => {
