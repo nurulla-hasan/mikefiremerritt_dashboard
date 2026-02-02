@@ -45,7 +45,7 @@ const section = location.pathname.split("/")[1] || "";
 const isSettingsPath = section === "settings";
 const isManagementPath = section === "management";
 
-const [isManagementOpen, setIsManagementOpen] = useState(!isManagementPath);
+const [isManagementOpen, setIsManagementOpen] = useState(isManagementPath);
 const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
 
   useEffect(() => {
@@ -69,6 +69,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
 
   const userManagementItems = [
     { name: "User Management", icon: Users, href: "/management/users" },
+    { name: "Admin Management", icon: GlobeLock, href: "/management/admins" },
     { name: "Trainer Management", icon: BadgeCheck, href: "/management/trainers" },
   ];
 

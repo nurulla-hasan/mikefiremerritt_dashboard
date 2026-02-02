@@ -14,6 +14,7 @@ const users: User[] = [
     email: "john.doe@example.com",
     role: "Trainer",
     status: "Approved",
+    joinedDate: "2024-01-15",
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ const users: User[] = [
     email: "jane.smith@example.com",
     role: "Individual",
     status: "Decline",
+    joinedDate: "2024-01-16",
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ const users: User[] = [
     email: "michael.johnson@example.com",
     role: "Trainer",
     status: "Decline",
+    joinedDate: "2024-01-17",
   },
   {
     id: 4,
@@ -35,6 +38,7 @@ const users: User[] = [
     email: "emily.brown@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-18",
   },
   {
     id: 5,
@@ -42,6 +46,7 @@ const users: User[] = [
     email: "david.wilson@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-19",
   },
   {
     id: 6,
@@ -49,6 +54,7 @@ const users: User[] = [
     email: "sophia.taylor@example.com",
     role: "Trainer",
     status: "Decline",
+    joinedDate: "2024-01-20",
   },
   {
     id: 7,
@@ -56,6 +62,7 @@ const users: User[] = [
     email: "daniel.anderson@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-21",
   },
   {
     id: 8,
@@ -63,6 +70,7 @@ const users: User[] = [
     email: "olivia.martinez@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-22",
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ const users: User[] = [
     email: "james.wilson@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-23",
   },
   {
     id: 10,
@@ -77,6 +86,7 @@ const users: User[] = [
     email: "william.davis@example.com",
     role: "Individual",
     status: "Approved",
+    joinedDate: "2024-01-24",
   },
 ];
 

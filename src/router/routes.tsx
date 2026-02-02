@@ -13,6 +13,7 @@ const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const About = lazy(() => import("@/app/settings/about-us/About"));
 const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 const Users = lazy(() => import("@/app/management/users/Users"));
+const Admins = lazy(() => import("@/app/management/admins/Admins"));
 const Trainers = lazy(() => import("@/app/management/trainers/Trainers"));
 const Programs = lazy(() => import("@/app/management/programs/Programs"));
 const Gyms = lazy(() => import("@/app/management/gyms/Gyms"));
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
 
             // Management
             { path: "management/users", element: <Users /> },
+            { path: "management/admins", element: <Admins /> },
             { path: "management/trainers", element: <Trainers /> },
             { path: "management/programs", element: <Programs /> },
             { path: "management/gyms", element: <Gyms /> },

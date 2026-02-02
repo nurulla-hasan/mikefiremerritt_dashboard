@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { ColumnDef } from "@tanstack/react-table";
 import { Trash2, Ban } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import UserViewModal from "./view-modal";
+import UserViewModal from "../users/view-modal";
 
-export type User = {
+export type Admin = {
   id: number;
   name: string;
   email: string;
-  role: "Trainer" | "Individual";
-  status: "Approved" | "Decline";
-  joinedDate: string;
+  role: string;
 };
 
-export const usersColumns: ColumnDef<User>[] = [
+export const adminsColumns: ColumnDef<Admin>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -45,7 +43,7 @@ export const usersColumns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "name",
-    header: "User Name",
+    header: "Admin Name",
     cell: ({ row }) => (
       <span className="text-sm font-medium text-foreground">
         {row.original.name}
@@ -62,15 +60,6 @@ export const usersColumns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "joinedDate",
-    header: "Joined Date",
-    cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        {row.original.joinedDate}
-      </span>
-    ),
-  },
-  {
     accessorKey: "role",
     header: "Role",
     cell: ({ row }) => (
@@ -81,19 +70,6 @@ export const usersColumns: ColumnDef<User>[] = [
         {row.original.role}
       </Badge>
     ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const approved = row.original.status === "Approved";
-      const variant = approved ? "success" : "destructive";
-      return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1">
-          {row.original.status}
-        </Badge>
-      );
-    },
   },
   {
     id: "actions",
