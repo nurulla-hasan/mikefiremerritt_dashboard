@@ -31,6 +31,7 @@ const users: User[] = [
     name: "John Doe",
     email: "john.doe@example.com",
     role: "Trainer",
+    joinedDate: "12 Jan 2025",
     status: "Approved",
   },
   {
@@ -38,6 +39,7 @@ const users: User[] = [
     name: "Jane Smith",
     email: "jane.smith@example.com",
     role: "Individual",
+    joinedDate: "12 Jan 2025",
     status: "Decline",
   },
   {
@@ -45,6 +47,7 @@ const users: User[] = [
     name: "Michael Johnson",
     email: "michael.johnson@example.com",
     role: "Trainer",
+    joinedDate: "12 Jan 2025",
     status: "Decline",
   },
   {
@@ -52,6 +55,7 @@ const users: User[] = [
     name: "Emily Brown",
     email: "emily.brown@example.com",
     role: "Individual",
+    joinedDate: "12 Jan 2025",
     status: "Approved",
   },
   {
@@ -59,6 +63,7 @@ const users: User[] = [
     name: "David Wilson",
     email: "david.wilson@example.com",
     role: "Individual",
+    joinedDate: "12 Jan 2025",
     status: "Approved",
   },
 ];
