@@ -206,7 +206,7 @@ const Fees = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">%</Label>
+                  <Label className="text-sm font-medium">Discount Percentage</Label>
                   <div className="relative">
                     <Input
                       value={rewardPercentage}
