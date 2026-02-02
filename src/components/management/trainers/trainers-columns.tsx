@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ban, User as UserIcon } from "lucide-react";
+import { Ban } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
@@ -114,16 +114,13 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <TrainerViewModal />
-        <Button variant="outline" size="icon">
-          <UserIcon className="h-4 w-4" />
-        </Button>
         <SubscriptionFeeModal />
         <Button
           variant="outline"
           size="icon"
           className="text-amber-500 hover:text-amber-600"
         >
-          <Ban className="h-4 w-4" />
+          <Ban />
         </Button>
       </div>
     ),

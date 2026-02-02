@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   Collapsible,
   CollapsibleContent,
@@ -24,12 +25,35 @@ import {
   MessageSquareQuote,
   MessageCircleQuestion,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 // import { useDispatch } from "react-redux";
 // import { setAccessToken, setAdmin } from "@/redux/feature/auth/authSlice";
 import { Button } from "../ui/button";
+
+const NAV_ITEMS = [{ name: "Dashboard", icon: LayoutGrid, href: "/" }];
+
+const MANAGEMENT_ITEMS = [
+  { name: "User Management", icon: Users, href: "/management/users" },
+  { name: "Admin Management", icon: GlobeLock, href: "/management/admins" },
+  { name: "Trainer Management", icon: BadgeCheck, href: "/management/trainers" },
+  { name: "Program Management", icon: Layers, href: "/management/programs" },
+  { name: "Gym Management", icon: Dumbbell, href: "/management/gyms" },
+  { name: "Newsfeed Moderation", icon: Newspaper, href: "/management/newsfeed" },
+  { name: "Manage Subscription", icon: Wallet, href: "/management/subscriptions" },
+  { name: "Manage Ticket", icon: Ticket, href: "/management/tickets" },
+  { name: "Reviews", icon: MessageSquareQuote, href: "/management/reviews" },
+];
+
+const SETTINGS_SUB_ITEMS = [
+  { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
+  { name: "About", icon: BadgeInfo, href: "/settings/about" },
+  { name: "Terms", icon: ReceiptText, href: "/settings/terms" },
+  { name: "Disclaimers", icon: ListOrdered, href: "/settings/disclaimers" },
+  { name: "Privacy", icon: GlobeLock, href: "/settings/privacy" },
+  { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
+];
 
 const Sidebar = ({
   isSidebarOpen,
@@ -45,8 +69,12 @@ const section = location.pathname.split("/")[1] || "";
 const isSettingsPath = section === "settings";
 const isManagementPath = section === "management";
 
-const [isManagementOpen, setIsManagementOpen] = useState(!isManagementPath);
+const [isManagementOpen, setIsManagementOpen] = useState(true);
 const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
+
+  useEffect(() => {
+    if (isSettingsPath) setIsSettingsOpen(true);
+  }, [isSettingsPath]);
 
   useEffect(() => {
     if (prevLocation.current !== location && isSidebarOpen) {
@@ -62,63 +90,6 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
   //     window.location.href = "/auth/login";
   // };
 
-  const navItems = useMemo(
-    () => [{ name: "Dashboard", icon: LayoutGrid, href: "/" }],
-    []
-  );
-
-  const userManagementItems = [
-    { name: "User Management", icon: Users, href: "/management/users" },
-    { name: "Admin Management", icon: GlobeLock, href: "/management/admins" },
-    { name: "Trainer Management", icon: BadgeCheck, href: "/management/trainers" },
-  ];
-
-  const businessManagementItems = [
-    {
-      name: "Program Management",
-      icon: Layers,
-      href: "/management/programs",
-    },
-    { name: "Gym Management", icon: Dumbbell, href: "/management/gyms" },
-  ];
-
-  const moderationItems = [
-    {
-      name: "Newsfeed Moderation",
-      icon: Newspaper,
-      href: "/management/newsfeed",
-    },
-    {
-      name: "Manage Subscription",
-      icon: Wallet,
-      href: "/management/subscriptions",
-    },
-  ];
-
-  const supportItems = [
-    { name: "Manage Ticket", icon: Ticket, href: "/management/tickets" },
-    { name: "Reviews", icon: MessageSquareQuote, href: "/management/reviews" },
-  ];
-
-  const managementItems = [
-    ...userManagementItems,
-    ...businessManagementItems,
-    ...moderationItems,
-    ...supportItems,
-  ];
-
-  const settingsSubItems = useMemo(
-    () => [
-      { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
-      { name: "About", icon: BadgeInfo, href: "/settings/about" },
-      { name: "Terms", icon: ReceiptText, href: "/settings/terms" },
-      { name: "Disclaimers", icon: ListOrdered, href: "/settings/disclaimers" },
-      { name: "Privacy", icon: GlobeLock, href: "/settings/privacy" },
-      { name: "FAQ", icon: MessageCircleQuestion, href: "/settings/faq" },
-    ],
-    []
-  );
-
   return (
     <div
       className={`fixed top-0 left-0 z-40 h-screen bg-sidebar text-sidebar-foreground w-64 transition-transform duration-300 ease-in-out transform ${
@@ -131,7 +102,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
       <ScrollArea className="h-[calc(100vh-149px)]">
         <nav className="grow space-y-3 p-4">
           {/* Dashboard */}
-          {navItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <NavLink
               key={item.href}
               to={item.href}
@@ -153,9 +124,8 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           ))}
 
           {/* Management group */}
-          <Collapsible defaultOpen={isManagementOpen}>
+          <Collapsible open={isManagementOpen} onOpenChange={setIsManagementOpen}>
             <CollapsibleTrigger
-              onClick={() => setIsManagementOpen(!isManagementOpen)}
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
                     ${
                       isManagementPath
@@ -175,7 +145,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="py-2 space-y-2">
-              {managementItems.map((item, index) => (
+              {MANAGEMENT_ITEMS.map((item, index) => (
                 <NavLink
                   key={item.href}
                   to={item.href}
@@ -201,9 +171,8 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           </Collapsible>
 
           {/* Settings group */}
-          <Collapsible defaultOpen={isSettingsOpen}>
+          <Collapsible open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
             <CollapsibleTrigger
-              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
                     ${
                       isSettingsPath
@@ -223,7 +192,7 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="py-2 space-y-2">
-              {settingsSubItems.map((item, index) => (
+              {SETTINGS_SUB_ITEMS.map((item, index) => (
                 <NavLink
                   key={item.href}
                   to={item.href}

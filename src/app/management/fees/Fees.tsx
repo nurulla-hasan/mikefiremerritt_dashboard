@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { CheckCircle2, MinusCircle, Plus } from "lucide-react";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
+import PageLayout from "@/components/common/page-layout";
 
 const Fees = () => {
   const [standardFee, setStandardFee] = useState("50");
@@ -33,7 +34,7 @@ const Fees = () => {
   const [discountDates, setDiscountDates] = useState<DateRange | undefined>();
 
   return (
-    <div className="space-y-8">
+    <PageLayout>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <PageHeader
           title="Fees Management"
@@ -239,7 +240,7 @@ const Fees = () => {
           </Card>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
