@@ -51,11 +51,11 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
         </div>
 
         {/* Center: logo with notch */}
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-14 flex items-center justify-center pointer-events-none">
-          <div className="relative w-70 h-full bg-card notch-shape flex items-center justify-center pointer-events-auto">
-            <div className="flex items-center gap-4">
-              <img src="/logo.png" alt="Logo" className="h-12 w-auto" />
-              <span className="text-2xl font-medium font-crimson text-foreground">
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-10 lg:h-14 flex items-center justify-center pointer-events-none">
+          <div className="relative w-40 md:w-56 lg:w-70 h-full bg-card notch-shape flex items-center justify-center pointer-events-auto">
+            <div className="flex items-center gap-2 lg:gap-4">
+              <img src="/logo.png" alt="Logo" className="h-7 lg:h-12 w-auto" />
+              <span className="text-sm md:text-xl lg:text-2xl font-medium font-crimson text-foreground">
                 VitaKinetic
               </span>
             </div>
@@ -162,7 +162,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                         className="opacity-60 mr-2"
                         aria-hidden="true"
                       />
-                      <span>notifications</span>
+                      <span>Notifications</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -175,7 +175,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                     ) : (
                       <Moon size={16} className="opacity-60 mr-2" />
                     )}
-                    <span>{theme === "dark" ? "light_mode" : "dark_mode"}</span>
+                    <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
