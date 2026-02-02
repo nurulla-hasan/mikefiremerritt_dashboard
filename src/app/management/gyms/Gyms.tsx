@@ -28,7 +28,7 @@ const Gyms = () => {
   return (
     <PageLayout>
       <div className="flex flex-col md:flex-row md:justify-between gap-2">
-        <PageHeader title="GYM Management" description="Manage your gyms here" length={gyms.length} />
+        <PageHeader title="Gym Management" description="Manage your gyms here" length={gyms.length} />
         <GymsFilter />
       </div>
       <DataTable columns={gymsColumns} data={gyms} meta={meta} />

@@ -18,12 +18,11 @@ export const TrainersFilter = () => {
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       {/* Left Filters */}
 
-      <Select defaultValue="all">
+      <Select>
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="Trainer Filter" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Trainer Filter</SelectItem>
           <SelectItem value="active">Approved</SelectItem>
           <SelectItem value="inactive">Pending</SelectItem>
           <SelectItem value="decline">Rejected</SelectItem>

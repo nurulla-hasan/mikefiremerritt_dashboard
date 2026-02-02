@@ -5,6 +5,7 @@ import { Download, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AddGymModal from "./add-modal";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 // import {
 //   Select,
 //   SelectContent, 
@@ -16,27 +17,15 @@ import AddGymModal from "./add-modal";
 export const GymsFilter = () => {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
-      {/* <Select defaultValue="default">
+      <Select>
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="Sort" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="default">Sort</SelectItem>
-          <SelectItem value="asc">Ascending</SelectItem>
-          <SelectItem value="desc">Descending</SelectItem>
+          <SelectItem value="active">Active</SelectItem>
+          <SelectItem value="inactive">Inactive</SelectItem>
         </SelectContent>
       </Select>
-
-      <Select defaultValue="recent">
-        <SelectTrigger className="w-fit rounded-full">
-          <SelectValue placeholder="Sort" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="recent">Most recent</SelectItem>
-          <SelectItem value="active">Active first</SelectItem>
-          <SelectItem value="inactive">Inactive first</SelectItem>
-        </SelectContent>
-      </Select> */}
 
       <div className="relative w-full md:w-65">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />

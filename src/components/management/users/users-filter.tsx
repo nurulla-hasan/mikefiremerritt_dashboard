@@ -16,22 +16,20 @@ export const UsersFilter = () => {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       {/* Left sort (Role) */}
-      <Select defaultValue="all">
+      <Select>
         <SelectTrigger className="w-fit rounded-full border-muted-foreground/30">
           <SelectValue placeholder="Role" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All roles</SelectItem>
           <SelectItem value="Trainer">Trainer</SelectItem>
           <SelectItem value="Individual">Individual</SelectItem>
         </SelectContent>
       </Select>
-      <Select defaultValue="all">
+      <Select>
         <SelectTrigger className="w-fit rounded-full border-muted-foreground/30">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Status</SelectItem>
           <SelectItem value="Approved">Approved</SelectItem>
           <SelectItem value="Decline">Decline</SelectItem>
         </SelectContent>
