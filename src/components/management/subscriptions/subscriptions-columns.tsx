@@ -13,6 +13,7 @@ export type Subscription = {
   expireDate: string;
   plan: string;
   amount: string;
+  referrals: number;
   status: "Active" | "Expired";
 };
 
@@ -70,6 +71,15 @@ export const subscriptionsColumns: ColumnDef<Subscription>[] = [
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
         {row.original.amount}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "referrals",
+    header: "Referrals",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.referrals}
       </span>
     ),
   },

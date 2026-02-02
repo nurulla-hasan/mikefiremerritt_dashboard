@@ -35,6 +35,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 5,
     status: "Active",
   },
   {
@@ -46,6 +47,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 2,
     status: "Expired",
   },
   {
@@ -57,6 +59,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 8,
     status: "Active",
   },
   {
@@ -68,6 +71,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 12,
     status: "Active",
   },
   {
@@ -79,6 +83,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 0,
     status: "Expired",
   },
   {
@@ -90,6 +95,7 @@ const subscriptions: Subscription[] = [
     expireDate: "12 Jan 2025",
     plan: "Monthly",
     amount: "$254",
+    referrals: 4,
     status: "Active",
   },
 ];
