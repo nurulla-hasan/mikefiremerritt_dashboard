@@ -40,17 +40,6 @@ const Fees = () => {
           title="Fees Management"
           description="Manage subscription fees, rewards, and referral programs."
         />
-        <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" className="rounded-full">
-            Manage Rewards
-          </Button>
-          <Button variant="secondary" className="rounded-full">
-            Manage Referral Rewards
-          </Button>
-          <Button variant="secondary" className="rounded-full">
-            Discount Subscription Fee
-          </Button>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
