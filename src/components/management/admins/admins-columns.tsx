@@ -1,11 +1,10 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { Trash2, Ban } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import UserViewModal from "../users/view-modal";
 
 export type Admin = {
   id: number;
@@ -73,17 +72,9 @@ export const adminsColumns: ColumnDef<Admin>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right pr-8">Actions</div>,
+    header: () => <div className="text-right">Actions</div>,
     cell: () => (
       <div className="flex items-center justify-end gap-1">
-        <UserViewModal />
-        <Button
-          variant="outline"
-          size="icon"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban />
-        </Button>
         <Button
           variant="outline"
           size="icon"

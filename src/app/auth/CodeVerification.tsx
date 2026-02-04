@@ -102,7 +102,7 @@ export default function CodeVerification() {
             <p className="text-sm text-destructive text-center">{error}</p>
           )}
 
-          <Button 
+          <Button  
             onClick={handleSubmit} 
             className="w-full" 
             loading={isLoading}
