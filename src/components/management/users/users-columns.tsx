@@ -102,15 +102,15 @@ export const usersColumns: ColumnDef<User>[] = [
       <div className="flex items-center justify-end gap-1">
         <UserViewModal />
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-amber-500 hover:text-amber-600"
         >
           <Ban />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 />

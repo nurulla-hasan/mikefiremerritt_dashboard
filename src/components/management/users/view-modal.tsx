@@ -29,7 +29,7 @@ const UserViewModal = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       {/* Eye button for actions column */}
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon-sm">
           <Eye />
         </Button>
       </DialogTrigger>
