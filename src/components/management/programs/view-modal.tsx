@@ -29,7 +29,7 @@ const ProgramViewModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon-sm">
           <Eye />
         </Button>
       </DialogTrigger>

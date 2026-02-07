@@ -11,7 +11,9 @@ export type Gym = {
   id: number;
   name: string;
   location: string;
+  state: string;
   views: string;
+  rating: number;
   status: "Active" | "Unavailable";
 };
 
@@ -59,11 +61,29 @@ export const gymsColumns: ColumnDef<Gym>[] = [
     ),
   },
   {
+    accessorKey: "state",
+    header: "State",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.state}
+      </span>
+    ),
+  },
+  {
     accessorKey: "views",
     header: "Views",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
         {row.original.views}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        ⭐ {row.original.rating}
       </span>
     ),
   },
@@ -86,12 +106,12 @@ export const gymsColumns: ColumnDef<Gym>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <GymViewModal />
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon-sm">
           <Pencil />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 />

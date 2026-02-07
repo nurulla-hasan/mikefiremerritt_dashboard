@@ -14,7 +14,31 @@ import {
 
 export const NewsfeedFilter = () => {
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
+    <div className="flex flex-wrap gap-3 items-center justify-end">
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Date Created" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="today">Today</SelectItem>
+          <SelectItem value="yesterday">Yesterday</SelectItem>
+          <SelectItem value="last-7-days">Last 7 days</SelectItem>
+          <SelectItem value="last-30-days">Last 30 days</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Views" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0-500">0 - 500</SelectItem>
+          <SelectItem value="501-1000">501 - 1000</SelectItem>
+          <SelectItem value="1001-2000">1001 - 2000</SelectItem>
+          <SelectItem value="2000+">2000+</SelectItem>
+        </SelectContent>
+      </Select>
+
       <Select>
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="Account type" />

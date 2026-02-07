@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 export const SubscriptionsFilter = () => {
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
+    <div className="flex flex-wrap gap-3 items-center justify-end">
       <Button
         asChild
         className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
@@ -25,7 +25,42 @@ export const SubscriptionsFilter = () => {
           Fees
         </Link>
       </Button>
-      
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Start Date" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="today">Today</SelectItem>
+          <SelectItem value="yesterday">Yesterday</SelectItem>
+          <SelectItem value="last-7-days">Last 7 days</SelectItem>
+          <SelectItem value="last-30-days">Last 30 days</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Amount" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0-100">0 - 100</SelectItem>
+          <SelectItem value="101-500">101 - 500</SelectItem>
+          <SelectItem value="501-1000">501 - 1000</SelectItem>
+          <SelectItem value="1000+">1000+</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Referrals" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0-5">0 - 5</SelectItem>
+          <SelectItem value="6-10">6 - 10</SelectItem>
+          <SelectItem value="11+">11+</SelectItem>
+        </SelectContent>
+      </Select>
+
       <Select>
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="Plan" />

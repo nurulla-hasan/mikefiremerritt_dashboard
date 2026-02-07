@@ -16,7 +16,52 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export const ProgramsFilter = () => {
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
+    <div className="flex flex-wrap gap-3 items-center justify-end">
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Price Range" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0-100">$0 - $100</SelectItem>
+          <SelectItem value="101-300">$101 - $300</SelectItem>
+          <SelectItem value="301-500">$301 - $500</SelectItem>
+          <SelectItem value="500+">$500+</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Views" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0-500">0 - 500</SelectItem>
+          <SelectItem value="501-1000">501 - 1000</SelectItem>
+          <SelectItem value="1001-2000">1001 - 2000</SelectItem>
+          <SelectItem value="2000+">2000+</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Specialty" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="strength">Strength</SelectItem>
+          <SelectItem value="transformation">Transformation</SelectItem>
+          <SelectItem value="nutrition">Nutrition</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-fit rounded-full">
+          <SelectValue placeholder="Ratings" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="4.5+">4.5 & Up</SelectItem>
+          <SelectItem value="4.0+">4.0 & Up</SelectItem>
+          <SelectItem value="3.5+">3.5 & Up</SelectItem>
+        </SelectContent>
+      </Select>
 
       <Select>
         <SelectTrigger className="w-fit rounded-full">
@@ -28,7 +73,7 @@ export const ProgramsFilter = () => {
         </SelectContent>
       </Select>
 
-      <div className="relative w-full md:w-65">
+      <div className="relative w-full md:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or specialty"

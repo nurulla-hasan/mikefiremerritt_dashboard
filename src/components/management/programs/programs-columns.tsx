@@ -13,6 +13,8 @@ export type Program = {
   programName: string;
   price: string;
   views: string;
+  specialty: string;
+  rating: number;
   status: "Approved" | "Decline" | "Completed";
 };
 
@@ -78,6 +80,24 @@ export const programsColumns: ColumnDef<Program>[] = [
     ),
   },
   {
+    accessorKey: "specialty",
+    header: "Specialty",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.specialty}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        ⭐ {row.original.rating}
+      </span>
+    ),
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
@@ -102,8 +122,8 @@ export const programsColumns: ColumnDef<Program>[] = [
       <div className="flex items-center justify-end gap-1">
         <ProgramViewModal />
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 />

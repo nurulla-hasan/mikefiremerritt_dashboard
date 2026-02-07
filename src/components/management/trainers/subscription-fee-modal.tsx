@@ -26,7 +26,7 @@ const SubscriptionFeeModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon-sm">
           <DollarSign className="h-4 w-4" />
         </Button>
       </DialogTrigger>

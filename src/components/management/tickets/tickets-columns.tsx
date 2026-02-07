@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TicketViewModal from "./view-modal";
+import TicketResponseModal from "./response-modal";
 
 export type Ticket = {
   id: number;
@@ -97,16 +98,17 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <TicketViewModal />
+        <TicketResponseModal />
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-amber-500 hover:text-amber-600"
         >
           <Ban />
         </Button>
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 />

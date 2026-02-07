@@ -1,6 +1,6 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -76,8 +76,15 @@ export const adminsColumns: ColumnDef<Admin>[] = [
     cell: () => (
       <div className="flex items-center justify-end gap-1">
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
+          className="text-green-500 hover:text-green-600"
+        >
+          <Edit />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon-sm"
           className="text-red-500 hover:text-red-600"
         >
           <Trash2 />

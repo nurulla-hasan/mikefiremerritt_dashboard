@@ -17,6 +17,8 @@ export type Trainer = {
   views: string;
   subscriptionFee: string;
   status: "Approved" | "Rejected" | "Pending";
+  specialty: string;
+  certifications: string[];
 };
 
 export const trainersColumns: ColumnDef<Trainer>[] = [
@@ -82,6 +84,28 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     ),
   },
   {
+    accessorKey: "specialty",
+    header: "Specialty",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.specialty}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "certifications",
+    header: "Certifications",
+    cell: ({ row }) => (
+      <div className="flex flex-wrap gap-1">
+        {row.original.certifications.map((cert) => (
+          <Badge key={cert} variant="secondary" className="text-[10px] px-1.5 py-0">
+            {cert}
+          </Badge>
+        ))}
+      </div>
+    ),
+  },
+  {
     accessorKey: "subscriptionFee",
     header: () => <div className="text-center">Subscription Fee</div>,
     cell: ({ row }) => (
@@ -116,8 +140,8 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
         <TrainerViewModal />
         <SubscriptionFeeModal />
         <Button
-          variant="outline"
-          size="icon"
+          variant="ghost"
+          size="icon-sm"
           className="text-amber-500 hover:text-amber-600"
         >
           <Ban />

@@ -14,6 +14,15 @@ import { CheckCircle2, MinusCircle, Plus } from "lucide-react";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
 import PageLayout from "@/components/common/page-layout";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 const Fees = () => {
   const [standardFee, setStandardFee] = useState("50");
@@ -27,11 +36,47 @@ const Fees = () => {
 
   const [referralAmount, setReferralAmount] = useState("10");
   const [rewardLimit, setRewardLimit] = useState("");
-  const [rewardPercentage, setRewardPercentage] = useState("10");
+  const [rewardFee, setRewardFee] = useState("45");
   const [discountFee, setDiscountFee] = useState("50");
+  const [duration, setDuration] = useState("3");
 
   const [rewardDates, setRewardDates] = useState<DateRange | undefined>();
   const [discountDates, setDiscountDates] = useState<DateRange | undefined>();
+
+  const historyData = [
+    {
+      id: "PRC-001",
+      type: "Time Period",
+      amount: "$50",
+      duration: "6 Months",
+      range: "Jan 01 - Jun 30, 2024",
+      status: "Past",
+    },
+    {
+      id: "PRC-002",
+      type: "First Come First Serve",
+      amount: "$40",
+      duration: "-",
+      range: "Feb 15 - Mar 15, 2024",
+      status: "Past",
+    },
+    {
+      id: "PRC-003",
+      type: "Time Period",
+      amount: "$55",
+      duration: "12 Months",
+      range: "Jul 01 - Dec 31, 2024",
+      status: "Scheduled",
+    },
+    {
+      id: "PRC-004",
+      type: "First Come First Serve",
+      amount: "$45",
+      duration: "-",
+      range: "Aug 01 - Aug 31, 2024",
+      status: "Scheduled",
+    },
+  ];
 
   return (
     <PageLayout>
@@ -133,17 +178,17 @@ const Fees = () => {
               </CardContent>
             </Card>
 
-            {/* Discount Subscription Fee */}
+            {/* Time Period Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="font-crimson text-xl text-center">
-                  Discount Subscription Fee
+                  Time Period
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">
-                    Discount Subscription Fee (Monthly)
+                    Subscription Fee (Monthly)
                   </Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -156,6 +201,17 @@ const Fees = () => {
                       placeholder="50"
                     />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">
+                    Duration (Months)
+                  </Label>
+                  <Input
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    placeholder="e.g. 3"
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -176,12 +232,13 @@ const Fees = () => {
                 </div>
               </CardContent>
             </Card>
-            {/* Manage Reward */}
           </div>
+
+          {/* First Come First Serve Section */}
           <Card>
             <CardHeader>
               <CardTitle className="font-crimson text-xl text-center">
-                Manage Reward
+                First Come First Serve
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -195,16 +252,18 @@ const Fees = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Discount Percentage</Label>
+                  <Label className="text-sm font-medium">
+                    Subscription Fee (Monthly)
+                  </Label>
                   <div className="relative">
-                    <Input
-                      value={rewardPercentage}
-                      onChange={(e) => setRewardPercentage(e.target.value)}
-                      className="pr-7"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                      %
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                      $
                     </span>
+                    <Input
+                      value={rewardFee}
+                      onChange={(e) => setRewardFee(e.target.value)}
+                      className="pl-7"
+                    />
                   </div>
                 </div>
               </div>
@@ -229,6 +288,48 @@ const Fees = () => {
           </Card>
         </div>
       </div>
+
+      {/* History Section */}
+      <Card>
+        <CardHeader>
+          <PageHeader title="Pricing History" description="View past and scheduled custom pricing details." />
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Pricing ID</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Duration</TableHead>
+                <TableHead>Date Range</TableHead>
+                <TableHead className="text-right">Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {historyData.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">{item.id}</TableCell>
+                  <TableCell>{item.type}</TableCell>
+                  <TableCell>{item.amount}</TableCell>
+                  <TableCell>{item.duration}</TableCell>
+                  <TableCell>{item.range}</TableCell>
+                  <TableCell className="text-right">
+                    <Badge
+                      variant={
+                        item.status === "Scheduled" ? "default" : "secondary"
+                      }
+                      className="rounded-full"
+                    >
+                      {item.status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </PageLayout>
   );
 };
