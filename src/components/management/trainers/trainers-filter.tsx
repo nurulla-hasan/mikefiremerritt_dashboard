@@ -9,19 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 
 export const TrainersFilter = () => {
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
       {/* Left Filters */}
-
       <Select>
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="View Count" />

@@ -30,7 +30,7 @@ const meta = {
 const Programs = () => {
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex flex-col md:flex-row md:justify-between gap-2">
         <PageHeader title="Program management" description="Manage your programs here" />
         <ProgramsFilter />
       </div>
