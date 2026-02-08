@@ -18,14 +18,14 @@ const AddProgramModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+ Add Specialty</Button>
+        <Button className="rounded-full">+ Add Program</Button>
       </DialogTrigger>
 
       <DialogPortal>
         <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
           <div className="w-full h-40 md:h-56 bg-muted">
             <img
-              src="https://images.unsplash.com/photo-1758875570137-8691b7c55033?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop"
               alt="Add Program"
               className="h-full w-full object-cover"
             />
@@ -34,19 +34,31 @@ const AddProgramModal = () => {
           <div className="px-8 py-6 space-y-6">
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold font-crimson">
-                Add Specialty
+                Add New Program
               </DialogTitle>
             </DialogHeader>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <p className="text-sm font-medium">Specialty Name</p>
-                <Input placeholder="Enter specialty name" />
+                <p className="text-sm font-medium">Program Name</p>
+                <Input placeholder="Enter program name" />
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Trainer Name</p>
+                <Input placeholder="Enter trainer name" />
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Price</p>
+                <Input placeholder="Enter price" />
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Specialty</p>
+                <Input placeholder="Enter specialty" />
               </div>
             </div>
 
             <div className="flex justify-center">
-              <Button className="min-w-40 rounded-full">Save</Button>
+              <Button className="min-w-40 rounded-full">Save Program</Button>
             </div>
           </div>
         </DialogContent>
