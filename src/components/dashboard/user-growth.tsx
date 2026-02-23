@@ -13,6 +13,13 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const chartData = [
   { month: "Jan", active: 90, newUsers: 60 },
@@ -43,10 +50,20 @@ const chartConfig = {
 const UserGrowthChart = () => {
   return (
     <Card className="border-muted/40">
-      <CardHeader className="pb-2">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-medium font-crimson">
           User Growth
         </CardTitle>
+        <Select defaultValue="2024">
+          <SelectTrigger className="h-8 w-25 rounded-full border-muted bg-transparent text-xs">
+            <SelectValue placeholder="Year" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="2024">2024</SelectItem>
+            <SelectItem value="2023">2023</SelectItem>
+            <SelectItem value="2022">2022</SelectItem>
+          </SelectContent>
+        </Select>
       </CardHeader>
       <CardContent className="pt-2">
         <ChartContainer
