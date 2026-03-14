@@ -22,8 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DataTablePagination } from "./data-table-pagination";
 import { ScrollArea, ScrollBar } from "./scroll-area";
+import { DataTablePagination } from "./data-table-pagination";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 declare module "@tanstack/react-table" {

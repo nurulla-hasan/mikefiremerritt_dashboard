@@ -1,12 +1,13 @@
 "use client";
 
-import { Trash2, Edit } from "lucide-react";
+import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AddFAQModal from "./add-faq-modal";
 import type { TFaq } from "@/types/faq.types";
 import { useDeleteFaqMutation } from "@/redux/feature/faq/faqApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
+import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 
 export const ActionButtons = ({ faq }: { faq: TFaq }) => {
   const [deleteFaq, { isLoading: isDeleting }] = useDeleteFaqMutation();
@@ -22,26 +23,28 @@ export const ActionButtons = ({ faq }: { faq: TFaq }) => {
   };
 
   return (
-    <div className="flex items-center justify-end gap-2 pr-4">
-      <AddFAQModal mode="edit" faq={faq}>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-primary"
-        >
-          <Edit />
-        </Button>
-      </AddFAQModal>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8 text-destructive"
-        onClick={handleDelete}
-        loading={isDeleting}
-        loadingText="Deleting..."
-      >
-        <Trash2 />
-      </Button>
+    <div className="flex items-center justify-end pr-4">
+      <AddFAQModal
+        mode="edit"
+        faq={faq}
+        actionTrigger={
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-primary"
+          >
+            <Edit />
+          </Button>
+        }
+      />
+      <ConfirmationModal
+        title="Delete FAQ"
+        description="Are you sure you want to delete this FAQ? This action cannot be undone."
+        onConfirm={handleDelete}
+        isLoading={isDeleting}
+        confirmButtonText="Delete"
+        confirmLoadingText="Deleting..."
+      />
     </div>
   );
 };

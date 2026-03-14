@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Plus } from "lucide-react";
 
@@ -24,7 +24,7 @@ import type { TError } from "@/types/global.types";
 interface AddFAQModalProps {
   mode?: "add" | "edit";
   faq?: TFaq;
-  children?: React.ReactNode;
+  actionTrigger?: React.ReactNode;
 }
 
 type FAQFormValues = {
@@ -32,7 +32,7 @@ type FAQFormValues = {
   answer: string;
 };
 
-const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
+const AddFAQModal = ({ mode = "add", faq, actionTrigger }: AddFAQModalProps) => {
   const [open, setOpen] = useState(false);
   const [createFaq, { isLoading: isCreating }] = useCreateFaqMutation();
   const [updateFaq, { isLoading: isUpdating }] = useUpdateFaqMutation();
@@ -43,6 +43,15 @@ const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
       answer: faq?.answer || "",
     },
   });
+
+  useEffect(() => {
+    if (faq && mode === "edit") {
+      form.reset({
+        question: faq.question,
+        answer: faq.answer,
+      });
+    }
+  }, [faq, mode, form]);
 
   const onSubmit = async (data: FAQFormValues) => {
     try {
@@ -68,7 +77,7 @@ const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
       title={mode === "add" ? "Add New FAQ" : "Edit FAQ"}
       description={mode === "add" ? "Add a new frequently asked question" : "Edit the frequently asked question"}
       actionTrigger={
-        children || (
+        actionTrigger || (
           <Button className="rounded-full">
             <Plus />
             Add FAQ

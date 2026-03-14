@@ -7,7 +7,7 @@ export const faqColumns: ColumnDef<TFaq>[] = [
     header: "Serial No.",
     accessorKey: "id",
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-foreground">
+      <span>
         {row.index + 1}
       </span>
     ),
@@ -18,7 +18,7 @@ export const faqColumns: ColumnDef<TFaq>[] = [
     accessorKey: "question",
     header: "Question",
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-foreground">
+      <span>
         {row.original.question}
       </span>
     ),
