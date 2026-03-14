@@ -43,12 +43,6 @@ export const formatDate = (dateString: string) => {
   return format(new Date(dateString), "dd MMM yyyy");
 };
 
-// Get Image URL
-// export const getImageUrl = (imagePath: string) => {
-//   if (!imagePath) return '';
-//   return imagePath.startsWith('/') ? `${IMAGE_BASE_URL}${imagePath}` : `${IMAGE_BASE_URL}/${imagePath}`;
-// };
-
 // Time Ago
 export const timeAgo = (createdAt: string) => {
   if (!createdAt) return "";

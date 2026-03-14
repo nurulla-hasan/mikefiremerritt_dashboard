@@ -26,10 +26,10 @@ import {
   MessageCircleQuestion,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import { useDispatch } from "react-redux";
-// import { setAccessToken, setAdmin } from "@/redux/feature/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { Logout } from "@/redux/feature/auth/authSlice";
 import { Button } from "../ui/button";
 
 const NAV_ITEMS = [{ name: "Dashboard", icon: LayoutGrid, href: "/" }];
@@ -62,15 +62,15 @@ const Sidebar = ({
   isSidebarOpen: boolean;
   setIsSidebarOpen: (open: boolean) => void;
 }) => {
-  // const dispatch = useDispatch();
-const location = useLocation();
-const prevLocation = useRef(location);
-const section = location.pathname.split("/")[1] || "";
-const isSettingsPath = section === "settings";
-const isManagementPath = section === "management";
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const prevLocation = useRef(location);
+  const section = location.pathname.split("/")[1] || "";
+  const isSettingsPath = section === "settings";
+  const isManagementPath = section === "management";
 
-const [isManagementOpen, setIsManagementOpen] = useState(true);
-const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
+  const [isManagementOpen, setIsManagementOpen] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
 
   useEffect(() => {
     if (isSettingsPath) setIsSettingsOpen(true);
@@ -83,18 +83,15 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
     prevLocation.current = location;
   }, [location, isSidebarOpen, setIsSidebarOpen]);
 
-  // const handleLogout = () => {
-  //     dispatch(setAdmin(null));
-  //     dispatch(setAccessToken(null));
-  //     localStorage.removeItem("accessToken");
-  //     window.location.href = "/auth/login";
-  // };
+  const handleLogout = () => {
+    dispatch(Logout());
+    window.location.href = "/auth/login";
+  };
 
   return (
     <div
-      className={`fixed top-0 left-0 z-40 h-screen bg-sidebar text-sidebar-foreground w-64 transition-transform duration-300 ease-in-out transform ${
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } lg:translate-x-0 flex flex-col`}
+      className={`fixed top-0 left-0 z-40 h-screen bg-sidebar text-sidebar-foreground w-64 transition-transform duration-300 ease-in-out transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 flex flex-col`}
     >
       <div className="pb-20">
         {/* Logo */}
@@ -109,11 +106,10 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
               end
               className={({ isActive }) =>
                 `w-full flex items-center justify-start p-2 rounded-sm text-sm font-medium transition-colors duration-200
-                    ${
-                      isActive
-                        ? "border-x-2 border-primary bg-primary/20"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
+                    ${isActive
+                  ? "border-x-2 border-primary bg-primary/20"
+                  : "hover:bg-accent hover:text-accent-foreground"
+                }
                             `
               }
               onClick={() => setIsSidebarOpen(false)}
@@ -127,11 +123,10 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           <Collapsible open={isManagementOpen} onOpenChange={setIsManagementOpen}>
             <CollapsibleTrigger
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
-                    ${
-                      isManagementPath
-                        ? "border-x-2 border-primary bg-primary/20"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
+                    ${isManagementPath
+                  ? "border-x-2 border-primary bg-primary/20"
+                  : "hover:bg-accent hover:text-accent-foreground"
+                }
                             `}
             >
               <div className="flex items-center text-sm px-2">
@@ -139,9 +134,8 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
                 Management
               </div>
               <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isManagementOpen ? "-rotate-180" : ""
-                }`}
+                className={`h-4 w-4 transition-transform duration-300 ${isManagementOpen ? "-rotate-180" : ""
+                  }`}
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="py-2 space-y-2">
@@ -155,11 +149,10 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
                   }}
                   className={({ isActive }) =>
                     `animate-fade-in-up w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "border-x-2 border-primary bg-primary/20"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
+                                ${isActive
+                      ? "border-x-2 border-primary bg-primary/20"
+                      : "hover:bg-accent hover:text-accent-foreground"
+                    }`
                   }
                   onClick={() => setIsSidebarOpen(false)}
                 >
@@ -174,11 +167,10 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
           <Collapsible open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
             <CollapsibleTrigger
               className={`w-full flex items-center justify-between p-2 rounded-sm text-base font-medium cursor-pointer transition-colors duration-200 
-                    ${
-                      isSettingsPath
-                        ? "border-x-2 border-primary bg-primary/20"
-                        : "hover:bg-accent hover:text-accent-foreground"
-                    }
+                    ${isSettingsPath
+                  ? "border-x-2 border-primary bg-primary/20"
+                  : "hover:bg-accent hover:text-accent-foreground"
+                }
                             `}
             >
               <div className="flex items-center text-sm px-2">
@@ -186,9 +178,8 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
                 Settings
               </div>
               <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${
-                  isSettingsOpen ? "-rotate-180" : ""
-                }`}
+                className={`h-4 w-4 transition-transform duration-300 ${isSettingsOpen ? "-rotate-180" : ""
+                  }`}
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="py-2 space-y-2">
@@ -202,11 +193,10 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
                   }}
                   className={({ isActive }) =>
                     `animate-fade-in-up w-[90%] ml-5 flex items-center justify-start px-2 py-2 rounded-sm text-sm font-medium transition-colors duration-200  
-                                ${
-                                  isActive
-                                    ? "border-x-2 border-primary bg-primary/20"
-                                    : "hover:bg-accent hover:text-accent-foreground"
-                                }`
+                                ${isActive
+                      ? "border-x-2 border-primary bg-primary/20"
+                      : "hover:bg-accent hover:text-accent-foreground"
+                    }`
                   }
                   onClick={() => setIsSidebarOpen(false)}
                 >
@@ -219,12 +209,14 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(isSettingsPath);
         </nav>
       </ScrollArea>
       <div className="border-t p-4">
-        <Link to="/auth/login" className="block w-full text-center">
-          <Button variant="outline" className="justify-start w-full">
-            <LogOut />
-            Logout
-          </Button>
-        </Link>
+        {/* <Link to="/auth/login" className="block w-full text-center"> */}
+        <Button onClick={handleLogout}
+          variant="outline"
+          className="justify-start w-full">
+          <LogOut />
+          Logout
+        </Button>
+        {/* </Link> */}
       </div>
     </div>
   );

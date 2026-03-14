@@ -21,8 +21,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { signInUser } from "@/services/auth";
-// import { SuccessToast, ErrorToast } from "@/lib/utils";
+import { SuccessToast, ErrorToast } from "@/lib/utils";
+import { useLoginMutation } from "@/redux/feature/auth/authApis";
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -38,7 +38,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [login, { isLoading: loginIsLoading }] = useLoginMutation();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -49,25 +49,12 @@ export default function Login() {
   });
 
   async function onSubmit(data: LoginFormValues) {
-    setIsLoading(true);
     try {
-      // const result = await signInUser(data);
-
-      // if (result?.success) {
-      //   SuccessToast("Login successful! Welcome back!");
-      //   navigate("/");
-      // } else {
-      //   ErrorToast(result?.message || "Invalid email or password. Please try again.");
-      // }
-
-      // Temporary: just log and navigate without real API
-      console.log("Login submitted (API disabled)", data);
+      await login(data).unwrap();
+      SuccessToast("Login successful! Welcome back!");
       navigate("/");
-    } catch (error) {
-      // ErrorToast("An unexpected error occurred. Please try again.");
-      console.error("Login failed:", error);
-    } finally {
-      setIsLoading(false);
+    } catch (error: any) {
+      ErrorToast(error?.message || "An unexpected error occurred.");
     }
   }
 
@@ -146,7 +133,8 @@ export default function Login() {
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading}
+              loading={loginIsLoading}
+              loadingText="Signing In..."
             >
               Sign In
             </Button>
