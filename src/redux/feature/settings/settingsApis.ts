@@ -20,8 +20,6 @@ const settingsApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.privacy],
     }),
-
-
     getTermsConditions: builder.query({
       query: () => ({
         url: "/terms-&-conditions",

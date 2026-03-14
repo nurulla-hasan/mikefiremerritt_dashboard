@@ -8,7 +8,7 @@ const faqApis = baseApi.injectEndpoints({
       query: (query) => {
         const params = buildQueryParams(query);
         return {
-          url: "/faq/allFaq",
+          url: "/faqs",
           method: "GET",
           params,
         };
@@ -17,7 +17,7 @@ const faqApis = baseApi.injectEndpoints({
     }),
     createFaq: builder.mutation({
       query: (data) => ({
-        url: "/faq/create-faq",
+        url: "/faqs",
         method: "POST",
         body: data,
       }),
@@ -25,15 +25,15 @@ const faqApis = baseApi.injectEndpoints({
     }),
     updateFaq: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/faq/update-faq/${id}`,
+        url: `/faqs/${id}`,
         method: "PATCH",
-        body: data,
+        body: { ...data },
       }),
       invalidatesTags: [tagTypes.faq],
     }),
     deleteFaq: builder.mutation({
       query: (id) => ({
-        url: `/faq/delete-faq/${id}`,
+        url: `/faqs/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.faq],
