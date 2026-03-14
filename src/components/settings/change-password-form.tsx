@@ -14,11 +14,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lock, Eye, EyeOff, KeyRound } from "lucide-react";
+import { useChangePasswordMutation } from "@/redux/feature/auth/authApis";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import type { TError } from "@/types/global.types";
 
 const passwordSchema = z.object({
-  currentPassword: z.string().min(6, { message: "Password must be at least 6 characters." }),
-  newPassword: z.string().min(8, { message: "New password must be at least 8 characters." }),
-  confirmPassword: z.string().min(8, { message: "Confirm password must be at least 8 characters." }),
+  oldPassword: z.string().min(6, { message: "Current password must be at least 6 characters." }),
+  newPassword: z.string().min(6, { message: "New password must be at least 6 characters." }),
+  confirmPassword: z.string().min(6, { message: "Confirm password must be at least 6 characters." }),
 }).refine((data) => data.newPassword === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -27,6 +30,7 @@ const passwordSchema = z.object({
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 const ChangePasswordForm = () => {
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -34,15 +38,26 @@ const ChangePasswordForm = () => {
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
-      currentPassword: "",
+      oldPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
   });
 
-  function onSubmit(values: PasswordFormValues) {
-    console.log(values);
-    // Handle form submission
+  async function onSubmit(values: PasswordFormValues) {
+    const updateData = {
+      oldPassword: values.oldPassword,
+      newPassword: values.newPassword,
+    };
+
+    try {
+      await changePassword(updateData).unwrap();
+      SuccessToast("Password changed successfully");
+      form.reset();
+    } catch (error) {
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to change password");
+    }
   }
 
   return (
@@ -63,7 +78,7 @@ const ChangePasswordForm = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="currentPassword"
+              name="oldPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="font-semibold">Current Password</FormLabel>
@@ -149,7 +164,12 @@ const ChangePasswordForm = () => {
             />
 
             <div className="pt-2">
-              <Button type="submit" className="w-full md:w-auto px-8 shadow-lg shadow-primary/20">
+              <Button 
+                type="submit" 
+                className="w-full md:w-auto px-8 shadow-lg shadow-primary/20"
+                loading={isLoading}
+                loadingText="Updating..."
+              >
                 Update Password
               </Button>
             </div>

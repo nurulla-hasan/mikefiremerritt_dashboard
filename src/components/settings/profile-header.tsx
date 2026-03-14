@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Camera, Loader2 } from "lucide-react";
+import { Mail, Camera, Loader2, Upload, X } from "lucide-react";
 import type { IUser } from "@/types/user";
 import { useRef, useState } from "react";
 import { useUpdateProfileImageMutation } from "@/redux/feature/auth/authApis";
@@ -86,21 +86,22 @@ const ProfileHeader = ({ user }: ProfileHeaderProps) => {
             {previewImage && (
               <div className="flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
                 <Button 
-                  size="xs"
+                  size="icon-xs"
                   variant="default"
+                  className="rounded-full"
                   onClick={handleUpload}
                   disabled={isLoading}
                 >
-                  {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : "Update"}
+                  {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
                 </Button>
                 <Button 
-                  size="xs"
+                  size="icon-xs"
                   variant="outline"
-                  className="text-destructive"
+                  className="text-destructive rounded-full"
                   onClick={handleCancel}
                   disabled={isLoading}
                 >
-                  Cancel
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             )}

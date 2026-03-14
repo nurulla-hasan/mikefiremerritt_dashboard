@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Mail, User, MapPin, Save } from "lucide-react";
+import { Phone, Mail, User, MapPin, Save, Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import type { IUser } from "@/types/user";
+import { useUpdateProfileMutation } from "@/redux/feature/auth/authApis";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import type { TError } from "@/types/global.types";
 
 const profileSchema = z.object({
   fullName: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -30,6 +33,7 @@ interface EditProfileFormProps {
 }
 
 const EditProfileForm = ({ user }: EditProfileFormProps) => {
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -51,9 +55,21 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
     }
   }, [user, form]);
 
-  function onSubmit(values: ProfileFormValues) {
-    console.log(values);
-    // Handle form submission
+  async function onSubmit(values: ProfileFormValues) {
+    // Only send non-commented fields from user's request: fullName, phoneNumber, address
+    const updateData = {
+      fullName: values.fullName,
+      phoneNumber: values.phoneNumber,
+      address: values.address,
+    };
+
+    try {
+      await updateProfile(updateData).unwrap();
+      SuccessToast("Profile updated successfully");
+    } catch (error) {
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to update profile");
+    }
   }
 
   return (
@@ -143,9 +159,17 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
             </div>
 
             <div className="pt-2">
-              <Button type="submit" className="w-full md:w-auto px-8 gap-2 shadow-lg shadow-primary/20">
-                <Save className="h-4 w-4" />
-                Save Changes
+              <Button 
+                type="submit" 
+                className="w-full md:w-auto px-8 gap-2 shadow-lg shadow-primary/20"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4" />
+                )}
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
             </div>
           </form>
