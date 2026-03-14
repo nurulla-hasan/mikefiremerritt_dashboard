@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AddFAQModal from "./add-faq-modal";
@@ -10,12 +11,14 @@ import type { TError } from "@/types/global.types";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 
 export const ActionButtons = ({ faq }: { faq: TFaq }) => {
+  const [open, setOpen] = useState(false);
   const [deleteFaq, { isLoading: isDeleting }] = useDeleteFaqMutation();
 
   const handleDelete = async () => {
     try {
       await deleteFaq(faq.id).unwrap();
       SuccessToast("FAQ deleted successfully");
+      setOpen(false);
     } catch (error) {
       const err = error as TError;
       ErrorToast(err?.data?.message || "Failed to delete FAQ");
@@ -40,10 +43,12 @@ export const ActionButtons = ({ faq }: { faq: TFaq }) => {
       <ConfirmationModal
         title="Delete FAQ"
         description="Are you sure you want to delete this FAQ? This action cannot be undone."
+        open={open}
+        onOpenChange={setOpen}
         onConfirm={handleDelete}
         isLoading={isDeleting}
-        confirmButtonText="Delete"
-        confirmLoadingText="Deleting..."
+        confirmText="Delete"
+        loadingText="Deleting..."
       />
     </div>
   );

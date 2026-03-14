@@ -11,43 +11,46 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import type { ReactNode } from "react";
 import { Spinner } from "./spinner";
+import type { ReactNode } from "react";
+import { Button } from "./button";
+import { Trash2 } from "lucide-react";
 
 interface ConfirmationModalProps {
   title?: string;
   description?: string;
+  confirmText?: string;
+  loadingText?: string;
+  cancelText?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onConfirm: () => void;
   isLoading?: boolean;
   trigger?: ReactNode;
-  confirmButtonText?: string;
-  confirmLoadingText?: string;
+  children?: ReactNode;
 }
 
 export function ConfirmationModal({
   title = "Are you sure?",
   description = "This action cannot be undone.",
+  confirmText = "Delete",
+  loadingText = "Deleting...",
+  cancelText = "Cancel",
   open,
   onOpenChange,
   onConfirm,
   isLoading,
   trigger,
-  confirmButtonText = "Confirm",
-  confirmLoadingText = "Confirming...",
+  children,
 }: ConfirmationModalProps) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      {trigger !== null && (
+     {trigger !== null && (
         <AlertDialogTrigger asChild>
           {trigger || (
             <Button
               variant="ghost"
               size="icon-sm"
-              className="text-destructive"
             >
               <Trash2 />
             </Button>
@@ -61,10 +64,12 @@ export function ConfirmationModal({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
 
+        {children}
+
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>{cancelText}</AlertDialogCancel>
           <AlertDialogAction
-            onClick={(e) => {
+            onClick={(e: { preventDefault: () => void; }) => {
               e.preventDefault();
               onConfirm();
             }}
@@ -73,10 +78,10 @@ export function ConfirmationModal({
             {isLoading ? (
               <>
                 <Spinner />
-                {confirmLoadingText}
+                {loadingText}
               </>
             ) : (
-              confirmButtonText
+              confirmText
             )}
           </AlertDialogAction>
         </AlertDialogFooter>
