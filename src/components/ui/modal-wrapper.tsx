@@ -39,12 +39,12 @@ export function ModalWrapper({
         </DialogTrigger>
       )}
 
-      <DialogContent className="p-0">
+      <DialogContent className="p-0 gap-0">
         
         {/* Header Section */}
         {title && (
-          <DialogHeader className="px-6 py-4 border-b shrink-0 text-left">
-            <DialogTitle className="text-xl font-black uppercase tracking-tighter">
+          <DialogHeader className="px-6 py-4 border-b shrink-0 text-left gap-1">
+            <DialogTitle className="text-xl font-semibold uppercase tracking-wider">
               {title}
             </DialogTitle>
             {description && <DialogDescription>{description}</DialogDescription>}

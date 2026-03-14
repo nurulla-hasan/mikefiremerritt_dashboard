@@ -16,11 +16,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { type FAQ } from "./faq-columns";
+import type { TFaq } from "@/types/faq.types";
+import { useCreateFaqMutation, useUpdateFaqMutation } from "@/redux/feature/faq/faqApis";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import type { TError } from "@/types/global.types";
 
 interface AddFAQModalProps {
   mode?: "add" | "edit";
-  faq?: FAQ;
+  faq?: TFaq;
   children?: React.ReactNode;
 }
 
@@ -31,6 +34,8 @@ type FAQFormValues = {
 
 const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
   const [open, setOpen] = useState(false);
+  const [createFaq, { isLoading: isCreating }] = useCreateFaqMutation();
+  const [updateFaq, { isLoading: isUpdating }] = useUpdateFaqMutation();
 
   const form = useForm<FAQFormValues>({
     defaultValues: {
@@ -39,11 +44,20 @@ const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
     },
   });
 
-  const onSubmit = (data: FAQFormValues) => {
-    console.log(data);
-    setOpen(false);
-    if (mode === "add") {
-      form.reset();
+  const onSubmit = async (data: FAQFormValues) => {
+    try {
+      if (mode === "add") {
+        await createFaq(data).unwrap();
+        SuccessToast("FAQ created successfully");
+        form.reset();
+      } else if (mode === "edit" && faq?.id) {
+        await updateFaq({ id: faq.id, data }).unwrap();
+        SuccessToast("FAQ updated successfully");
+      }
+      setOpen(false);
+    } catch (error) {
+      const err = error as TError;
+      ErrorToast(err?.data?.message || `Failed to ${mode} FAQ`);
     }
   };
 
@@ -96,7 +110,12 @@ const AddFAQModal = ({ mode = "add", faq, children }: AddFAQModalProps) => {
               )}
             />
             <div className="pt-4">
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                loading={isCreating || isUpdating}
+                loadingText={mode === "add" ? "Adding FAQ..." : "Saving Changes..."}
+              >
                 {mode === "add" ? "Add FAQ" : "Save Changes"}
               </Button>
             </div>
