@@ -1,55 +1,70 @@
 import PageLayout from "@/components/common/page-layout";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
-  // FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import TiptapEditor from "@/components/ui/tiptap-editor";
-// import { ErrorToast, SuccessToast } from "@/lib/utils";
-import { Save } from "lucide-react";
-import PageHeader from "../../../components/ui/page-header";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import PageHeader from "@/components/ui/page-header";
+import { useGetPrivacyPolicyQuery, useUpdatePrivacyPolicyMutation } from "@/redux/feature/settings/settingsApis";
+import type { TError } from "@/types/global.types";
 
-//Replace the form type from AboutFormValues to PrivacyFormValues
 type FormValues = {
-  title: string;
   content: string;
 };
 
 const Privacy = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: privacyData, isLoading: isFetching } = useGetPrivacyPolicyQuery({});
+  const [updatePrivacyPolicy, { isLoading: isUpdating }] = useUpdatePrivacyPolicyMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      title: "Privacy Policy",
       content: "",
     },
   });
 
+  // Set initial form values when data is fetched
+  useEffect(() => {
+    if (privacyData?.data?.content) {
+      form.reset({
+        content: privacyData.data.content,
+      });
+    }
+  }, [privacyData, form]);
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    const id = privacyData?.data?.id;
+    if (!id) {
+      ErrorToast("Privacy Policy record not found");
+      return;
+    }
+
     try {
-      setIsSubmitting(true);
-      // const slug = generateSlug(data.title || "privacy-policy");
-      // await upsertPage({
-      //   slug,
-      //   title: data.title,
-      //   content: data.content,
-      // });
-      // SuccessToast("Privacy Policy saved successfully");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await updatePrivacyPolicy({ id, data }).unwrap();
+      SuccessToast("Privacy Policy saved successfully");
     } catch (error) {
-      // ErrorToast("Failed to save Privacy Policy");
-    } finally {
-      setIsSubmitting(false);
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to save Privacy Policy");
     }
   };
+
+  if (isFetching) {
+    return (
+      <PageLayout>
+        <div className="flex h-100 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout>
       <PageHeader title="Privacy Policy" description="Manage the Privacy Policy page content" />
@@ -79,10 +94,10 @@ const Privacy = () => {
           <div className="flex justify-end">
             <Button
               type="submit"
+              loading={isUpdating}
               loadingText="Saving..."
-              loading={isSubmitting}
             >
-              <Save /> Save
+              Save
             </Button>
           </div>
         </form>

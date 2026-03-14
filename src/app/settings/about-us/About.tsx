@@ -1,54 +1,70 @@
 import PageLayout from "@/components/common/page-layout";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
-  // FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import TiptapEditor from "@/components/ui/tiptap-editor";
-// import { ErrorToast, SuccessToast } from "@/lib/utils";
-import { Save } from "lucide-react";
-import PageHeader from "../../../components/ui/page-header";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import PageHeader from "@/components/ui/page-header";
+import { useGetAboutUsQuery, useUpdateAboutUsMutation } from "@/redux/feature/settings/settingsApis";
+import type { TError } from "@/types/global.types";
 
 type FormValues = {
-  title: string;
   content: string;
 };
 
 const About = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: aboutData, isLoading: isFetching } = useGetAboutUsQuery({});
+  const [updateAboutUs, { isLoading: isUpdating }] = useUpdateAboutUsMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      title: "About Mike Fire Merritt",
       content: "",
     },
   });
 
+  // Set initial form values when data is fetched
+  useEffect(() => {
+    if (aboutData?.data?.content) {
+      form.reset({
+        content: aboutData.data.content,
+      });
+    }
+  }, [aboutData, form]);
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    const id = aboutData?.data?.id;
+    if (!id) {
+      ErrorToast("About Us record not found");
+      return;
+    }
+
     try {
-      setIsSubmitting(true);
-      // const slug = generateSlug(data.title || "about-us");
-      // await upsertPage({
-      //   slug,
-      //   title: data.title,
-      //   content: data.content,
-      // });
-      // SuccessToast("About page saved successfully");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await updateAboutUs({ id, data }).unwrap();
+      SuccessToast("About page saved successfully");
     } catch (error) {
-      // ErrorToast("Failed to save About page");
-    } finally {
-      setIsSubmitting(false);
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to save About page");
     }
   };
+
+  if (isFetching) {
+    return (
+      <PageLayout>
+        <div className="flex h-100 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout>
       <PageHeader title="About Us" description="Manage the About Us page content" />
@@ -78,10 +94,10 @@ const About = () => {
           <div className="flex justify-end">
             <Button
               type="submit"
+              loading={isUpdating}
               loadingText="Saving..."
-              loading={isSubmitting}
             >
-              <Save /> Save
+             Save
             </Button>
           </div>
         </form>

@@ -1,6 +1,6 @@
+import { buildQueryParams } from "@/lib/utils";
 import { baseApi } from "../baseApi";
 import { tagTypes } from "@/redux/tagTypes";
-import { buildQueryParams } from "@/lib/utils";
 
 const userApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({

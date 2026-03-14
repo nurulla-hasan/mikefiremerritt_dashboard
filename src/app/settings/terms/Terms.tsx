@@ -1,55 +1,80 @@
 import PageLayout from "@/components/common/page-layout";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
-  // FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import TiptapEditor from "@/components/ui/tiptap-editor";
-// import { ErrorToast, SuccessToast } from "@/lib/utils";
-import { Save } from "lucide-react";
-import PageHeader from "../../../components/ui/page-header";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import PageHeader from "@/components/ui/page-header";
+import { useGetTermsConditionsQuery, useUpdateTermsConditionsMutation } from "@/redux/feature/settings/settingsApis";
+import type { TError } from "@/types/global.types";
 
-//Replace the form type from TermsFormValues to FormValues
 type FormValues = {
-  title: string;
   content: string;
 };
 
 const Terms = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: termsData, isLoading: isFetching } = useGetTermsConditionsQuery({});
+  const [updateTermsConditions, { isLoading: isUpdating }] = useUpdateTermsConditionsMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      title: "Terms and Conditions",
       content: "",
     },
   });
 
+  // Set initial form values when data is fetched
+  useEffect(() => {
+    if (termsData?.data) {
+      // Handle both array and object response
+      const content = Array.isArray(termsData.data)
+        ? termsData.data[0]?.content
+        : termsData.data?.content;
+
+      if (content) {
+        form.reset({
+          content: content,
+        });
+      }
+    }
+  }, [termsData, form]);
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    const id = Array.isArray(termsData?.data)
+      ? termsData.data[0]?.id
+      : termsData?.data?.id;
+
+    if (!id) {
+      ErrorToast("Terms and Conditions record not found");
+      return;
+    }
+
     try {
-      setIsSubmitting(true);
-      // const slug = generateSlug(data.title || "terms-and-conditions");
-      // await upsertPage({
-      //   slug,
-      //   title: data.title,
-      //   content: data.content,
-      // });
-      // SuccessToast("Terms and Conditions saved successfully");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await updateTermsConditions({ id, data }).unwrap();
+      SuccessToast("Terms and Conditions saved successfully");
     } catch (error) {
-      // ErrorToast("Failed to save Terms and Conditions");
-    } finally {
-      setIsSubmitting(false);
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to save Terms and Conditions");
     }
   };
+
+  if (isFetching) {
+    return (
+      <PageLayout>
+        <div className="flex h-100 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout>
       <PageHeader title="Terms and Conditions" description="Manage the Terms and Conditions page content" />
@@ -79,10 +104,10 @@ const Terms = () => {
           <div className="flex justify-end">
             <Button
               type="submit"
+              loading={isUpdating}
               loadingText="Saving..."
-              loading={isSubmitting}
             >
-              <Save /> Save
+              Save
             </Button>
           </div>
         </form>
