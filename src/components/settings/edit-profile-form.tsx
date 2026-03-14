@@ -13,26 +13,43 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail, User, MapPin, Save } from "lucide-react";
+import { useEffect } from "react";
+import type { IUser } from "@/types/user";
 
 const profileSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  fullName: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  phone: z.string().min(10, { message: "Phone number must be at least 10 characters." }),
+  phoneNumber: z.string().min(10, { message: "Phone number must be at least 10 characters." }),
   address: z.string().min(5, { message: "Address must be at least 5 characters." }),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
-const EditProfileForm = () => {
+interface EditProfileFormProps {
+  user?: IUser;
+}
+
+const EditProfileForm = ({ user }: EditProfileFormProps) => {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: "John Doe",
-      email: "admin@example.com",
-      phone: "+1 234 567 890",
-      address: "123 Main St, New York, NY 10001",
+      fullName: user?.fullName || "",
+      email: user?.email || "",
+      phoneNumber: user?.phoneNumber || "",
+      address: user?.address || "",
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        fullName: user.fullName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        address: user.address,
+      });
+    }
+  }, [user, form]);
 
   function onSubmit(values: ProfileFormValues) {
     console.log(values);
@@ -58,7 +75,7 @@ const EditProfileForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <FormField
                 control={form.control}
-                name="name"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-semibold">Full Name</FormLabel>
@@ -82,7 +99,7 @@ const EditProfileForm = () => {
                     <FormControl>
                       <div className="relative group">
                         <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                        <Input placeholder="admin@example.com" type="email" className="pl-10 bg-muted/30 focus:bg-background transition-all" {...field} />
+                        <Input placeholder="admin@example.com" type="email" className="pl-10 bg-muted/30 focus:bg-background transition-all" {...field} disabled />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -92,7 +109,7 @@ const EditProfileForm = () => {
 
               <FormField
                 control={form.control}
-                name="phone"
+                name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-semibold">Phone Number</FormLabel>

@@ -31,7 +31,7 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth.accessToken;
     // If authorization header is already set (e.g. for refresh token call), don't overwrite it
     if (token && !headers.has("authorization")) {
-      headers.set("authorization", `Bearer ${token}`);
+      headers.set("Authorization", `${token}`);
     }
     return headers;
   },
@@ -61,7 +61,7 @@ const baseQueryWithReauth = async (
             url: "/auth/refresh-token",
             method: "POST",
             headers: {
-              Authorization: `Bearer ${refreshToken}`,
+              Authorization: `${refreshToken}`,
             },
           },
           api,
@@ -101,16 +101,16 @@ const baseQueryWithReauth = async (
     const refreshToken = state.auth.refreshToken;
     if (refreshToken) {
       const refreshResult = await baseQuery(
-        {
-          url: "/auth/refresh-token",
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
+          {
+            url: "/auth/refresh-token",
+            method: "POST",
+            headers: {
+              Authorization: `${refreshToken}`,
+            },
           },
-        },
-        api,
-        extraOptions
-      );
+          api,
+          extraOptions
+        );
 
       if (refreshResult?.data) {
         const data = (refreshResult.data as RefreshTokenResponse).data;

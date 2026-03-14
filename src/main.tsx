@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <ThemeProvider defaultTheme='light' storageKey='theme'>
           <RouterProvider router={router} />
-          <Toaster richColors position="top-right" />
+          <Toaster richColors position="bottom-right" />
       </ThemeProvider>
     </Provider>
   </StrictMode>,
