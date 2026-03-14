@@ -43,7 +43,15 @@ const authApi = baseApi.injectEndpoints({
 
     forgotPassword: builder.mutation({
       query: (email) => ({
-        url: "/auth/forgotPass",
+        url: "/users/forgot-password",
+        method: "POST",
+        body: email,
+      }),
+    }),
+
+    resendOtp: builder.mutation({
+      query: (email) => ({
+        url: "/users/resend-otp",
         method: "POST",
         body: email,
       }),
@@ -51,32 +59,24 @@ const authApi = baseApi.injectEndpoints({
 
     verifyOtp: builder.mutation({
       query: (data) => ({
-        url: "/auth/verifyOtp",
-        method: "POST",
+        url: "/users/verify-otp-forgot-password",
+        method: "PUT",
         body: data,
       }),
     }),
 
     resetPassword: builder.mutation({
       query: (data) => ({
-        url: "/auth/resetPass",
-        method: "POST",
+        url: "/users/update-password",
+        method: "PUT",
         body: data,
-      }),
-    }),
-
-    resendOtp: builder.mutation({
-      query: (email) => ({
-        url: "/auth/resendOtp",
-        method: "POST",
-        body: email,
       }),
     }),
 
     changePassword: builder.mutation({
       query: (data) => ({
-        url: "/auth/changePassword",
-        method: "POST",
+        url: "/users/change-password",
+        method: "PUT",
         body: data,
       }),
     }),

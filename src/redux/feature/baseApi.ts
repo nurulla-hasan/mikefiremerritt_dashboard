@@ -29,7 +29,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl: "https://mike-firemerrit.vercel.app/api/v1",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
-    if (token) {
+    // If authorization header is already set (e.g. for refresh token call), don't overwrite it
+    if (token && !headers.has("authorization")) {
       headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
@@ -59,7 +60,9 @@ const baseQueryWithReauth = async (
           {
             url: "/auth/refresh-token",
             method: "POST",
-            body: { refreshToken },
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+            },
           },
           api,
           extraOptions
@@ -101,7 +104,9 @@ const baseQueryWithReauth = async (
         {
           url: "/auth/refresh-token",
           method: "POST",
-          body: { refreshToken },
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
         },
         api,
         extraOptions
@@ -131,7 +136,6 @@ const baseQueryWithReauth = async (
       api.dispatch(Logout());
     }
   }
-
   return result;
 };
 

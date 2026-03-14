@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -15,8 +14,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-// import { forgotPassword } from "@/services/auth";
-// import { SuccessToast, ErrorToast } from "@/lib/utils";
+import { useForgotPasswordMutation } from "@/redux/feature/auth/authApis";
+import { SuccessToast, ErrorToast } from "@/lib/utils";
+import type { TError } from "@/types/global.types";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email({
@@ -28,7 +28,7 @@ type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -38,23 +38,20 @@ export default function ForgotPassword() {
   });
 
   async function onSubmit(data: ForgotPasswordFormValues) {
-    setIsLoading(true);
     try {
-      // const result = await forgotPassword(data.email);
-      // if (result?.success) {
-      //   SuccessToast("Verification code sent! Please check your email.");
-      //   navigate("/auth/verify");
-      // } else {
-      //   ErrorToast(result?.message || "Failed to send code. Please try again.");
-      // }
-
-      console.log("Forgot password submitted (API disabled)", data);
-      navigate("/auth/verify");
-    } catch (error) {
-      // ErrorToast("An unexpected error occurred. Please try again.");
-      console.error("Password reset failed:", error);
-    } finally {
-      setIsLoading(false);
+      const result = await forgotPassword(data).unwrap();
+      if (result?.success) {
+        SuccessToast("Verification code sent! Please check your email.");
+        const otpToken = result?.data?.otpToken;
+        navigate(
+          `/auth/verify?email=${encodeURIComponent(data.email)}${
+            otpToken ? `&otpToken=${otpToken}` : ""
+          }`
+        );
+      }
+    } catch (err) {
+      const error = err as TError;
+      ErrorToast(error?.data?.message || error?.message || "Something went wrong");
     }
   }
 
@@ -90,12 +87,16 @@ export default function ForgotPassword() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full"
+              loading={isLoading}
+              loadingText="Sending...">
               Send Reset Link
             </Button>
             <Link to="/auth/login">
               <Button variant="ghost" className="w-full">
-                <ArrowLeft className="mr-2 h-4 w-4" />
+                <ArrowLeft />
                 Back to Login
               </Button>
             </Link>

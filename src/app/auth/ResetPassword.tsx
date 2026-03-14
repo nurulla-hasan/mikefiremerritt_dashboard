@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Eye, EyeOff, Lock, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,15 +15,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-// import { setNewPassword } from "@/services/auth";
-// import { SuccessToast, ErrorToast } from "@/lib/utils";
+import { useResetPasswordMutation } from "@/redux/feature/auth/authApis";
+import { SuccessToast, ErrorToast } from "@/lib/utils";
+import type { TError } from "@/types/global.types";
 
 const resetPasswordSchema = z.object({
   password: z.string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" }),
+    .min(6, { message: "Password must be at least 6 characters" }),
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
@@ -34,9 +32,14 @@ type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email");
+  const otp = searchParams.get("otp");
+  const otpToken = searchParams.get("otpToken");
+
+  const [resetPassword, { isLoading: isResetting }] = useResetPasswordMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<ResetPasswordFormValues>({
@@ -48,29 +51,29 @@ export default function ResetPassword() {
   });
 
   async function onSubmit(data: ResetPasswordFormValues) {
-    setIsLoading(true);
-    try {
-      // const result = await setNewPassword(data.password);
-      // if (result?.success) {
-      //   SuccessToast("Password reset successful! Your password has been successfully reset.");
-      //   setIsSuccess(true);
-      //   setTimeout(() => {
-      //     navigate("/auth/login");
-      //   }, 2000);
-      // } else {
-      //   ErrorToast(result?.message || "Password reset failed. Please try again.");
-      // }
+    if (!email || !otp) {
+      ErrorToast("Missing required information. Please try the verification process again.");
+      return;
+    }
 
-      console.log("Reset password submitted (API disabled)", data);
-      setIsSuccess(true);
-      setTimeout(() => {
-        navigate("/auth/login");
-      }, 2000);
-    } catch (error) {
-      // ErrorToast("An unexpected error occurred. Please try again.");
-      console.error("Password reset failed:", error);
-    } finally {
-      setIsLoading(false);
+    try {
+      const result = await resetPassword({
+        email,
+        password: data.password,
+        otp: Number(otp),
+        otpToken,
+      }).unwrap();
+
+      if (result?.success) {
+        SuccessToast("Password reset successful! You can now login with your new password.");
+        setIsSuccess(true);
+        setTimeout(() => {
+          navigate("/auth/login");
+        }, 2000);
+      }
+    } catch (err) {
+      const error = err as TError;
+      ErrorToast(error?.data?.message || error?.message || "Password reset failed. Please try again.");
     }
   }
 
@@ -96,12 +99,6 @@ export default function ResetPassword() {
       </Card>
     )
   }
-
-  const password = form.watch("password")
-  const hasMinLength = password.length >= 8
-  const hasUpperCase = /[A-Z]/.test(password)
-  const hasLowerCase = /[a-z]/.test(password)
-  const hasNumber = /[0-9]/.test(password)
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -147,29 +144,6 @@ export default function ResetPassword() {
               )}
             />
 
-            {/* Password strength indicator */}
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Password must contain:</p>
-              <ul className="space-y-1 text-sm">
-                <li className={`flex items-center gap-2 ${hasMinLength ? "text-green-600 dark:text-green-400" : "text-muted-foreground"}`}>
-                  <div className={`h-1.5 w-1.5 rounded-full ${hasMinLength ? "bg-green-600 dark:bg-green-400" : "bg-muted-foreground"}`} />
-                  At least 8 characters
-                </li>
-                <li className={`flex items-center gap-2 ${hasUpperCase ? "text-green-600 dark:text-green-400" : "text-muted-foreground"}`}>
-                  <div className={`h-1.5 w-1.5 rounded-full ${hasUpperCase ? "bg-green-600 dark:bg-green-400" : "bg-muted-foreground"}`} />
-                  One uppercase letter
-                </li>
-                <li className={`flex items-center gap-2 ${hasLowerCase ? "text-green-600 dark:text-green-400" : "text-muted-foreground"}`}>
-                  <div className={`h-1.5 w-1.5 rounded-full ${hasLowerCase ? "bg-green-600 dark:bg-green-400" : "bg-muted-foreground"}`} />
-                  One lowercase letter
-                </li>
-                <li className={`flex items-center gap-2 ${hasNumber ? "text-green-600 dark:text-green-400" : "text-muted-foreground"}`}>
-                  <div className={`h-1.5 w-1.5 rounded-full ${hasNumber ? "bg-green-600 dark:bg-green-400" : "bg-muted-foreground"}`} />
-                  One number
-                </li>
-              </ul>
-            </div>
-
             <FormField
               control={form.control}
               name="confirmPassword"
@@ -203,7 +177,11 @@ export default function ResetPassword() {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full"
+              loading={isResetting}
+              loadingText="Resetting...">
               Reset Password
             </Button>
           </form>
