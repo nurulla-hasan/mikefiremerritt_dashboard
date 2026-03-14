@@ -81,18 +81,27 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    myProfile: builder.query({
+    getMe: builder.query({
       query: () => ({
-        url: "/user/my-profile",
+        url: "/users/me",
         method: "GET",
       }),
       providesTags: [tagTypes.user],
     }),
 
-    editProfile: builder.mutation({
+    updateProfile: builder.mutation({
       query: (data) => ({
         url: "/user/edit-profile",
         method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
+
+    updateProfileImage: builder.mutation({
+      query: (data) => ({
+        url: "/users/update-profile-image",
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: [tagTypes.user],
@@ -108,6 +117,7 @@ export const {
   useResetPasswordMutation,
   useResendOtpMutation,
   useChangePasswordMutation,
-  useMyProfileQuery,
-  useEditProfileMutation,
+  useGetMeQuery,
+  useUpdateProfileMutation,
+  useUpdateProfileImageMutation,
 } = authApi;
