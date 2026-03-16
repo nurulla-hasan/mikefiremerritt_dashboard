@@ -3,12 +3,11 @@ export interface IUser {
   fullName: string;
   email: string;
   phoneNumber: string;
-  address: string;
+  status: "ACTIVE" | "BLOCKED" | "PENDING";
+  role: "MEMBER" | "TRAINER";
+  bio: string | null;
   image: string | null;
-  bio: string;
   fitnessGoals: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  socialAccounts: any[];
+  address: string | null;
   createdAt: string;
-  updatedAt: string;
 }

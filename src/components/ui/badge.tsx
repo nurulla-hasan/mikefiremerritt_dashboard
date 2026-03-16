@@ -11,20 +11,6 @@ const badgeVariants = cva(
         default:
           "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
 
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-
-        destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-
-        success:
-          "border-transparent bg-green-100 text-green-700 hover:bg-green-100/80 dark:bg-green-900/30 dark:text-green-400",
-
-        warning:
-          "border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80 dark:bg-yellow-900/30 dark:text-yellow-400",
-
-        info: "border-transparent bg-blue-100 text-blue-700 hover:bg-blue-100/80 dark:bg-blue-900/30 dark:text-blue-400",
-
         outline:
           "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
 
@@ -33,6 +19,22 @@ const badgeVariants = cva(
 
         muted:
           "border-transparent bg-muted text-muted-foreground hover:bg-muted/80",
+
+        success:
+          "bg-slate-50 text-slate-600 border-slate-100 hover:bg-slate-50 dark:bg-slate-900/30 dark:text-slate-400 dark:border-slate-800 backdrop-blur-sm",
+
+        info: "bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800 backdrop-blur-sm",
+
+        progress:
+          "bg-amber-50 text-amber-600 border-amber-100 hover:bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800 backdrop-blur-sm",
+
+        accepted:
+          "bg-green-50 text-green-600 border-green-100 hover:bg-green-50 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800 backdrop-blur-sm",
+
+        warning:
+          "bg-yellow-50 text-yellow-600 border-yellow-100 hover:bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800 backdrop-blur-sm",
+
+        rejected: "bg-red-50 text-red-600 border-red-100 hover:bg-red-50 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800 backdrop-blur-sm",
       },
     },
     defaultVariants: {
@@ -59,4 +61,5 @@ function Badge({
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { Badge, badgeVariants };

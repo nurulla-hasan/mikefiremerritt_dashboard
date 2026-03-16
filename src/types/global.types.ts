@@ -16,3 +16,12 @@ export type TError = {
   status?: number;
   message?: string;
 };
+
+export type TMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};

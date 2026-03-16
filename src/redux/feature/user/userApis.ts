@@ -9,7 +9,7 @@ const userApis = baseApi.injectEndpoints({
       query: (query) => {
         const params = buildQueryParams(query);
         return {
-          url: "/user/all",
+          url: "/admin/users",
           method: "GET",
           params: params,
         };
@@ -17,17 +17,17 @@ const userApis = baseApi.injectEndpoints({
       providesTags: [tagTypes.user],
     }),
 
-    getSingleUser: builder.query({
-      query: (id) => ({
-        url: `/user/single/${id}`,
-        method: "GET",
-      }),
-      providesTags: [tagTypes.user],
-    }),
+    // getSingleUser: builder.query({
+    //   query: (id) => ({
+    //     url: `/user/single/${id}`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: [tagTypes.user],
+    // }),
 
     updateUserStatus: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/user/block-user/${id}`,
+        url: `/admin/users/${id}`,
         method: "PATCH",
         body: data,
       }),
@@ -56,7 +56,7 @@ const userApis = baseApi.injectEndpoints({
 export const {
   useGetAllUsersQuery,
   useLazyGetAllUsersQuery,
-  useGetSingleUserQuery,
+  // useGetSingleUserQuery,
   useUpdateUserStatusMutation,
   useDeleteUserMutation,
   useApproveUserMutation,

@@ -1,20 +1,13 @@
 import { useState, useMemo, useTransition, useCallback, useEffect } from 'react';
+import type { TMeta } from '@/types/global.types';
 
 // Generic API list response shape
 export type ApiListResponse<T> = {
   success: boolean;
   message: string;
   statusCode: number;
-  data?: {
-    meta?: {
-      page: number;
-      limit: number;
-      total: number;
-      totalPage: number;
-      [k: string]: unknown;
-    };
-    result?: T[];
-  };
+  data: T[];
+  meta: TMeta;
 };
 
 /**
@@ -34,9 +27,10 @@ type BaseParams = { page?: number; limit?: number; };
 // The hook returned values
 export type UseSmartFetchReturn<P extends BaseParams, T> = {
   data: T[];
-  meta: NonNullable<ApiListResponse<T>["data"]>["meta"];
+  meta: TMeta | undefined;
   isLoading: boolean;
   isPending: boolean;
+  isFetching: boolean;
   isError: boolean;
   filter: Partial<P>;
   setFilter: React.Dispatch<React.SetStateAction<Partial<P>>>;
@@ -46,7 +40,7 @@ export type UseSmartFetchReturn<P extends BaseParams, T> = {
 
 type QueryHook<P extends BaseParams, T> = (
   params: P
-) => { data?: ApiListResponse<T>; isLoading: boolean; isError: boolean };
+) => { data?: ApiListResponse<T>; isLoading: boolean; isError: boolean; isFetching: boolean };
 
 /**
  * useSmartFetchHook - Optimized for React 19
@@ -72,7 +66,7 @@ const useSmartFetchHook = <P extends BaseParams, T>(
   const debouncedFilter = useInternalDebounce<Partial<P>>(filter);
 
   // Execute the query hook
-  const { data, isLoading, isError } = queryHook(debouncedFilter as P);
+  const { data, isLoading, isError, isFetching } = queryHook(debouncedFilter as P);
 
   // Helper to set current page safely
   const setPage = useCallback((page: number) => {
@@ -91,8 +85,8 @@ const useSmartFetchHook = <P extends BaseParams, T>(
     });
   }, [initialParams, options]);
 
-  const list = useMemo(() => data?.data?.result ?? [], [data?.data?.result]);
-  const meta = data?.data?.meta;
+  const list = useMemo(() => data?.data ?? [], [data?.data]);
+  const meta = data?.meta;
 
   return {
     data: list,
@@ -100,6 +94,7 @@ const useSmartFetchHook = <P extends BaseParams, T>(
     isLoading,
     isPending,
     isError,
+    isFetching,
     setPage,
     filter,
     setFilter,

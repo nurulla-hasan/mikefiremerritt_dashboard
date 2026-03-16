@@ -39,6 +39,7 @@ interface DataTableProps<TData, TValue> {
   pageSize?: number;
   isLoading?: boolean;
   isError?: boolean;
+  isFetching?: boolean;
   meta?: {
     total: number;
     page: number;
@@ -55,6 +56,7 @@ export function DataTable<TData, TValue>({
   pageSize = 10,
   isLoading,
   isError,
+  isFetching,
   meta,
   onPageChange,
   onPageSizeChange,
@@ -157,7 +159,7 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-           {isLoading ? (
+           {isLoading || isFetching ? (
                 // Loading Skeleton Rows
                 Array.from({ length: pageSize }).map((_, index) => (
                   <TableRow key={index} className="h-14">
