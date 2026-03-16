@@ -11,7 +11,6 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
 } from "@/components/ui/chart";
 import {
   Select,
@@ -20,40 +19,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const chartData = [
-  { month: "Jan", earning: 80 },
-  { month: "Feb", earning: 60 },
-  { month: "Mar", earning: 70 },
-  { month: "Apr", earning: 55 },
-  { month: "May", earning: 75 },
-  { month: "Jun", earning: 65 },
-  { month: "Jul", earning: 85 },
-  { month: "Aug", earning: 78 },
-];
+import type { ChartConfig } from "@/components/ui/chart";
 
 const chartConfig = {
-  earning: {
-    label: "Revenue",
-    color: "var(--primary)",
+  total: {
+    label: "Total Earning",
+    color: "hsl(var(--primary))",
   },
 } satisfies ChartConfig;
 
-const EarningGrowthChart = () => {
+const years = Array.from({ length: 5 }, (_, i) => (new Date().getFullYear() - i).toString());
+
+interface EarningGrowthChartProps {
+  data: {
+    label: string;
+    total: number;
+  }[];
+  year: string;
+  onYearChange: (year: string) => void;
+}
+
+const EarningGrowthChart = ({ data, year, onYearChange }: EarningGrowthChartProps) => {
   return (
     <Card className="border-muted/40">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-medium font-crimson">
           Subscription Revenue
         </CardTitle>
-        <Select defaultValue="2024">
+        <Select value={year} onValueChange={onYearChange}>
           <SelectTrigger className="h-8 w-25 rounded-full border-muted bg-transparent text-xs">
             <SelectValue placeholder="Year" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="2024">2024</SelectItem>
-            <SelectItem value="2023">2023</SelectItem>
-            <SelectItem value="2022">2022</SelectItem>
+            {years.map((y) => (
+              <SelectItem key={y} value={y}>
+                {y}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </CardHeader>
@@ -62,7 +64,7 @@ const EarningGrowthChart = () => {
           config={chartConfig}
           className="aspect-auto h-55 w-full"
         >
-          <AreaChart data={chartData}>
+          <AreaChart data={data}>
             <defs>
               <linearGradient id="earningFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.6} />
@@ -71,7 +73,7 @@ const EarningGrowthChart = () => {
             </defs>
             <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
-              dataKey="month"
+              dataKey="label"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -88,7 +90,7 @@ const EarningGrowthChart = () => {
             />
             <Area
               type="natural"
-              dataKey="earning"
+              dataKey="total"
               stroke="var(--primary)"
               fill="url(#earningFill)"
             />

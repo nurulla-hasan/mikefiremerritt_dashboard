@@ -1,19 +1,22 @@
 import { Card, CardContent } from "@/components/ui/card";
 
-type Stat = {
-  label: string;
-  value: string;
-};
+interface StatsProps {
+  data: {
+    totalUsers: number;
+    totalTrainers: number;
+    totalProducts: number;
+    totalEarnings: number;
+  };
+}
 
-const items: Stat[] = [
-  { label: "Total User", value: "18.6K" },
-  { label: "Total Trainer", value: "18.6K" },
-  { label: "Active Program", value: "1204" },
-  { label: "Website View", value: "1020" },
-  { label: "Total Earning", value: "$2,5000" },
-];
+const Stats = ({ data }: StatsProps) => {
+  const items = [
+    { label: "Total User", value: data.totalUsers.toLocaleString() },
+    { label: "Total Trainer", value: data.totalTrainers.toLocaleString() },
+    { label: "Total Product", value: data.totalProducts.toLocaleString() },
+    { label: "Total Earning", value: `$${data.totalEarnings.toLocaleString()}` },
+  ];
 
-const Stats = () => {
   return (
     <Card className="border-muted/40">
       <CardContent className="p-0">

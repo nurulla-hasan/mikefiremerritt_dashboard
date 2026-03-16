@@ -1,0 +1,183 @@
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Dashboard stats retrieved successfully",
+    "data": {
+        "totalUsers": 29,
+        "totalTrainers": 23,
+        "totalProducts": 11,
+        "totalEarnings": 1234.89,
+        "earningGrowth": [
+            {
+                "label": "Jan 2026",
+                "total": 0
+            },
+            {
+                "label": "Feb 2026",
+                "total": 0
+            },
+            {
+                "label": "Mar 2026",
+                "total": 1813.8400000000001
+            },
+            {
+                "label": "Apr 2026",
+                "total": 0
+            },
+            {
+                "label": "May 2026",
+                "total": 0
+            },
+            {
+                "label": "Jun 2026",
+                "total": 0
+            },
+            {
+                "label": "Jul 2026",
+                "total": 0
+            },
+            {
+                "label": "Aug 2026",
+                "total": 0
+            },
+            {
+                "label": "Sep 2026",
+                "total": 0
+            },
+            {
+                "label": "Oct 2026",
+                "total": 0
+            },
+            {
+                "label": "Nov 2026",
+                "total": 0
+            },
+            {
+                "label": "Dec 2026",
+                "total": 0
+            }
+        ],
+        "userGrowthByMonth": [
+            {
+                "month": "Jan 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Jan 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Feb 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Feb 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Mar 2026",
+                "role": "MEMBER",
+                "count": 23
+            },
+            {
+                "month": "Mar 2026",
+                "role": "TRAINER",
+                "count": 23
+            },
+            {
+                "month": "Apr 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Apr 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "May 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "May 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Jun 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Jun 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Jul 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Jul 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Aug 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Aug 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Sep 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Sep 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Oct 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Oct 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Nov 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Nov 2026",
+                "role": "TRAINER",
+                "count": 0
+            },
+            {
+                "month": "Dec 2026",
+                "role": "MEMBER",
+                "count": 0
+            },
+            {
+                "month": "Dec 2026",
+                "role": "TRAINER",
+                "count": 0
+            }
+        ]
+    }
+}
