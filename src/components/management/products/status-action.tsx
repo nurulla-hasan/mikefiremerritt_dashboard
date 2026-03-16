@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import { Ban, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import { Download, Search, Settings2 } from "lucide-react";
 

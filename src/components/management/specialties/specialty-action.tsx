@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import { Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";

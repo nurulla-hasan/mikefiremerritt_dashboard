@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import PageLayout from "@/components/common/page-layout";
 import { trainersColumns } from "@/components/management/trainers/trainers-columns";

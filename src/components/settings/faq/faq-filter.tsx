@@ -1,4 +1,4 @@
-"use client";
+
 import AddFAQModal from "./add-faq-modal";
 
 export const FAQFilter = () => {

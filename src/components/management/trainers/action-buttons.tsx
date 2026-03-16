@@ -1,6 +1,6 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import TrainerViewModal from "./view-modal";
 import type { ITrainer } from "@/types/trainer";

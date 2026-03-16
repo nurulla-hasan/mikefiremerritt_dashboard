@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+
 
 import PageLayout from "@/components/common/page-layout";
 import { reviewsColumns } from "@/components/management/reviews/reviews-columns";
