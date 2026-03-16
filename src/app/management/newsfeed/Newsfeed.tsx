@@ -1,120 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import PageLayout from "@/components/common/page-layout";
 import {
   newsfeedColumns,
-  type NewsfeedItem,
 } from "@/components/management/newsfeed/newsfeed-columns";
 import { NewsfeedFilter } from "@/components/management/newsfeed/newsfeed-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
-
-const newsfeed: NewsfeedItem[] = [
-  {
-    id: 1,
-    name: "Hilda Reinger",
-    avatar: "https://i.pravatar.cc/150?u=1",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-02-05",
-    views: "1.5k",
-    accountType: "User",
-  },
-  {
-    id: 2,
-    name: "Kerry Trantow",
-    avatar: "https://i.pravatar.cc/150?u=2",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-02-04",
-    views: "1.2k",
-    accountType: "User",
-  },
-  {
-    id: 3,
-    name: "Geneva Pfannerstill",
-    avatar: "https://i.pravatar.cc/150?u=3",
-    caption: "Lorem ipsum dolor sit",
-    date: "2024-02-03",
-    views: "800",
-    accountType: "User",
-  },
-  {
-    id: 4,
-    name: "Everett Williamson",
-    avatar: "https://i.pravatar.cc/150?u=4",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-02-02",
-    views: "2k",
-    accountType: "Trainer",
-  },
-  {
-    id: 5,
-    name: "Tonya Parker",
-    avatar: "https://i.pravatar.cc/150?u=5",
-    caption: "Lorem ipsum dolor sit",
-    date: "2024-02-01",
-    views: "1.1k",
-    accountType: "User",
-  },
-  {
-    id: 6,
-    name: "Jan Leuschke",
-    avatar: "https://i.pravatar.cc/150?u=6",
-    caption: "Lorem ipsum dolor sit",
-    date: "2024-01-30",
-    views: "3k",
-    accountType: "User",
-  },
-  {
-    id: 7,
-    name: "Melinda Cummings",
-    avatar: "https://i.pravatar.cc/150?u=7",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-01-29",
-    views: "1.5k",
-    accountType: "Trainer",
-  },
-  {
-    id: 8,
-    name: "Kelvin Gusikowski",
-    avatar: "https://i.pravatar.cc/150?u=8",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-01-28",
-    views: "1.5k",
-    accountType: "Trainer",
-  },
-  {
-    id: 9,
-    name: "Meredith Labadie",
-    avatar: "https://i.pravatar.cc/150?u=9",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-01-27",
-    views: "900",
-    accountType: "Trainer",
-  },
-  {
-    id: 10,
-    name: "Simon Emard",
-    avatar: "https://i.pravatar.cc/150?u=10",
-    caption: "Lorem ipsum dolor sit amet",
-    date: "2024-01-26",
-    views: "1.4k",
-    accountType: "Trainer",
-  },
-];
-
-const meta = {
-  total: newsfeed.length,
-  page: 1,
-  limit: 10,
-  totalPages: Math.ceil(newsfeed.length / 10),
-};
+import useSmartFetchHook from "@/hooks/useSmartFetchHook";
+import { useGetAllNewsfeedsQuery } from "@/redux/feature/newsfeed/newsfeedApis";
+import type { INewsfeed } from "@/types/newsfeed";
 
 const Newsfeed = () => {
+  const { data, meta, isLoading, isError, isFetching, setPage, filter, setFilter } = useSmartFetchHook<any, INewsfeed>(
+    useGetAllNewsfeedsQuery
+  );
+
   return (
     <PageLayout>
       <div className="flex flex-col md:flex-row md:justify-between">
         <PageHeader title="Newsfeed Moderation" description="Manage the newsfeed here" />
-        <NewsfeedFilter />
+        <NewsfeedFilter filter={filter} setFilter={setFilter} />
       </div>
-      <DataTable columns={newsfeedColumns} data={newsfeed} meta={meta} />
+      <DataTable
+        columns={newsfeedColumns}
+        data={data}
+        meta={meta}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        isError={isError}
+        onPageChange={setPage}
+      />
     </PageLayout>
   );
 };

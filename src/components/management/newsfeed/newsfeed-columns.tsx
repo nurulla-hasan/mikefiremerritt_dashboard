@@ -1,131 +1,103 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ColumnDef } from "@tanstack/react-table";
-import { Ban, Trash2 } from "lucide-react";
 
-import { Checkbox } from "@/components/ui/checkbox";
+import type { ColumnDef } from "@tanstack/react-table";
+import { formatDate } from "@/lib/utils";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import NewsfeedViewModal from "./view-modal";
+import { ActionButtons } from "./action-buttons";
+import type { INewsfeed } from "@/types/newsfeed";
 
-export type NewsfeedItem = {
-  id: number;
-  name: string;
-  avatar: string;
-  caption: string;
-  date: string;
-  views: string;
-  accountType: "User" | "Trainer";
-};
-
-export const newsfeedColumns: ColumnDef<NewsfeedItem>[] = [
+export const newsfeedColumns: ColumnDef<INewsfeed>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <label className="flex items-center gap-2 cursor-pointer select-none">
-        <span className="font-semibold">Select All</span>
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
-        />
-      </label>
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: "SL",
+    cell: ({ row, table }) => {
+      const { pageIndex, pageSize } = table.getState().pagination;
+      return (
+        <span className="text-sm font-medium text-foreground">
+          {pageIndex * pageSize + row.index + 1}
+        </span>
+      );
+    },
   },
   {
-    accessorKey: "avatar",
+    accessorKey: "user.image",
     header: "Profile",
     cell: ({ row }) => (
       <Avatar>
-        <AvatarImage src={row.original.avatar} alt={row.original.name} />
-        <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
+        <AvatarImage src={row.original.user?.image || ""} alt={row.original.user?.fullName} />
+        <AvatarFallback>{row.original.user?.fullName?.charAt(0) || "U"}</AvatarFallback>
       </Avatar>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "user.fullName",
     header: "Name",
     cell: ({ row }) => (
       <span className="text-sm font-medium text-foreground">
-        {row.original.name}
+        {row.original.user?.fullName || "N/A"}
       </span>
     ),
   },
   {
-    accessorKey: "caption",
-    header: "Caption",
+    accessorKey: "content",
+    header: "Content",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        {row.original.caption}
+      <span className="text-sm text-muted-foreground line-clamp-1 max-w-50">
+        {row.original.content || "No content"}
       </span>
     ),
   },
   {
-    accessorKey: "date",
+    accessorKey: "createdAt",
     header: "Date",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.date}</span>
-    ),
-  },
-  {
-    accessorKey: "views",
-    header: "Views",
-    cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
-        {row.original.views}
+        {row.original.createdAt ? formatDate(row.original.createdAt) : "N/A"}
       </span>
     ),
   },
   {
-    accessorKey: "accountType",
+    accessorKey: "impressionCount",
+    header: "Impressions",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.impressionCount ?? 0}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "user.role",
     header: "Account Type",
     cell: ({ row }) => {
-      const type = row.original.accountType;
-      const variant = "success";
+      const role = row.original.user?.role || "USER";
       return (
         <Badge
-          variant={variant as any}
-          className="rounded-full px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20"
+          variant="outline"
+          className="rounded-full px-3 py-1 capitalize border-border"
         >
-          {type}
+          {role.toLowerCase()}
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "isPublished",
+    header: "Status",
+    cell: ({ row }) => {
+      const isPublished = row.original.isPublished;
+      return (
+        <Badge
+          variant={isPublished ? "accepted" : "rejected"}
+          className="rounded-full px-3 py-1"
+        >
+          {isPublished ? "Published" : "Unpublished"}
         </Badge>
       );
     },
   },
   {
     id: "actions",
-    header: () => <div className="text-right pr-8">Actions</div>,
-    cell: () => (
-      <div className="flex items-center justify-end gap-1">
-        <NewsfeedViewModal />
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-red-500 hover:text-red-600"
-        >
-          <Trash2 />
-        </Button>
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: () => <div className="text-right pr-6">Actions</div>,
+    cell: ({ row }) => <ActionButtons data={row.original} />,
   },
 ];

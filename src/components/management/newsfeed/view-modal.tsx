@@ -12,51 +12,79 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import type { INewsfeed } from "@/types/newsfeed";
+import { formatDate } from "@/lib/utils";
 
-const fakePost = {
-  trainerName: "Hilda Reinger",
-  caption: "Lorem ipsum dolor",
-  view: "1.2k",
-  favourite: "1.2k",
-  date: "11/4/2025",
-  cover:
-    "https://images.unsplash.com/photo-1758875568433-7b8301847439?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-};
+interface NewsfeedViewModalProps {
+  data: INewsfeed;
+}
 
-const NewsfeedViewModal = () => {
+const NewsfeedViewModal = ({ data }: NewsfeedViewModalProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon-sm">
-          <Eye />
+          <Eye className="size-4 text-muted-foreground" />
         </Button>
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-3xl p-0 overflow-hidden shadow-2xl">
-          <div className="w-full h-52 md:h-64 bg-muted">
-            <img
-              src={fakePost.cover}
-              alt={fakePost.trainerName}
-              className="h-full w-full object-cover"
-            />
+        <DialogContent className="max-w-2xl p-0 overflow-hidden shadow-2xl border-none">
+          <div className="w-full h-64 md:h-80 bg-muted relative">
+            {data.video ? (
+              <video
+                src={data.video}
+                controls
+                className="h-full w-full object-cover"
+              />
+            ) : data.image ? (
+              <img
+                src={data.image}
+                alt={data.user.fullName}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full w-full bg-muted text-muted-foreground italic">
+                No Media Available
+              </div>
+            )}
           </div>
 
-          <div className="px-10 py-8 space-y-4">
+          <div className="px-10 py-8 space-y-6">
             <DialogHeader className="text-left">
-              <DialogTitle className="text-xl font-semibold font-crimson">
+              <DialogTitle className="text-2xl font-semibold font-crimson">
                 Newsfeed Details
               </DialogTitle>
             </DialogHeader>
 
-            <div className="space-y-2 text-sm">
-              <InfoRow label="Trainer Name" value={fakePost.trainerName} />
-              <InfoRow label="Caption" value={fakePost.caption} />
-              <InfoRow label="View" value={fakePost.view} />
-              <InfoRow label="Favourite" value={fakePost.favourite} />
-              <InfoRow label="Date" value={fakePost.date} />
+            <div className="space-y-4">
+              <InfoRow label="Poster Name" value={data?.user?.fullName || "N/A"} />
+              <InfoRow label="Account Type" value={data?.user?.role?.toLowerCase() || "N/A"} className="capitalize" />
+              <div className="grid grid-cols-[160px_1fr] gap-4">
+                <p className="text-sm font-medium">Content</p>
+                <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                  {data?.content || "No content provided"}
+                </p>
+              </div>
+              <InfoRow label="Impressions" value={data?.impressionCount?.toString() || "0"} />
+              <InfoRow label="Reach" value={data?.reachCount?.toString() || "0"} />
+              <div className="grid grid-cols-3 gap-4 pt-2 border-t border-border">
+                <div className="text-center">
+                  <p className="text-xs font-medium text-muted-foreground uppercase">Likes</p>
+                  <p className="text-sm font-semibold">{data?.likeCount ?? 0}</p>
+                </div>
+                <div className="text-center border-x border-border">
+                  <p className="text-xs font-medium text-muted-foreground uppercase">Comments</p>
+                  <p className="text-sm font-semibold">{data?.commentCount ?? 0}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs font-medium text-muted-foreground uppercase">Shares</p>
+                  <p className="text-sm font-semibold">{data?.shareCount ?? 0}</p>
+                </div>
+              </div>
+              <InfoRow label="Date" value={data?.createdAt ? formatDate(data.createdAt) : "N/A"} />
             </div>
           </div>
         </DialogContent>
@@ -67,10 +95,10 @@ const NewsfeedViewModal = () => {
 
 export default NewsfeedViewModal;
 
-const InfoRow = ({ label, value }: { label: string; value: string }) => (
+const InfoRow = ({ label, value, className }: { label: string; value: string; className?: string }) => (
   <div className="grid grid-cols-[160px_1fr] items-center gap-4">
     <p className="text-sm font-medium">{label}</p>
-    <p className="text-sm text-muted-foreground">{value}</p>
+    <p className={`text-sm text-muted-foreground ${className || ""}`}>{value}</p>
   </div>
 );
 
