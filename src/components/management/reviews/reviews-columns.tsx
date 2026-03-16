@@ -1,5 +1,4 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { TReview } from "@/types/review";
 import { ReviewActionButtons } from "./action-buttons";
@@ -17,28 +16,15 @@ const renderStars = (rating: number) => {
 
 export const reviewsColumns: ColumnDef<TReview>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <label className="flex items-center gap-2 cursor-pointer select-none">
-        <span className="font-semibold">Select All</span>
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
-        />
-      </label>
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: "SL",
+    cell: ({ row, table }) => {
+      const { pageIndex, pageSize } = table.getState().pagination;
+      return (
+        <span className="text-sm font-medium text-foreground">
+          {pageIndex * pageSize + row.index + 1}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "user.image",

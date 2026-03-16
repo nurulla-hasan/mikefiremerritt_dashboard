@@ -35,6 +35,21 @@ const settingsApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.terms],
     }),
+    getDisclimer: builder.query({
+      query: () => ({
+        url: "/disclaimer",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.about],
+    }),
+    updateDisclaimer: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/disclaimer/${id}`,
+        method: "PATCH",
+        body: { ...data },
+      }),
+      invalidatesTags: [tagTypes.about],
+    }),
     getAboutUs: builder.query({
       query: () => ({
         url: "/about-us",
@@ -60,4 +75,6 @@ export const {
   useUpdateTermsConditionsMutation,
   useGetAboutUsQuery,
   useUpdateAboutUsMutation,
+  useGetDisclimerQuery,
+  useUpdateDisclaimerMutation,
 } = settingsApis;

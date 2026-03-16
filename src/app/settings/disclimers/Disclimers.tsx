@@ -1,58 +1,73 @@
 import PageLayout from "@/components/common/page-layout";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
-  // FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import TiptapEditor from "@/components/ui/tiptap-editor";
-// import { ErrorToast, SuccessToast } from "@/lib/utils";
-import { Save } from "lucide-react";
-import PageHeader from "../../../components/ui/page-header";
-
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import PageHeader from "@/components/ui/page-header";
+import { useGetDisclimerQuery, useUpdateDisclaimerMutation } from "@/redux/feature/settings/settingsApis";
+import type { TError } from "@/types/global.types";
 
 type FormValues = {
-  title: string;
   content: string;
 };
 
-const Disclaimers = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const Disclaimer = () => {
+  const { data: disclaimerData, isLoading: isFetching } = useGetDisclimerQuery({});
+  const [updateDisclaimer, { isLoading: isUpdating }] = useUpdateDisclaimerMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
-      title: "Disclaimers",
       content: "",
     },
   });
 
+  // Set initial form values when data is fetched
+  useEffect(() => {
+    if (disclaimerData?.data?.content) {  
+      form.reset({
+        content: disclaimerData.data.content,
+      });
+    }
+  }, [disclaimerData, form]);
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    const id = disclaimerData?.data?.id;
+    if (!id) {
+      ErrorToast("Disclaimer record not found");
+      return;
+    }
+
     try {
-      setIsSubmitting(true);
-      // const slug = generateSlug(data.title || "disclaimers");
-      // await upsertPage({
-      //   slug,
-      //   title: data.title,
-      //   content: data.content,
-      // });
-      // SuccessToast("Disclaimers page saved successfully");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      await updateDisclaimer({ id, data }).unwrap();
+      SuccessToast("Disclaimer saved successfully");
     } catch (error) {
-      // ErrorToast("Failed to save Disclaimers page");
-    } finally {
-      setIsSubmitting(false);
+      const err = error as TError;
+      ErrorToast(err?.data?.message || "Failed to save Disclaimer");
     }
   };
+
+  if (isFetching) {
+    return (
+      <PageLayout>
+        <div className="flex h-100 items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout>
-      <PageHeader title="Disclaimers" description="Manage the Disclaimers page content" />
+      <PageHeader title="Disclaimer" description="Manage the Disclaimer page content" />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -79,10 +94,10 @@ const Disclaimers = () => {
           <div className="flex justify-end">
             <Button
               type="submit"
+              loading={isUpdating}
               loadingText="Saving..."
-              loading={isSubmitting}
             >
-              <Save /> Save
+              Save
             </Button>
           </div>
         </form>
@@ -91,4 +106,4 @@ const Disclaimers = () => {
   );
 };
 
-export default Disclaimers;
+export default Disclaimer;
