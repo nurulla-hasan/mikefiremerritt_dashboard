@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,15 +11,40 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ImagePlus, X } from "lucide-react";
+import { useCreateSpecialtyMutation, useUpdateSpecialtyMutation } from "@/redux/feature/specialties/specialtyApis";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
+import type { Specialty } from "./specialties-columns";
 
-const AddSpecialtyModal = () => {
+interface AddSpecialtyModalProps {
+  specialty?: Specialty;
+  trigger?: ReactNode;
+}
+
+const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
   const [open, setOpen] = useState(false);
+  const [specialtyName, setSpecialtyName] = useState("");
   const [image, setImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [createSpecialty, { isLoading: isCreating }] = useCreateSpecialtyMutation();
+  const [updateSpecialty, { isLoading: isUpdating }] = useUpdateSpecialtyMutation();
+
+  useEffect(() => {
+    if (specialty) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSpecialtyName(specialty.specialtyName);
+      setImage(specialty.specialtyImage);
+    } else {
+      setSpecialtyName("");
+      setImage(null);
+    }
+  }, [specialty, open]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
@@ -29,22 +55,57 @@ const AddSpecialtyModal = () => {
 
   const removeImage = () => {
     setImage(null);
+    setImageFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!specialtyName.trim()) {
+      ErrorToast("Specialty name is required");
+      return;
+    }
+
+    if (!image && !specialty) {
+      ErrorToast("Specialty image is required");
+      return;
+    }
+
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append("specialtyImage", imageFile);
+    }
+    
+    formData.append("bodyData", JSON.stringify({ specialtyName }));
+
+    try {
+      if (specialty) {
+        await updateSpecialty({ id: specialty.id, data: formData }).unwrap();
+        SuccessToast("Specialty updated successfully");
+      } else {
+        await createSpecialty(formData).unwrap();
+        SuccessToast("Specialty added successfully");
+      }
+      setOpen(false);
+      removeImage();
+      setSpecialtyName("");
+    } catch (error: any) {
+      ErrorToast(error?.data?.message || `Failed to ${specialty ? "update" : "add"} specialty`);
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+ Add Specialty</Button>
+        {trigger || <Button className="rounded-full">+ Add Specialty</Button>}
       </DialogTrigger>
 
       <DialogPortal>
         <DialogContent className="max-w-md p-6 overflow-hidden border shadow-2xl">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold font-crimson text-center">
-              Add New Specialty
+              {specialty ? "Update Specialty" : "Add New Specialty"}
             </DialogTitle>
           </DialogHeader>
 
@@ -83,12 +144,20 @@ const AddSpecialtyModal = () => {
 
             <div className="space-y-2">
               <p className="text-sm font-medium">Specialty Name</p>
-              <Input placeholder="e.g. Yoga, CrossFit, HIIT" />
+              <Input 
+                placeholder="e.g. Yoga, CrossFit, HIIT" 
+                value={specialtyName}
+                onChange={(e) => setSpecialtyName(e.target.value)}
+              />
             </div>
 
             <div className="flex justify-center pt-2">
-              <Button className="w-full rounded-full" onClick={() => setOpen(false)}>
-                Save Specialty
+              <Button 
+                className="w-full rounded-full" 
+                onClick={handleSubmit}
+                disabled={isCreating || isUpdating}
+              >
+                {isCreating || isUpdating ? (specialty ? "Updating..." : "Saving...") : (specialty ? "Update Specialty" : "Save Specialty")}
               </Button>
             </div>
           </div>

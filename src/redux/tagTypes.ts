@@ -10,6 +10,7 @@ export const tagTypes = {
   terms: "Terms",
   about: "About",
   dashboard: "Dashboard",
+  specialty: "Specialty",
   // Add other tags here as needed
 };
 

@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetAllSpecialtiesQuery } from "@/redux/feature/trainer/trainerApis";
+import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialtyApis";
 
 interface ProductsFilterProps {
   filter?: any;

@@ -1,24 +1,25 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import SpecialtyAction from "./specialty-action";
 
 export type Specialty = {
-  id: number;
-  name: string;
-  image: string;
+  id: string;
+  specialtyName: string;
+  specialtyImage: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const specialtiesColumns: ColumnDef<Specialty>[] = [
   {
-    accessorKey: "image",
+    accessorKey: "specialtyImage",
     header: "Image",
     cell: ({ row }) => {
-      const image = row.getValue("image") as string;
+      const image = row.getValue("specialtyImage") as string;
       return (
         <div className="h-10 w-10 rounded-md overflow-hidden bg-muted">
           <img
             src={image || "https://via.placeholder.com/40"}
-            alt={row.getValue("name")}
+            alt={row.getValue("specialtyName")}
             className="h-full w-full object-cover"
           />
         </div>
@@ -26,21 +27,16 @@ export const specialtiesColumns: ColumnDef<Specialty>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "specialtyName",
     header: "Specialty Name",
   },
   {
     id: "actions",
     header: () => <div className="text-end">Actions</div>,
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <div className="text-end">
-          <Button variant="ghost" size="icon-sm" className="gap-2">
-            <Edit/>
-          </Button>
-          <Button variant="ghost" size="icon-sm" className="gap-2 text-destructive">
-            <Trash2/>
-          </Button>
+          <SpecialtyAction specialty={row.original} />
         </div>
       );
     },
