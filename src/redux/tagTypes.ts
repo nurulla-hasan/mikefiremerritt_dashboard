@@ -13,6 +13,7 @@ export const tagTypes = {
   specialty: "Specialty",
   support: "Support",
   review: "Review",
+  subscription: "Subscription",
   // Add other tags here as needed
 };
 
