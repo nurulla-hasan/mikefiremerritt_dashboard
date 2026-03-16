@@ -26,29 +26,28 @@ const userApis = baseApi.injectEndpoints({
     // }),
 
     updateUserStatus: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({ id }) => ({
         url: `/admin/users/${id}`,
         method: "PATCH",
-        body: data,
       }),
       invalidatesTags: [tagTypes.user],
     }),
 
-    deleteUser: builder.mutation({
-      query: (id) => ({
-        url: `/user/delete-user/${id}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [tagTypes.user],
-    }),
+    // deleteUser: builder.mutation({
+    //   query: (id) => ({
+    //     url: `/user/delete-user/${id}`,
+    //     method: "DELETE",
+    //   }),
+    //   invalidatesTags: [tagTypes.user],
+    // }),
 
-    approveUser: builder.mutation({
-      query: (id) => ({
-        url: `/user/approve/${id}`,
-        method: "PATCH",
-      }),
-      invalidatesTags: [tagTypes.user],
-    }),
+    // approveUser: builder.mutation({
+    //   query: (id) => ({
+    //     url: `/user/approve/${id}`,
+    //     method: "PATCH",
+    //   }),
+    //   invalidatesTags: [tagTypes.user],
+    // }),
     
   }),
 });
@@ -58,6 +57,6 @@ export const {
   useLazyGetAllUsersQuery,
   // useGetSingleUserQuery,
   useUpdateUserStatusMutation,
-  useDeleteUserMutation,
-  useApproveUserMutation,
+  // useDeleteUserMutation,
+  // useApproveUserMutation,
 } = userApis;

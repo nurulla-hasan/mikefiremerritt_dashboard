@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
-import { Trash2, Ban } from "lucide-react";
 
 // import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import UserViewModal from "./view-modal";
 import type { IUser } from "@/types/user";
 import { format } from "date-fns";
+import { ActionButtons } from "./action-buttons";
 
 export const usersColumns: ColumnDef<IUser>[] = [
   // {
@@ -94,25 +92,7 @@ export const usersColumns: ColumnDef<IUser>[] = [
   {
     id: "actions",
     header: () => <div className="text-right pr-8">Actions</div>,
-    cell: ({ row }) => (
-      <div className="flex items-center justify-end gap-1">
-        <UserViewModal user={row.original} />
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-red-500 hover:text-red-600"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      </div>
-    ),
+    cell: ({ row }) => <ActionButtons user={row.original} />,
     enableSorting: false,
     enableHiding: false,
   },
