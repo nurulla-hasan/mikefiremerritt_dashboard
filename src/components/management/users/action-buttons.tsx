@@ -39,6 +39,7 @@ export const ActionButtons = ({ user }: ActionButtonsProps) => {
         isLoading={isLoading}
         onConfirm={handleToggleStatus}
         open={isModalOpen}
+        loadingText={user.status === "ACTIVE" ? "Blocking..." : "Unblocking..."}
         onOpenChange={setIsModalOpen}
         trigger={
           <Button

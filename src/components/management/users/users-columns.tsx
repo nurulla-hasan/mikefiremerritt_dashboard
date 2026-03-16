@@ -8,32 +8,6 @@ import { format } from "date-fns";
 import { ActionButtons } from "./action-buttons";
 
 export const usersColumns: ColumnDef<IUser>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <label className="flex items-center gap-2 cursor-pointer select-none">
-  //       <span className="font-semibold">
-  //         Select All
-  //       </span>
-  //       <Checkbox
-  //         checked={table.getIsAllPageRowsSelected()}
-  //         onCheckedChange={(value: boolean) =>
-  //           table.toggleAllPageRowsSelected(!!value)
-  //         }
-  //         aria-label="Select all"
-  //       />
-  //     </label>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     header: "SL",
     cell: ({ row, table }) => {
@@ -60,6 +34,15 @@ export const usersColumns: ColumnDef<IUser>[] = [
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
         {row.original.email}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.role || "N/A"}
       </span>
     ),
   },
