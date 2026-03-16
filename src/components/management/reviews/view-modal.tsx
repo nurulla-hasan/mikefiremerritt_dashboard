@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Eye } from "lucide-react";
-
 import {
   Dialog,
   DialogContent,
@@ -12,22 +11,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import type { TReview } from "@/types/review";
 
-const fakeReview = {
-  name: "Jollof Rice",
-  email: "johndeo@gmail.com",
-  review:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at velit maximus, molestie est a, tempor magna.",
-  rating: 5,
-};
+interface ReviewViewModalProps {
+  review: TReview;
+}
 
-const ReviewViewModal = () => {
+const ReviewViewModal = ({ review }: ReviewViewModalProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon-sm">
           <Eye />
         </Button>
       </DialogTrigger>
@@ -41,26 +37,30 @@ const ReviewViewModal = () => {
               <DialogTitle className="text-xl font-semibold font-crimson">
                 Review Details
               </DialogTitle>
-              <p className="text-xs text-muted-foreground">{fakeReview.email}</p>
+              <p className="text-xs text-muted-foreground">{review.user.email}</p>
             </DialogHeader>
 
             <div className="space-y-3 text-sm">
-              <InfoRow label="User Name" value={fakeReview.name} />
+              <InfoRow label="User Name" value={review.user.fullName} />
               <div className="grid grid-cols-[120px_1fr] items-center gap-4">
                 <p className="text-sm font-medium">Rating</p>
-                <p className="text-lg text-amber-400 leading-none">
-                  {"★".repeat(fakeReview.rating)}
-                  <span className="text-muted-foreground/40">
-                    {"☆".repeat(5 - fakeReview.rating)}
-                  </span>
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="text-lg text-amber-400 leading-none">
+                    {"★".repeat(review.rating)}
+                    <span className="text-muted-foreground/40">
+                      {"☆".repeat(5 - review.rating)}
+                    </span>
+                  </p>
+                  <span className="text-xs text-muted-foreground">({review.rating}/5)</span>
+                </div>
               </div>
               <div className="grid grid-cols-[120px_1fr] items-start gap-4">
                 <p className="text-sm font-medium">Review</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {fakeReview.review}
+                  {review.comment}
                 </p>
               </div>
+              <InfoRow label="Posted On" value={new Date(review.createdAt).toLocaleDateString()} />
             </div>
           </div>
         </DialogContent>

@@ -1,76 +1,70 @@
 {
     "success": true,
     "statusCode": 200,
-    "message": "Support list retrieved successfully",
+    "message": "System reviews retrieved successfully",
+    "stats": {
+        "totalRatings": 5,
+        "averageRating": 4.6
+    },
     "data": [
         {
-            "id": "69b2345419d41c701a0c25f7",
-            "message": "Need Support From Web",
-            "userName": "Efaz Khondhoker (Member)",
-            "userEmail": "efazkh@gmail.com",
-            "userPhone": "012345678",
-            "status": "OPEN",
-            "type": "TECHNICAL_SUPPORT",
-            "createdAt": "2026-03-12T03:34:44.917Z",
-            "updatedAt": "2026-03-12T03:34:44.917Z",
-            "reply": null
-        },
-        {
-            "id": "69b23237e1a3011e3a0ed636",
-            "message": "Message from postman.",
-            "userName": "John Trainer",
-            "userEmail": "xodekif839@gamening.com",
-            "userPhone": "0123456789",
-            "status": "OPEN",
-            "type": "GENERAL_INQUIRY",
-            "createdAt": "2026-03-12T03:25:43.610Z",
-            "updatedAt": "2026-03-12T03:25:43.610Z",
-            "reply": null
-        },
-        {
-            "id": "69b2314b69325317f00ba973",
-            "message": "Demo.",
-            "userName": "John Trainer",
-            "userEmail": "xodekif839@gamening.com",
-            "userPhone": "0123456789",
-            "status": "OPEN",
-            "type": "GENERAL_INQUIRY",
-            "createdAt": "2026-03-12T03:21:47.370Z",
-            "updatedAt": "2026-03-12T03:21:47.370Z",
-            "reply": null
-        },
-        {
-            "id": "69afea76c3a39e4afa33d148",
-            "message": "Demo.",
-            "userName": "OG Rafiq",
-            "userEmail": "xodekif839@gamening.com",
-            "userPhone": "0123456789",
-            "status": "CLOSED",
-            "type": "GENERAL_INQUIRY",
-            "createdAt": "2026-03-10T09:55:01.932Z",
-            "updatedAt": "2026-03-10T09:55:55.863Z",
-            "reply": {
-                "id": "69afeaacc3a39e4afa33d149",
-                "message": "We working on it",
-                "status": "CLOSED",
-                "createdAt": "2026-03-10T09:55:56.036Z"
+            "id": "69b5404e145d48b72c6b4313",
+            "userId": "6978527b6ba1530a730adc4c",
+            "rating": 5,
+            "comment": "Amazing plateform, the plateform was very useful!",
+            "createdAt": "2026-03-14T11:02:38.881Z",
+            "user": {
+                "fullName": "Efaz Khondhoker (Member)",
+                "email": "efazkh@gmail.com",
+                "image": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773296429783_download (5).jpg"
             }
         },
         {
-            "id": "69a6634fa59b8120f94a2512",
-            "message": "Missmanagement.",
-            "userName": "efaz khondhoker",
-            "userEmail": "efazkh@gmail.com",
-            "userPhone": "012345678",
-            "status": "CLOSED",
-            "type": "FEEDBACK",
-            "createdAt": "2026-03-03T04:27:59.689Z",
-            "updatedAt": "2026-03-03T04:34:47.742Z",
-            "reply": {
-                "id": "69a664e788949ca50a23fab5",
-                "message": "We working on it",
-                "status": "CLOSED",
-                "createdAt": "2026-03-03T04:34:47.906Z"
+            "id": "69b53f9f07ad4dfe75555761",
+            "userId": "6978527b6ba1530a730adc4c",
+            "rating": 5,
+            "comment": "Amazing plateform, the plateform was very useful!",
+            "createdAt": "2026-03-14T10:59:43.238Z",
+            "user": {
+                "fullName": "Efaz Khondhoker (Member)",
+                "email": "efazkh@gmail.com",
+                "image": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773296429783_download (5).jpg"
+            }
+        },
+        {
+            "id": "69b53b542c2a975fcde60667",
+            "userId": "6979a7df7b9f581a170f2cf6",
+            "rating": 5,
+            "comment": "Amazing plateform, the plateform was very useful!",
+            "createdAt": "2026-03-14T10:41:24.010Z",
+            "user": {
+                "fullName": "Trainer Efaz",
+                "email": "xodekif839@gamening.com",
+                "image": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg"
+            }
+        },
+        {
+            "id": "69b13f394bcd1265dbe14298",
+            "userId": "6978527b6ba1530a730adc4c",
+            "rating": 5,
+            "comment": "Amazing plateform, the plateform was very useful!",
+            "createdAt": "2026-03-11T10:08:57.298Z",
+            "user": {
+                "fullName": "Efaz Khondhoker (Member)",
+                "email": "efazkh@gmail.com",
+                "image": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773296429783_download (5).jpg"
+            }
+        },
+        {
+            "id": "69b24ed19cddf276f7d0fa3c",
+            "userId": "6978527b6ba1530a730adc4c",
+            "rating": 3,
+            "comment": "Amazing plateform, the plateform was very useful!",
+            "createdAt": "2026-03-11T10:08:57.298Z",
+            "user": {
+                "fullName": "Efaz Khondhoker (Member)",
+                "email": "efazkh@gmail.com",
+                "image": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773296429783_download (5).jpg"
             }
         }
     ],

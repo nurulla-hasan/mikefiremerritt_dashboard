@@ -12,6 +12,7 @@ export const tagTypes = {
   dashboard: "Dashboard",
   specialty: "Specialty",
   support: "Support",
+  review: "Review",
   // Add other tags here as needed
 };
 

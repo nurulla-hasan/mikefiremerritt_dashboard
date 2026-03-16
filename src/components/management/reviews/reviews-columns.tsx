@@ -1,19 +1,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
-
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ReviewViewModal from "./view-modal";
-
-export type Review = {
-  id: number;
-  name: string;
-  avatar: string;
-  email: string;
-  review: string;
-  rating: number;
-};
+import type { TReview } from "@/types/review";
+import { ReviewActionButtons } from "./action-buttons";
 
 const renderStars = (rating: number) => {
   const full = "★".repeat(rating);
@@ -26,7 +15,7 @@ const renderStars = (rating: number) => {
   );
 };
 
-export const reviewsColumns: ColumnDef<Review>[] = [
+export const reviewsColumns: ColumnDef<TReview>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -52,39 +41,39 @@ export const reviewsColumns: ColumnDef<Review>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "avatar",
+    accessorKey: "user.image",
     header: "Profile",
     cell: ({ row }) => (
       <Avatar>
-        <AvatarImage src={row.original.avatar} alt={row.original.name} />
-        <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
+        <AvatarImage src={row.original.user.image} alt={row.original.user.fullName} />
+        <AvatarFallback>{row.original.user.fullName.charAt(0)}</AvatarFallback>
       </Avatar>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "user.fullName",
     header: "User Name",
     cell: ({ row }) => (
       <span className="text-sm font-medium text-foreground">
-        {row.original.name}
+        {row.original.user.fullName}
       </span>
     ),
   },
   {
-    accessorKey: "review",
+    accessorKey: "comment",
     header: "Reviews",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground truncate max-w-xs">
-        {row.original.review}
+        {row.original.comment}
       </span>
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "user.email",
     header: "Email",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
-        {row.original.email}
+        {row.original.user.email}
       </span>
     ),
   },
@@ -96,19 +85,6 @@ export const reviewsColumns: ColumnDef<Review>[] = [
   {
     id: "actions",
     header: () => <div className="text-right pr-4">Actions</div>,
-    cell: () => (
-      <div className="flex items-center justify-end gap-1">
-        <ReviewViewModal />
-        <Button
-          variant="outline"
-          size="icon"
-          className="text-red-500 hover:text-red-600"
-        >
-          <Trash2 />
-        </Button>
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    cell: ({ row }) => <ReviewActionButtons review={row.original} />,
   },
 ];
