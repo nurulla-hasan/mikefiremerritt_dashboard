@@ -3,6 +3,7 @@ export const tagTypes = {
   admin: "Admin",
   trainer: "Trainer",
   newsfeed: "Newsfeed",
+  product: "Product",
   notification: "Notification",
   faq: "FAQ",
   privacy: "Privacy",

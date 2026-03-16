@@ -3,6 +3,7 @@ import MainLayout from "@/layout/main-layout";
 import { lazy } from "react";
 import AuthLayout from "@/layout/auth-layout";
 import ProtectedRoute from "@/layout/protected-route";
+import Products from "@/app/management/products/Products";
 
 //======================================================================================================================
 // App pages (all under src/app)
@@ -16,7 +17,6 @@ const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
 const Users = lazy(() => import("@/app/management/users/Users"));
 const Admins = lazy(() => import("@/app/management/admins/Admins"));
 const Trainers = lazy(() => import("@/app/management/trainers/Trainers"));
-const Programs = lazy(() => import("@/app/management/programs/Programs"));
 const Gyms = lazy(() => import("@/app/management/gyms/Gyms"));
 const Newsfeed = lazy(() => import("@/app/management/newsfeed/Newsfeed"));
 const Notifications = lazy(() => import("@/app/notifications/Notifications"));
@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
             { path: "management/users", element: <Users /> },
             { path: "management/admins", element: <Admins /> },
             { path: "management/trainers", element: <Trainers /> },
-            { path: "management/programs", element: <Programs /> },
+            { path: "management/products", element: <Products /> },
             { path: "management/gyms", element: <Gyms /> },
             { path: "management/newsfeed", element: <Newsfeed /> },
             { path: "management/subscriptions", element: <Subscriptions /> },

@@ -1,389 +1,441 @@
 {
     "success": true,
     "statusCode": 200,
-    "message": "Trainer list retrieved successfully",
+    "message": "Product list retrieved successfully",
     "data": [
         {
-            "id": "69b6738534abe36e742b1a10",
-            "userId": "69b6733c34abe36e742b1a0f",
-            "fullName": "Jacob",
-            "email": "jetoca5005@bigonla.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773564804439_photo.jpg"
+            "id": "69b4e82b3de20aef7b42692a",
+            "productName": "adding product from web balance",
+            "productStatus": "INACTIVE",
+            "description": "Amet vel reprehende",
+            "durationWeeks": 23,
+            "bulletPoints": [
+                "[\"[\\\"[\\\\\\\"Non consectetur alia\\\\\\\"]\\\"]\"]"
             ],
-            "experienceYears": 2,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                }
-            ],
-            "createdAt": "2026-03-15T08:53:25.585Z",
-            "updatedAt": "2026-03-15T08:53:25.585Z"
+            "totalPurchased": 0,
+            "views": 17,
+            "price": 47,
+            "capacity": 59,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463593626_download (5).jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463594134_13265227_1920_1080_25fps.mp4",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463595296_New adjustments.pdf",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-14T04:46:35.775Z",
+            "updatedAt": "2026-03-14T05:46:09.213Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69b12b5706ac1979e0278e6b",
-            "userId": "69b12b1406ac1979e0278e6a",
-            "fullName": "John Doe",
-            "email": "laseg67098@bigonla.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773218646422_hair_cut.jpg"
+            "id": "69b4e7083de20aef7b426929",
+            "productName": "Esse nemo eos molli",
+            "productStatus": "INACTIVE",
+            "description": "Asperiores unde fuga",
+            "durationWeeks": 97,
+            "bulletPoints": [
+                "[\"Culpa omnis tenetur\"]"
             ],
-            "experienceYears": 2,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                }
-            ],
-            "createdAt": "2026-03-11T08:44:07.551Z",
-            "updatedAt": "2026-03-11T08:44:07.551Z"
+            "totalPurchased": 0,
+            "views": 1,
+            "price": 88,
+            "capacity": 30,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463302315_download (5).jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463302826_13265227_1920_1080_25fps.mp4",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773463304419_New adjustments.pdf",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-14T04:41:44.900Z",
+            "updatedAt": "2026-03-14T05:35:47.121Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69b101e09eaaf887c72298da",
-            "userId": "69b0ff869eaaf887c72298d9",
-            "fullName": "John Doe",
-            "email": "vegamo8067@3dkai.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773208031568_hair_cut.jpg"
+            "id": "69b23a0f4d3d4d3d1d94cf31",
+            "productName": "One-Time Nutrition Consultation",
+            "productStatus": "ACTIVE",
+            "description": "Single consultation session with a professional nutritionist.",
+            "durationWeeks": 1,
+            "bulletPoints": [
+                "Personalized nutrition advice",
+                "Diet analysis report",
+                "Custom meal recommendations",
+                "Follow-up email support"
             ],
-            "experienceYears": 2,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                }
-            ],
-            "createdAt": "2026-03-11T05:47:12.784Z",
-            "updatedAt": "2026-03-15T09:16:53.008Z"
+            "totalPurchased": 2,
+            "views": 5,
+            "price": 79.99,
+            "capacity": 10,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287950099_hair_cut.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287950987_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287951426_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-12T03:59:11.911Z",
+            "updatedAt": "2026-03-14T05:47:02.337Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a944bda8c25de6218ce7c2",
-            "userId": "69a9449aa8c25de6218ce7c1",
-            "fullName": "Sacha Crosby",
-            "email": "jijoyon836@daerdy.com",
-            "phoneNumber": "+1 (484) 762-5702",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700860017_photo_6145680347962740347_y.jpg"
+            "id": "69b23a034d3d4d3d1d94cf30",
+            "productName": "Annual Complete Nutrition Transformation",
+            "productStatus": "ACTIVE",
+            "description": "A full-year nutrition coaching program with continuous monitoring.",
+            "durationWeeks": 52,
+            "bulletPoints": [
+                "Year-long transformation roadmap",
+                "Quarterly progress consultations",
+                "Premium nutrition resources",
+                "Priority support"
             ],
-            "experienceYears": 1983,
-            "specialty": [
-                {
-                    "id": "69799aa07aa1f9ef64091eef",
-                    "specialtyName": "Pilates"
-                },
-                {
-                    "id": "69799aa57aa1f9ef64091ef0",
-                    "specialtyName": "Bootcamp"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-03-05T08:54:21.172Z",
-            "updatedAt": "2026-03-11T07:27:06.361Z"
+            "totalPurchased": 0,
+            "views": 3,
+            "price": 499.99,
+            "capacity": 40,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287937581_hair_cut.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287938476_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287938925_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-12T03:58:59.417Z",
+            "updatedAt": "2026-03-14T05:42:51.818Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a943e6277044e65efc9227",
-            "userId": "69a943be277044e65efc9226",
-            "fullName": "Kyle Hudson",
-            "email": "yiyib10582@daerdy.com",
-            "phoneNumber": "+1 (189) 525-2151",
-            "address": null,
-            "isProfileComplete": false,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700645562_photo_6145680347962740347_y.jpg"
+            "id": "69b239f84d3d4d3d1d94cf2f",
+            "productName": "Monthly Weight Loss Nutrition Plan",
+            "productStatus": "ACTIVE",
+            "description": "Monthly subscription program designed for sustainable weight loss.",
+            "durationWeeks": 24,
+            "bulletPoints": [
+                "Monthly personalized diet plan",
+                "Nutrition progress review",
+                "Healthy recipe collection",
+                "Private member community"
             ],
-            "experienceYears": 1993,
-            "specialty": [
-                {
-                    "id": "69799a8d7aa1f9ef64091eed",
-                    "specialtyName": "Partner Training"
-                },
-                {
-                    "id": "69799aa57aa1f9ef64091ef0",
-                    "specialtyName": "Bootcamp"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-03-05T08:50:46.729Z",
-            "updatedAt": "2026-03-05T08:50:46.729Z"
+            "totalPurchased": 1,
+            "views": 0,
+            "price": 49.99,
+            "capacity": 30,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287926802_hair_cut.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287927690_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773287928133_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-12T03:58:48.627Z",
+            "updatedAt": "2026-03-15T03:35:56.933Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a941d2a8c25de6218ce7bb",
-            "userId": "69a9411d277044e65efc9225",
-            "fullName": "Phoebe Crosby",
-            "email": "dayev45199@feriwor.com",
-            "phoneNumber": "+1 (326) 819-5137",
-            "address": null,
-            "isProfileComplete": false,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700113116_Clients 1.png"
+            "id": "69b2308e69325317f00ba972",
+            "productName": "Nutrition Pro Plan for you yyyyy",
+            "productStatus": "ACTIVE",
+            "description": "Structured one nutrition program with expert supervision.",
+            "durationWeeks": 26,
+            "bulletPoints": [
+                "Monthly diet strategy",
+                "Metabolic assessment",
+                "Recipe database access",
+                "Community support"
             ],
-            "experienceYears": 5,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                },
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-03-05T08:41:54.406Z",
-            "updatedAt": "2026-03-05T08:41:54.406Z"
+            "totalPurchased": 0,
+            "views": 0,
+            "price": 49.99,
+            "capacity": 25,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773285515821_download (4).jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773285516331_13265227_1920_1080_25fps.mp4",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773285517968_CSE_BD_DDA_E030312024370904536.pdf",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-12T03:18:38.420Z",
+            "updatedAt": "2026-03-12T03:18:38.420Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a9203571d81d154e8dba94",
-            "userId": "69a91fc571d81d154e8dba93",
-            "fullName": "John Doe",
-            "email": "xovih82413@7novels.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772691508709_hair_cut.jpg"
+            "id": "69ae4f882757846cca463a05",
+            "productName": "Nutrition Pro Plan for you",
+            "productStatus": "ACTIVE",
+            "description": "Structured one nutrition program with expert supervision.",
+            "durationWeeks": 26,
+            "bulletPoints": [
+                "Monthly diet strategy",
+                "Metabolic assessment",
+                "Recipe database access",
+                "Community support"
             ],
-            "experienceYears": 2,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                }
-            ],
-            "createdAt": "2026-03-05T06:18:29.863Z",
-            "updatedAt": "2026-03-05T06:18:29.863Z"
+            "totalPurchased": 1,
+            "views": 6,
+            "price": 49.99,
+            "capacity": 25,
+            "avgRating": 5,
+            "ratingCount": 1,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773031301836_hair_cut.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773031303081_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1773031303549_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-09T04:41:44.055Z",
+            "updatedAt": "2026-03-11T08:13:04.227Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a9157f5bcc23f85e6d68a5",
-            "userId": "69a914f15bcc23f85e6d68a4",
-            "fullName": "Trainer Rabeya",
-            "email": "roliwi4545@daerdy.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": false,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772688765919_Clients 1.png"
+            "id": "69acf0f8329941dc0cffaea2",
+            "productName": "Monthly Nutrition Pro Plan",
+            "productStatus": "ACTIVE",
+            "description": "Structured monthly nutrition program with expert supervision.",
+            "durationWeeks": 16,
+            "bulletPoints": [
+                "Monthly diet strategy",
+                "Metabolic assessment",
+                "Recipe database access",
+                "Community support"
             ],
-            "experienceYears": 5,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                },
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-03-05T05:32:47.085Z",
-            "updatedAt": "2026-03-05T05:32:47.085Z"
+            "totalPurchased": 3,
+            "views": 4,
+            "price": 39.99,
+            "capacity": 25,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941558202_photo.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941559063_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941559514_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-08T03:46:00.005Z",
+            "updatedAt": "2026-03-14T04:59:53.476Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "69a7c917fe2490877710c625",
-            "userId": "69a7c8acfe2490877710c624",
-            "fullName": "John Doe",
-            "email": "lajoka8767@7novels.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": true,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772603670156_hair_cut.jpg"
+            "id": "69acf0da329941dc0cffaea1",
+            "productName": "Weekly Nutrition Coaching",
+            "productStatus": "ACTIVE",
+            "description": "Ongoing weekly nutrition coaching with habit tracking and expert guidance.",
+            "durationWeeks": 12,
+            "bulletPoints": [
+                "Weekly coaching calls",
+                "Habit correction plans",
+                "Progress analytics dashboard",
+                "Chat support"
             ],
-            "experienceYears": 5,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                },
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-03-04T05:54:31.272Z",
-            "updatedAt": "2026-03-11T07:26:40.375Z"
+            "totalPurchased": 1,
+            "views": 1,
+            "price": 14.99,
+            "capacity": 30,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941528925_photo.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941529799_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941530258_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-08T03:45:30.765Z",
+            "updatedAt": "2026-03-09T03:54:40.242Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         },
         {
-            "id": "6982e9cbb20947d399d2b8a7",
-            "userId": "6982e89d3677f8cc5583a39a",
-            "fullName": "John Doe",
-            "email": "favecad173@codgal.com",
-            "phoneNumber": "0123456789",
-            "address": null,
-            "isProfileComplete": false,
-            "specialtyId": null,
-            "portfolio": [],
-            "certifications": [
-                "https://e-learning-paulina-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1770187208387_trainer.jpg"
+            "id": "69acf0ca329941dc0cffaea0",
+            "productName": "Best Nutrition Camp",
+            "productStatus": "ACTIVE",
+            "description": "Personalized nutrition consultation to help you optimize your diet and achieve your fitness goals.",
+            "durationWeeks": 12,
+            "bulletPoints": [
+                "Personalized meal plans",
+                "Weekly progress tracking",
+                "24/7 support access",
+                "Nutrition guide PDF included"
             ],
-            "experienceYears": 5,
-            "specialty": [
-                {
-                    "id": "69799a637aa1f9ef64091eea",
-                    "specialtyName": "Popular Trainers"
-                },
-                {
-                    "id": "69799a837aa1f9ef64091eec",
-                    "specialtyName": "Online Personal Training"
-                }
-            ],
-            "serviceTypes": [
-                {
-                    "id": "6979971b484c3f9f9a6d8a39",
-                    "serviceName": "Personal Training (1-on-1)"
-                },
-                {
-                    "id": "69799782484c3f9f9a6d8a3b",
-                    "serviceName": "Gym Training"
-                },
-                {
-                    "id": "697997a1484c3f9f9a6d8a3c",
-                    "serviceName": "Program/Package"
-                }
-            ],
-            "createdAt": "2026-02-04T06:40:11.692Z",
-            "updatedAt": "2026-02-04T06:40:11.692Z"
+            "totalPurchased": 1,
+            "views": 0,
+            "price": 59.99,
+            "capacity": 20,
+            "avgRating": 0,
+            "ratingCount": 0,
+            "productImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941512652_photo.jpg",
+            "productVideo": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941513531_photo.jpg",
+            "agreementPdf": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/product-media/1772941513983_hair_cut.jpg",
+            "isActive": true,
+            "isApproved": true,
+            "createdAt": "2026-03-08T03:45:14.482Z",
+            "updatedAt": "2026-03-08T04:45:12.647Z",
+            "trainer": {
+                "trainerId": "6979a7df7b9f581a170f2cf6",
+                "trainerName": "Trainer Efaz",
+                "trainerEmail": "xodekif839@gamening.com",
+                "trainerImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/user-profile-images/1773205569261_download (4).jpg",
+                "organizationName": "NASM",
+                "experienceYears": 5,
+                "specialty": [
+                    {
+                        "id": "69799a637aa1f9ef64091eea",
+                        "specialtyName": "Popular Trainers"
+                    },
+                    {
+                        "id": "69799a837aa1f9ef64091eec",
+                        "specialtyName": "Online Personal Training"
+                    }
+                ]
+            }
         }
     ],
     "meta": {

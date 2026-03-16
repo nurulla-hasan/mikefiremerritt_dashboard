@@ -38,7 +38,7 @@ const MANAGEMENT_ITEMS = [
   { name: "User Management", icon: Users, href: "/management/users" },
   { name: "Admin Management", icon: GlobeLock, href: "/management/admins" },
   { name: "Trainer Management", icon: BadgeCheck, href: "/management/trainers" },
-  { name: "Program Management", icon: Layers, href: "/management/programs" },
+  { name: "Product Management", icon: Layers, href: "/management/products" },
   { name: "Gym Management", icon: Dumbbell, href: "/management/gyms" },
   { name: "Newsfeed Moderation", icon: Newspaper, href: "/management/newsfeed" },
   { name: "Manage Subscription", icon: Wallet, href: "/management/subscriptions" },
