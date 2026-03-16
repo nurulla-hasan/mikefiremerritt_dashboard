@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Download, Search } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -10,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useGetAllSpecialtiesQuery } from "@/redux/feature/trainer/trainerApis";
+import { Button } from "@/components/ui/button";
 
 interface TrainersFilterProps {
   filter: any;
@@ -17,6 +18,9 @@ interface TrainersFilterProps {
 }
 
 export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
+  const { data: specialtiesData, isLoading, isError } = useGetAllSpecialtiesQuery(undefined);
+  const specialties = specialtiesData?.data || [];
+
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
       {/* View Count Range */}
@@ -82,13 +86,23 @@ export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
         <SelectTrigger className="w-fit rounded-full">
           <SelectValue placeholder="Specialty" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="max-h-62.5">
           <SelectItem value="all">All Specialty</SelectItem>
-          <SelectItem value="Yoga">Yoga</SelectItem>
-          <SelectItem value="Fitness">Fitness</SelectItem>
-          <SelectItem value="Nutrition">Nutrition</SelectItem>
-          <SelectItem value="CrossFit">CrossFit</SelectItem>
-          <SelectItem value="Bootcamp">Bootcamp</SelectItem>
+          {isLoading ? (
+            <div className="flex items-center justify-center p-4">
+              <span className="text-xs text-muted-foreground">Loading...</span>
+            </div>
+          ) : isError ? (
+            <div className="flex items-center justify-center p-4">
+              <span className="text-xs text-destructive">Failed to load</span>
+            </div>
+          ) : (
+            specialties.map((s: any) => (
+              <SelectItem key={s.id} value={s.specialtyName}>
+                {s.specialtyName}
+              </SelectItem>
+            ))
+          )}
         </SelectContent>
       </Select>
 

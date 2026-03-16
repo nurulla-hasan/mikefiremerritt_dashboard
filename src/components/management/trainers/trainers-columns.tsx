@@ -55,8 +55,17 @@ export const trainersColumns: ColumnDef<ITrainer>[] = [
     accessorKey: "experienceYears",
     header: "Experience",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground text-center block">
+      <span className="text-sm text-muted-foreground">
         {row.original.experienceYears} Years
+      </span>
+    ),
+  },
+  {
+    accessorKey: "viewCount",
+    header: "Views",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {row.original.viewCount}
       </span>
     ),
   },
