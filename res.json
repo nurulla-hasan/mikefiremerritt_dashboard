@@ -1,63 +1,85 @@
 {
     "success": true,
     "statusCode": 200,
-    "message": "All specialties list retrieved successfully",
+    "message": "Support list retrieved successfully",
     "data": [
         {
-            "id": "69799aa57aa1f9ef64091ef0",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Bootcamp",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469669980_photo.jpg",
-            "createdAt": "2026-01-28T05:12:05.871Z",
-            "updatedAt": "2026-03-14T06:27:51.259Z"
+            "id": "69b2345419d41c701a0c25f7",
+            "message": "Need Support From Web",
+            "userName": "Efaz Khondhoker (Member)",
+            "userEmail": "efazkh@gmail.com",
+            "userPhone": "012345678",
+            "status": "OPEN",
+            "type": "TECHNICAL_SUPPORT",
+            "createdAt": "2026-03-12T03:34:44.917Z",
+            "updatedAt": "2026-03-12T03:34:44.917Z",
+            "reply": null
         },
         {
-            "id": "69799aa07aa1f9ef64091eef",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Pilates",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469705873_photo.jpg",
-            "createdAt": "2026-01-28T05:12:00.508Z",
-            "updatedAt": "2026-03-14T06:28:27.083Z"
+            "id": "69b23237e1a3011e3a0ed636",
+            "message": "Message from postman.",
+            "userName": "John Trainer",
+            "userEmail": "xodekif839@gamening.com",
+            "userPhone": "0123456789",
+            "status": "OPEN",
+            "type": "GENERAL_INQUIRY",
+            "createdAt": "2026-03-12T03:25:43.610Z",
+            "updatedAt": "2026-03-12T03:25:43.610Z",
+            "reply": null
         },
         {
-            "id": "69799a977aa1f9ef64091eee",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Yoga",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469716114_photo.jpg",
-            "createdAt": "2026-01-28T05:11:51.873Z",
-            "updatedAt": "2026-03-14T06:28:37.216Z"
+            "id": "69b2314b69325317f00ba973",
+            "message": "Demo.",
+            "userName": "John Trainer",
+            "userEmail": "xodekif839@gamening.com",
+            "userPhone": "0123456789",
+            "status": "OPEN",
+            "type": "GENERAL_INQUIRY",
+            "createdAt": "2026-03-12T03:21:47.370Z",
+            "updatedAt": "2026-03-12T03:21:47.370Z",
+            "reply": null
         },
         {
-            "id": "69799a8d7aa1f9ef64091eed",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Partner Training",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469729454_photo.jpg",
-            "createdAt": "2026-01-28T05:11:41.674Z",
-            "updatedAt": "2026-03-14T06:28:50.601Z"
+            "id": "69afea76c3a39e4afa33d148",
+            "message": "Demo.",
+            "userName": "OG Rafiq",
+            "userEmail": "xodekif839@gamening.com",
+            "userPhone": "0123456789",
+            "status": "CLOSED",
+            "type": "GENERAL_INQUIRY",
+            "createdAt": "2026-03-10T09:55:01.932Z",
+            "updatedAt": "2026-03-10T09:55:55.863Z",
+            "reply": {
+                "id": "69afeaacc3a39e4afa33d149",
+                "message": "We working on it",
+                "status": "CLOSED",
+                "createdAt": "2026-03-10T09:55:56.036Z"
+            }
         },
         {
-            "id": "69799a837aa1f9ef64091eec",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Online Personal Training",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469742232_photo.jpg",
-            "createdAt": "2026-01-28T05:11:31.686Z",
-            "updatedAt": "2026-03-14T06:29:03.401Z"
-        },
-        {
-            "id": "69799a7a7aa1f9ef64091eeb",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Private Personal Training",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469752531_photo.jpg",
-            "createdAt": "2026-01-28T05:11:22.090Z",
-            "updatedAt": "2026-03-14T06:29:13.729Z"
-        },
-        {
-            "id": "69799a637aa1f9ef64091eea",
-            "userId": "69772e54d0d48a886651d387",
-            "specialtyName": "Popular Trainers",
-            "specialtyImage": "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/specialty-Image/1773469826695_photo.jpg",
-            "createdAt": "2026-01-28T05:10:59.392Z",
-            "updatedAt": "2026-03-14T06:30:27.829Z"
+            "id": "69a6634fa59b8120f94a2512",
+            "message": "Missmanagement.",
+            "userName": "efaz khondhoker",
+            "userEmail": "efazkh@gmail.com",
+            "userPhone": "012345678",
+            "status": "CLOSED",
+            "type": "FEEDBACK",
+            "createdAt": "2026-03-03T04:27:59.689Z",
+            "updatedAt": "2026-03-03T04:34:47.742Z",
+            "reply": {
+                "id": "69a664e788949ca50a23fab5",
+                "message": "We working on it",
+                "status": "CLOSED",
+                "createdAt": "2026-03-03T04:34:47.906Z"
+            }
         }
-    ]
+    ],
+    "meta": {
+        "page": 1,
+        "limit": 10,
+        "total": 5,
+        "totalPages": 1,
+        "hasNextPage": false,
+        "hasPrevPage": false
+    }
 }

@@ -11,6 +11,7 @@ export const tagTypes = {
   about: "About",
   dashboard: "Dashboard",
   specialty: "Specialty",
+  support: "Support",
   // Add other tags here as needed
 };
 

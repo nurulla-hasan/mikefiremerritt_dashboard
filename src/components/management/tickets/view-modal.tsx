@@ -14,27 +14,21 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { Ticket } from "@/types/ticket";
 
-const fakeTicket = {
-  ticketId: "TKT-0001",
-  userName: "Hilda Reinger",
-  email: "admin@gmail.com",
-  subject: "Issue with subscription payment",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at velit maximus, molestie est a, tempor magna.",
-  date: "2 days ago",
-  status: "Completed",
-};
+interface TicketViewModalProps {
+  ticket: Ticket;
+}
 
-const TicketViewModal = () => {
+const TicketViewModal = ({ ticket }: TicketViewModalProps) => {
   const [open, setOpen] = useState(false);
 
   const statusVariant =
-    fakeTicket.status === "Completed"
+    ticket.status === "CLOSED"
       ? "success"
-      : fakeTicket.status === "In Progress"
-      ? "warning"
-      : "muted";
+      : "warning";
+
+  const date = new Date(ticket.createdAt).toLocaleDateString();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -54,26 +48,39 @@ const TicketViewModal = () => {
                 Ticket Details
               </DialogTitle>
               <p className="text-xs text-muted-foreground">
-                {fakeTicket.ticketId} • {fakeTicket.date}
+                #{ticket.id.slice(-6).toUpperCase()} • {date}
               </p>
             </DialogHeader>
 
             <div className="space-y-3 text-sm">
-              <InfoRow label="User Name" value={fakeTicket.userName} />
-              <InfoRow label="Email" value={fakeTicket.email} />
-              <InfoRow label="Subject" value={fakeTicket.subject} />
+              <InfoRow label="User Name" value={ticket.userName} />
+              <InfoRow label="Email" value={ticket.userEmail} />
+              <InfoRow label="Phone" value={ticket.userPhone} />
+              <InfoRow label="Type" value={ticket.type.replace("_", " ")} />
               <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
-                <p className="text-sm font-medium">Description</p>
+                <p className="text-sm font-medium">Message</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {fakeTicket.description}
+                  {ticket.message}
                 </p>
               </div>
               <div className="grid grid-cols-[120px_1fr] gap-4 items-center">
                 <p className="text-sm font-medium">Status</p>
                 <Badge variant={statusVariant as any} className="rounded-full px-3 py-1">
-                  {fakeTicket.status}
+                  {ticket.status}
                 </Badge>
               </div>
+
+              {ticket.reply && (
+                <div className="mt-6 pt-6 border-t space-y-3">
+                  <p className="text-sm font-semibold">Support Reply</p>
+                  <div className="grid grid-cols-[120px_1fr] gap-4 items-start">
+                    <p className="text-sm font-medium">Reply Message</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {ticket.reply.message}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </DialogContent>

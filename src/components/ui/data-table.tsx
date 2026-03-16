@@ -114,13 +114,13 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="relative rounded-xl overflow-hidden border">
+      <div className="relative">
         {isFetching && !isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/10 backdrop-blur-[1px]">
             <Spinner className="text-primary size-8" />
           </div>
         )}
-        <ScrollArea className="w-[calc(100vw-42px)] lg:w-[calc(100vw-300px)] rounded-lg border whitespace-nowrap">
+        <ScrollArea className="w-[calc(100vw-42px)] lg:w-[calc(100vw-300px)] rounded-xl border whitespace-nowrap">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

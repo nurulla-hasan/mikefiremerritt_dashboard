@@ -1,52 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ban, Trash2 } from "lucide-react";
 
-import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import type { Ticket } from "@/types/ticket";
 import TicketViewModal from "./view-modal";
 import TicketResponseModal from "./response-modal";
 
-export type Ticket = {
-  id: number;
-  ticketId: string;
-  userName: string;
-  email: string;
-  date: string;
-  status: "Completed" | "In Progress" | "Pending";
-};
-
 export const ticketsColumns: ColumnDef<Ticket>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <label className="flex items-center gap-2 cursor-pointer select-none">
-        <span className="font-semibold">Select All</span>
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
-        />
-      </label>
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: "SL",
+    cell: ({ row, table }) => {
+      const { pageIndex, pageSize } = table.getState().pagination;
+      return (
+        <span className="text-sm font-medium text-foreground">
+          {pageIndex * pageSize + row.index + 1}
+        </span>
+      );
+    },
   },
   {
-    accessorKey: "ticketId",
+    accessorKey: "id",
     header: "Ticket ID",
     cell: ({ row }) => (
-      <span className="text-sm text-foreground">{row.original.ticketId}</span>
+      <span className="text-sm text-foreground">#{row.original.id.slice(-6).toUpperCase()}</span>
     ),
   },
   {
@@ -59,32 +41,62 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "userEmail",
     header: "Email",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
-        {row.original.email}
+        {row.original.userEmail}
       </span>
     ),
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "type",
+    header: "Type",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">{row.original.date}</span>
+      <span className="text-sm text-muted-foreground capitalize">
+        {row.original.type.replace("_", " ").toLowerCase()}
+      </span>
     ),
+  },
+  {
+    accessorKey: "message",
+    header: "Message",
+    cell: ({ row }) => {
+      const message = row.original.message;
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="text-sm text-muted-foreground line-clamp-1 max-w-50 cursor-help">
+                {message}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-80">
+              <p className="text-sm">{message}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Date",
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return (
+        <span className="text-sm text-muted-foreground">
+          {date.toLocaleDateString()}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.status;
-      const variant =
-        status === "Completed"
-          ? "success"
-          : status === "In Progress"
-          ? "warning"
-          : "muted";
+      const variant = status === "CLOSED" ? "success" : "warning";
       return (
         <Badge variant={variant as any} className="rounded-full px-3 py-1">
           {status}
@@ -94,25 +106,11 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right pr-8">Actions</div>,
-    cell: () => (
+    header: () => <div className="text-right pr-3">Actions</div>,
+    cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
-        <TicketViewModal />
-        <TicketResponseModal />
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-red-500 hover:text-red-600"
-        >
-          <Trash2 />
-        </Button>
+        <TicketViewModal ticket={row.original} />
+        <TicketResponseModal ticket={row.original} />
       </div>
     ),
     enableSorting: false,

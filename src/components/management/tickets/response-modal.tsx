@@ -16,16 +16,38 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import type { Ticket } from "@/types/ticket";
+import { useReplyToSupportTicketMutation } from "@/redux/feature/support/supportApis";
+import { toast } from "sonner";
 
-const TicketResponseModal = () => {
+interface TicketResponseModalProps {
+  ticket: Ticket;
+}
+
+const TicketResponseModal = ({ ticket }: TicketResponseModalProps) => {
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
+  const [replyToTicket, { isLoading }] = useReplyToSupportTicketMutation();
 
-  const handleSendResponse = () => {
-    // In a real app, this would call an API
-    console.log("Sending response:", response);
-    setOpen(false);
-    setResponse("");
+  const handleSendResponse = async () => {
+    if (!response.trim()) {
+      toast.error("Please enter a response message");
+      return;
+    }
+
+    try {
+      await replyToTicket({
+        id: ticket.id,
+        data: { message: response }
+      }).unwrap();
+      
+      toast.success("Response sent successfully");
+      setOpen(false);
+      setResponse("");
+    } catch (error) {
+      toast.error("Failed to send response");
+      console.error("Error sending response:", error);
+    }
   };
 
   return (
@@ -46,7 +68,7 @@ const TicketResponseModal = () => {
                 Respond to Ticket
               </DialogTitle>
               <p className="text-xs text-muted-foreground">
-                TKT-0001 • Issue with subscription payment
+                #{ticket.id.slice(-6).toUpperCase()} • {ticket.userName}
               </p>
             </DialogHeader>
 
@@ -61,16 +83,26 @@ const TicketResponseModal = () => {
                   className="min-h-37.5 resize-none"
                   value={response}
                   onChange={(e) => setResponse(e.target.value)}
+                  disabled={isLoading}
                 />
               </div>
             </div>
 
             <DialogFooter className="flex justify-end gap-3 pt-4 border-t">
-              <Button variant="outline" onClick={() => setOpen(false)} className="rounded-full">
+              <Button 
+                variant="outline" 
+                onClick={() => setOpen(false)} 
+                className="rounded-full"
+                disabled={isLoading}
+              >
                 Cancel
               </Button>
-              <Button onClick={handleSendResponse} className="rounded-full px-8">
-                Send Response
+              <Button 
+                onClick={handleSendResponse} 
+                className="rounded-full px-8"
+                disabled={isLoading}
+              >
+                {isLoading ? "Sending..." : "Send Response"}
               </Button>
             </DialogFooter>
           </div>

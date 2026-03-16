@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo, useTransition, useCallback, useEffect } from 'react';
 import type { TMeta } from '@/types/global.types';
 
@@ -52,7 +53,7 @@ const useSmartFetchHook = <P extends BaseParams, T>(
   initialParams: Partial<P> = {} as Partial<P>
 ): UseSmartFetchReturn<P, T> => {
   // Merged state for simpler management
-  const [filter, setFilter] = useState<Partial<P>>({
+  const [filter, setRawFilter] = useState<Partial<P>>({
     page: 1,
     limit: options.limit || 10,
     ...initialParams,
@@ -68,15 +69,24 @@ const useSmartFetchHook = <P extends BaseParams, T>(
   // Execute the query hook
   const { data, isLoading, isError, isFetching } = queryHook(debouncedFilter as P);
 
+  // Smart setFilter that resets page to 1 unless page is explicitly updated
+  const setFilter = useCallback((update: React.SetStateAction<Partial<P>>) => {
+    setRawFilter(prev => {
+      const next = typeof update === 'function' ? (update as any)(prev) : update;
+      // If the update doesn't contain a new page, reset it to 1
+      return { ...next, page: next.page || 1 };
+    });
+  }, []);
+
   // Helper to set current page safely
   const setPage = useCallback((page: number) => {
-    setFilter(prev => ({ ...prev, page }));
+    setRawFilter(prev => ({ ...prev, page }));
   }, []);
 
   // Reset all filters
   const resetFilters = useCallback(() => {
     startTransition(() => {
-      setFilter({
+      setRawFilter({
         page: 1,
         limit: options.limit || 10,
         ...initialParams,
