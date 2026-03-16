@@ -1,7 +1,7 @@
 export const tagTypes = {
   user: "User",
   admin: "Admin",
-  course: "Course",
+  trainer: "Trainer",
   notification: "Notification",
   faq: "FAQ",
   privacy: "Privacy",

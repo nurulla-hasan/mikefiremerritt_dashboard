@@ -1,68 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import type { ColumnDef } from "@tanstack/react-table";
-import { Ban } from "lucide-react";
-
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import TrainerViewModal from "./view-modal";
-import SubscriptionFeeModal from "./subscription-fee-modal";
+import { ActionButtons } from "./action-buttons";
+import type { ITrainer } from "@/types/trainer";
 
-export type Trainer = {
-  id: number;
-  name: string;
-  email: string;
-  image: string;
-  views: string;
-  subscriptionFee: string;
-  status: "Approved" | "Rejected" | "Pending";
-  specialty: string;
-  certifications: string[];
-};
-
-export const trainersColumns: ColumnDef<Trainer>[] = [
+export const trainersColumns: ColumnDef<ITrainer>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <label className="flex items-center gap-2 cursor-pointer select-none">
-        <span className="font-semibold">Select All</span>
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value: boolean) =>
-            table.toggleAllPageRowsSelected(!!value)
-          }
-          aria-label="Select all"
-        />
-      </label>
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value: boolean) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: "SL",
+    cell: ({ row, table }) => {
+      const { pageIndex, pageSize } = table.getState().pagination;
+      return (
+        <span className="text-sm font-medium text-foreground">
+          {pageIndex * pageSize + row.index + 1}
+        </span>
+      );
+    },
   },
   {
-    accessorKey: "image",
-    header: "Trainer Image",
-    cell: ({ row }) => (
-      <Avatar>
-        <AvatarImage src={row.original.image} alt={row.original.name} />
-        <AvatarFallback>{row.original.name.charAt(0)}</AvatarFallback>
-      </Avatar>
-    ),
-  },
-  {
-    accessorKey: "name",
+    accessorKey: "fullName",
     header: "Trainer Name",
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-foreground">
-        {row.original.name}
-      </span>
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage src={row.original.image || ""} alt={row.original.fullName} />
+          <AvatarFallback>{row.original.fullName.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <span className="text-sm font-medium text-foreground">
+          {row.original.fullName}
+        </span>
+      </div>
     ),
   },
   {
@@ -75,11 +43,20 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     ),
   },
   {
-    accessorKey: "views",
-    header: "Views",
+    accessorKey: "phoneNumber",
+    header: "Phone",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
-        {row.original.views}
+        {row.original.phoneNumber}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "experienceYears",
+    header: "Experience",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground text-center block">
+        {row.original.experienceYears} Years
       </span>
     ),
   },
@@ -87,68 +64,34 @@ export const trainersColumns: ColumnDef<Trainer>[] = [
     accessorKey: "specialty",
     header: "Specialty",
     cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        {row.original.specialty}
-      </span>
-    ),
-  },
-  {
-    accessorKey: "certifications",
-    header: "Certifications",
-    cell: ({ row }) => (
-      <div className="flex flex-wrap gap-1">
-        {row.original.certifications.map((cert) => (
-          <Badge key={cert} variant="secondary" className="text-[10px] px-1.5 py-0">
-            {cert}
+      <div className="flex flex-wrap gap-1 max-w-50">
+        {row.original.specialty?.map((s) => (
+          <Badge key={s.id} variant="outline" className="text-[10px] px-1.5 py-0">
+            {s.specialtyName}
           </Badge>
         ))}
       </div>
     ),
   },
   {
-    accessorKey: "subscriptionFee",
-    header: () => <div className="text-center">Subscription Fee</div>,
-    cell: ({ row }) => (
-      <div className="text-center text-muted-foreground tracking-widest">
-        {row.original.subscriptionFee}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "isProfileComplete",
+    header: "Profile Status",
     cell: ({ row }) => {
-      const status = row.original.status;
-      const variant =
-        status === "Approved"
-          ? "success"
-          : status === "Rejected"
-          ? "destructive"
-          : "warning";
+      const isProfileComplete = row.original.isProfileComplete;
+      let variant = "outline";
+      if (isProfileComplete === true) variant = "accepted";
+      if (isProfileComplete === false) variant = "rejected";
+
       return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1">
-          {status}
+        <Badge variant={variant as any}>
+          {isProfileComplete === true ? "Complete" : "Incomplete"}
         </Badge>
       );
     },
   },
   {
     id: "actions",
-    header: () => <div className="text-right pr-14">Actions</div>,
-    cell: () => (
-      <div className="flex items-center justify-end gap-1">
-        <TrainerViewModal />
-        <SubscriptionFeeModal />
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="text-amber-500 hover:text-amber-600"
-        >
-          <Ban />
-        </Button>
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    header: () => <div className="text-right pr-8">Actions</div>,
+    cell: ({ row }) => <ActionButtons trainer={row.original} />,
   },
 ];

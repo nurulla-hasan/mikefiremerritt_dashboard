@@ -1,27 +1,397 @@
 {
     "success": true,
     "statusCode": 200,
-    "message": "User list retrieved successfully",
+    "message": "Trainer list retrieved successfully",
     "data": [
         {
-            "id": "69a694a6fe801014db153b60",
-            "fullName": "Mason Guerrero",
-            "email": "rayedo1781@hutudns.com",
-            "phoneNumber": "+1 (254) 865-6869",
-            "status": "ACTIVE",
-            "bio": null,
-            "image": null,
-            "fitnessGoals": [],
+            "id": "69b6738534abe36e742b1a10",
+            "userId": "69b6733c34abe36e742b1a0f",
+            "fullName": "Jacob",
+            "email": "jetoca5005@bigonla.com",
+            "phoneNumber": "0123456789",
             "address": null,
-            "createdAt": "2026-03-03T07:58:30.851Z"
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773564804439_photo.jpg"
+            ],
+            "experienceYears": 2,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                }
+            ],
+            "createdAt": "2026-03-15T08:53:25.585Z",
+            "updatedAt": "2026-03-15T08:53:25.585Z"
+        },
+        {
+            "id": "69b12b5706ac1979e0278e6b",
+            "userId": "69b12b1406ac1979e0278e6a",
+            "fullName": "John Doe",
+            "email": "laseg67098@bigonla.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773218646422_hair_cut.jpg"
+            ],
+            "experienceYears": 2,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                }
+            ],
+            "createdAt": "2026-03-11T08:44:07.551Z",
+            "updatedAt": "2026-03-11T08:44:07.551Z"
+        },
+        {
+            "id": "69b101e09eaaf887c72298da",
+            "userId": "69b0ff869eaaf887c72298d9",
+            "fullName": "John Doe",
+            "email": "vegamo8067@3dkai.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1773208031568_hair_cut.jpg"
+            ],
+            "experienceYears": 2,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                }
+            ],
+            "createdAt": "2026-03-11T05:47:12.784Z",
+            "updatedAt": "2026-03-15T09:16:53.008Z"
+        },
+        {
+            "id": "69a944bda8c25de6218ce7c2",
+            "userId": "69a9449aa8c25de6218ce7c1",
+            "fullName": "Sacha Crosby",
+            "email": "jijoyon836@daerdy.com",
+            "phoneNumber": "+1 (484) 762-5702",
+            "address": null,
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700860017_photo_6145680347962740347_y.jpg"
+            ],
+            "experienceYears": 1983,
+            "specialty": [
+                {
+                    "id": "69799aa07aa1f9ef64091eef",
+                    "specialtyName": "Pilates"
+                },
+                {
+                    "id": "69799aa57aa1f9ef64091ef0",
+                    "specialtyName": "Bootcamp"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-03-05T08:54:21.172Z",
+            "updatedAt": "2026-03-11T07:27:06.361Z"
+        },
+        {
+            "id": "69a943e6277044e65efc9227",
+            "userId": "69a943be277044e65efc9226",
+            "fullName": "Kyle Hudson",
+            "email": "yiyib10582@daerdy.com",
+            "phoneNumber": "+1 (189) 525-2151",
+            "address": null,
+            "isProfileComplete": false,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700645562_photo_6145680347962740347_y.jpg"
+            ],
+            "experienceYears": 1993,
+            "specialty": [
+                {
+                    "id": "69799a8d7aa1f9ef64091eed",
+                    "specialtyName": "Partner Training"
+                },
+                {
+                    "id": "69799aa57aa1f9ef64091ef0",
+                    "specialtyName": "Bootcamp"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-03-05T08:50:46.729Z",
+            "updatedAt": "2026-03-05T08:50:46.729Z"
+        },
+        {
+            "id": "69a941d2a8c25de6218ce7bb",
+            "userId": "69a9411d277044e65efc9225",
+            "fullName": "Phoebe Crosby",
+            "email": "dayev45199@feriwor.com",
+            "phoneNumber": "+1 (326) 819-5137",
+            "address": null,
+            "isProfileComplete": false,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772700113116_Clients 1.png"
+            ],
+            "experienceYears": 5,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                },
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-03-05T08:41:54.406Z",
+            "updatedAt": "2026-03-05T08:41:54.406Z"
+        },
+        {
+            "id": "69a9203571d81d154e8dba94",
+            "userId": "69a91fc571d81d154e8dba93",
+            "fullName": "John Doe",
+            "email": "xovih82413@7novels.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772691508709_hair_cut.jpg"
+            ],
+            "experienceYears": 2,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                }
+            ],
+            "createdAt": "2026-03-05T06:18:29.863Z",
+            "updatedAt": "2026-03-05T06:18:29.863Z"
+        },
+        {
+            "id": "69a9157f5bcc23f85e6d68a5",
+            "userId": "69a914f15bcc23f85e6d68a4",
+            "fullName": "Trainer Rabeya",
+            "email": "roliwi4545@daerdy.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": false,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772688765919_Clients 1.png"
+            ],
+            "experienceYears": 5,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                },
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-03-05T05:32:47.085Z",
+            "updatedAt": "2026-03-05T05:32:47.085Z"
+        },
+        {
+            "id": "69a7c917fe2490877710c625",
+            "userId": "69a7c8acfe2490877710c624",
+            "fullName": "John Doe",
+            "email": "lajoka8767@7novels.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": true,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://rebarber-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1772603670156_hair_cut.jpg"
+            ],
+            "experienceYears": 5,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                },
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-03-04T05:54:31.272Z",
+            "updatedAt": "2026-03-11T07:26:40.375Z"
+        },
+        {
+            "id": "6982e9cbb20947d399d2b8a7",
+            "userId": "6982e89d3677f8cc5583a39a",
+            "fullName": "John Doe",
+            "email": "favecad173@codgal.com",
+            "phoneNumber": "0123456789",
+            "address": null,
+            "isProfileComplete": false,
+            "specialtyId": null,
+            "portfolio": [],
+            "certifications": [
+                "https://e-learning-paulina-bucket.s3.eu-north-1.amazonaws.com/trainer-certification-documents/1770187208387_trainer.jpg"
+            ],
+            "experienceYears": 5,
+            "specialty": [
+                {
+                    "id": "69799a637aa1f9ef64091eea",
+                    "specialtyName": "Popular Trainers"
+                },
+                {
+                    "id": "69799a837aa1f9ef64091eec",
+                    "specialtyName": "Online Personal Training"
+                }
+            ],
+            "serviceTypes": [
+                {
+                    "id": "6979971b484c3f9f9a6d8a39",
+                    "serviceName": "Personal Training (1-on-1)"
+                },
+                {
+                    "id": "69799782484c3f9f9a6d8a3b",
+                    "serviceName": "Gym Training"
+                },
+                {
+                    "id": "697997a1484c3f9f9a6d8a3c",
+                    "serviceName": "Program/Package"
+                }
+            ],
+            "createdAt": "2026-02-04T06:40:11.692Z",
+            "updatedAt": "2026-02-04T06:40:11.692Z"
         }
     ],
     "meta": {
         "page": 1,
         "limit": 10,
-        "total": 1,
-        "totalPages": 1,
-        "hasNextPage": false,
+        "total": 11,
+        "totalPages": 2,
+        "hasNextPage": true,
         "hasPrevPage": false
     }
 }
