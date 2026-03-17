@@ -15,6 +15,7 @@ export const tagTypes = {
   review: "Review",
   pricingRule: "PricingRule",
   subscription: "Subscription",
+  referral: "Referral",
   // Add other tags here as needed
 };
 

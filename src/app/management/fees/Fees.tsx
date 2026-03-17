@@ -14,7 +14,6 @@ import FirstComeFirstServeForm from "@/components/management/fees/FirstComeFirst
 
 const Fees = () => {
   const [standardFee, setStandardFee] = useState("");
-  const [referralAmount, setReferralAmount] = useState("");
 
   const {
     data: pricingData,
@@ -42,10 +41,7 @@ const Fees = () => {
             setStandardFee={setStandardFee}
           />
           {/* Referral Rewards */}
-          <ReferralRewards
-            referralAmount={referralAmount}
-            setReferralAmount={setReferralAmount}
-          />
+          <ReferralRewards />
         </div>
 
         <div className="space-y-6">
