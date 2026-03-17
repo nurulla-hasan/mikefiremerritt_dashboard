@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import PageHeader from "@/components/ui/page-header";
 import {
@@ -14,15 +15,13 @@ import { CheckCircle2, MinusCircle, Plus } from "lucide-react";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
 import PageLayout from "@/components/common/page-layout";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { DataTable } from "@/components/ui/data-table";
+import { pricingHistoryColumns } from "@/components/management/fees/pricing-history-columns";
+import useSmartFetchHook from "@/hooks/useSmartFetchHook";
+import { useGetAllPricingRulesQuery, useAddPricingRuleMutation } from "@/redux/feature/pricing-rule/pricingRuleApis";
+import type { TPricingRule } from "@/types/pricing-rule";
+import { toast } from "sonner";
+import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 const Fees = () => {
   const [standardFee, setStandardFee] = useState("50");
@@ -35,48 +34,87 @@ const Fees = () => {
   ]);
 
   const [referralAmount, setReferralAmount] = useState("10");
-  const [rewardLimit, setRewardLimit] = useState("");
-  const [rewardFee, setRewardFee] = useState("45");
   const [discountFee, setDiscountFee] = useState("50");
   const [duration, setDuration] = useState("3");
+  const [timeBasedRuleName, setTimeBasedRuleName] = useState("");
+
+  const [rewardLimit, setRewardLimit] = useState("");
+  const [rewardFee, setRewardFee] = useState("45");
+  const [firstComeRuleName, setFirstComeRuleName] = useState("");
 
   const [rewardDates, setRewardDates] = useState<DateRange | undefined>();
   const [discountDates, setDiscountDates] = useState<DateRange | undefined>();
 
-  const historyData = [
-    {
-      id: "PRC-001",
-      type: "Time Period",
-      amount: "$50",
-      duration: "6 Months",
-      range: "Jan 01 - Jun 30, 2024",
-      status: "Past",
-    },
-    {
-      id: "PRC-002",
-      type: "First Come First Serve",
-      amount: "$40",
-      duration: "-",
-      range: "Feb 15 - Mar 15, 2024",
-      status: "Past",
-    },
-    {
-      id: "PRC-003",
-      type: "Time Period",
-      amount: "$55",
-      duration: "12 Months",
-      range: "Jul 01 - Dec 31, 2024",
-      status: "Scheduled",
-    },
-    {
-      id: "PRC-004",
-      type: "First Come First Serve",
-      amount: "$45",
-      duration: "-",
-      range: "Aug 01 - Aug 31, 2024",
-      status: "Scheduled",
-    },
-  ];
+  const {
+    data: pricingData,
+    meta: pricingMeta,
+    isLoading,
+    isError,
+    isFetching,
+    setPage,
+  } = useSmartFetchHook<any, TPricingRule>(useGetAllPricingRulesQuery);
+
+  const [addPricingRule, { isLoading: isAdding }] = useAddPricingRuleMutation();
+
+  const handleSaveFirstCome = async () => {
+    if (!rewardDates?.from || !rewardDates?.to || !rewardLimit || !rewardFee) {
+      ErrorToast("Please fill all fields for First Come First Serve");
+      return;
+    }
+
+    const payload: any = {
+      subscriptionOfferId: "69803d34443d74ebcf780365", // From user's example
+      type: "FIRST_COME",
+      discountAmount: Number(standardFee) - Number(rewardFee),
+      maxSubscribers: Number(rewardLimit),
+      startDate: rewardDates.from.toISOString(),
+      endDate: rewardDates.to.toISOString(),
+      isActive: true,
+    };
+
+    if (firstComeRuleName) payload.name = firstComeRuleName;
+
+    try {
+      await addPricingRule(payload).unwrap();
+      SuccessToast("First Come First Serve rule added successfully");
+      // Reset form
+      setRewardLimit("");
+      setRewardDates(undefined);
+      setFirstComeRuleName("");
+    } catch (error: any) {
+      ErrorToast(error?.data?.message || "Failed to add pricing rule");
+    }
+  };
+
+  const handleSaveTimeBased = async () => {
+    if (!discountDates?.from || !discountDates?.to || !duration || !discountFee) {
+      ErrorToast("Please fill all fields for Time Period");
+      return;
+    }
+
+    const payload: any = {
+      subscriptionOfferId: "69803d34443d74ebcf780365", // From user's example
+      type: "TIME_BASED",
+      discountAmount: Number(standardFee) - Number(discountFee),
+      durationMonths: Number(duration),
+      startDate: discountDates.from.toISOString(),
+      endDate: discountDates.to.toISOString(),
+      isActive: true,
+    };
+
+    if (timeBasedRuleName) payload.name = timeBasedRuleName;
+
+    try {
+      await addPricingRule(payload).unwrap();
+      SuccessToast("Time Period rule added successfully");
+      // Reset form
+      setDuration("3");
+      setDiscountDates(undefined);
+      setTimeBasedRuleName("");
+    } catch (error: any) {
+      ErrorToast(error?.data?.message || "Failed to add pricing rule");
+    }
+  };
 
   return (
     <PageLayout>
@@ -171,7 +209,10 @@ const Fees = () => {
                   </div>
                 </div>
                 <div className="flex justify-center pt-2">
-                  <Button className="px-8 rounded-lg min-w-37.5">
+                  <Button 
+                    className="px-8 rounded-lg min-w-37.5"
+                    onClick={() => toast.info("Referral rewards update logic not implemented")}
+                  >
                     Save Change
                   </Button>
                 </div>
@@ -186,6 +227,15 @@ const Fees = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Rule Name (Optional)</Label>
+                  <Input
+                    value={timeBasedRuleName}
+                    onChange={(e) => setTimeBasedRuleName(e.target.value)}
+                    placeholder="e.g. Early Bird Discount"
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">
                     Subscription Fee (Monthly)
@@ -226,8 +276,12 @@ const Fees = () => {
                 </div>
 
                 <div className="flex justify-center pt-2">
-                  <Button className="px-8 rounded-lg min-w-37.5">
-                    Save Change
+                  <Button 
+                    className="px-8 rounded-lg min-w-37.5"
+                    onClick={handleSaveTimeBased}
+                    disabled={isAdding}
+                  >
+                    {isAdding ? "Saving..." : "Save Change"}
                   </Button>
                 </div>
               </CardContent>
@@ -242,6 +296,14 @@ const Fees = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Rule Name (Optional)</Label>
+                <Input
+                  value={firstComeRuleName}
+                  onChange={(e) => setFirstComeRuleName(e.target.value)}
+                  placeholder="e.g. Limited Offer"
+                />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">Limit</Label>
@@ -280,8 +342,12 @@ const Fees = () => {
               </div>
 
               <div className="flex justify-center pt-2">
-                <Button className="px-8 rounded-lg min-w-37.5">
-                  Save Change
+                <Button 
+                  className="px-8 rounded-lg min-w-37.5"
+                  onClick={handleSaveFirstCome}
+                  disabled={isAdding}
+                >
+                  {isAdding ? "Saving..." : "Save Change"}
                 </Button>
               </div>
             </CardContent>
@@ -289,47 +355,21 @@ const Fees = () => {
         </div>
       </div>
 
-      {/* History Section */}
-      <Card>
-        <CardHeader>
-          <PageHeader title="Pricing History" description="View past and scheduled custom pricing details." />
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Pricing ID</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Date Range</TableHead>
-                <TableHead className="text-right">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {historyData.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.id}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell>{item.amount}</TableCell>
-                  <TableCell>{item.duration}</TableCell>
-                  <TableCell>{item.range}</TableCell>
-                  <TableCell className="text-right">
-                    <Badge
-                      variant={
-                        item.status === "Scheduled" ? "default" : "secondary"
-                      }
-                      className="rounded-full"
-                    >
-                      {item.status}
-                    </Badge>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <PageHeader
+          title="Pricing History"
+          description="View past and scheduled custom pricing details."
+        />
+        <DataTable
+          columns={pricingHistoryColumns}
+          data={pricingData}
+          meta={pricingMeta}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          isError={isError}
+          onPageChange={setPage}
+        />
+      </div>
     </PageLayout>
   );
 };
