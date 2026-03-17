@@ -13,26 +13,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { useSelector } from "react-redux";
-// import { useGetAdminProfileQuery } from "@/redux/feature/auth/authApi";
+import { useDispatch } from "react-redux";
+import { useGetMeQuery } from "@/redux/feature/auth/authApis";
+import { Logout } from "@/redux/feature/auth/authSlice";
 import { getInitials } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const FALLBACK_ADMIN = {
-  name: "Golap Hasan",
-  email: "admin@popy.com",
-  profile_image: "https://i.pravatar.cc/150?img=32",
-};
+import { useGetNotificationsQuery } from "@/redux/feature/notifications/notificationApis";
 
 const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const { setTheme, theme } = useTheme();
-  // const storedAdmin = useSelector((state) => state.auth.admin);
-  const admin = FALLBACK_ADMIN;
-  // const { isLoading } = useGetAdminProfileQuery();
-  const isLoading = false;
+  const dispatch = useDispatch();
+  const { data: profileResponse, isLoading: isProfileLoading } = useGetMeQuery(undefined);
+  console.log(profileResponse)
+  const { data: notificationsResponse } = useGetNotificationsQuery();
+  
+  const admin = profileResponse?.data;
+  const unreadCount = notificationsResponse?.data?.filter(n => !n.isRead).length || 0;
 
   const handleLogout = () => {
-    window.location.href = "auth/login";
+    dispatch(Logout());
+    window.location.href = "/auth/login";
   };
 
   return (
@@ -84,7 +84,11 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           <Link to="/notifications">
             <Button variant="outline" size="icon-sm" className="rounded-full relative">
               <Bell className="h-4 w-4" />
-              <span className="absolute top-0 right-0 h-2 w-2 bg-primary rounded-full border-2 border-background"></span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-4 min-w-4 px-1 bg-primary text-[10px] font-bold text-white rounded-full flex items-center justify-center border-2 border-background">
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
             </Button>
           </Link>
 
@@ -94,27 +98,27 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
               to="/settings/profile"
               className="lg:flex items-center gap-3 hidden"
             >
-              {isLoading ? (
+              {isProfileLoading ? (
                 <>
                   <Skeleton className="h-10 w-10 rounded-full" />
                   <div className="flex flex-col gap-1">
-                    <Skeleton className="h-4 w-28 rounded-sm" />
+                    <Skeleton className="h-4 w-18 rounded-sm" />
                   </div>
                 </>
               ) : (
                 <>
                   <Avatar className="h-10 w-10 border">
                     <AvatarImage
-                      src={admin?.profile_image}
-                      alt={admin?.name || "user"}
+                      src={admin?.image}
+                      alt={admin?.fullName || "user"}
                     />
-                    <AvatarFallback>{getInitials(admin?.name)}</AvatarFallback>
+                    <AvatarFallback>{getInitials(admin?.fullName)}</AvatarFallback>
                   </Avatar>
                   <span
                     className="text-sm font-medium truncate max-w-45"
-                    title={admin?.name || "user"}
+                    title={admin?.fullName || "user"}
                   >
-                    {admin?.name || "user"}
+                    {admin?.fullName || "user"}
                   </span>
                 </>
               )}
@@ -122,20 +126,20 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
               {/* Profile dropdown menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                {isLoading ? (
+                {isProfileLoading ? (
                   <Skeleton className="h-10 w-10 rounded-full lg:hidden" />
                 ) : (
                   <Avatar className="h-10 w-10 lg:hidden">
                     <AvatarImage
-                      src={admin?.profile_image}
-                      alt={admin?.name || "user"}
+                      src={admin?.image}
+                      alt={admin?.fullName || "user"}
                     />
-                    <AvatarFallback>{getInitials(admin?.name)}</AvatarFallback>
+                    <AvatarFallback>{getInitials(admin?.fullName)}</AvatarFallback>
                   </Avatar>
                 )}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="max-w-64 mr-4">
-                {isLoading ? (
+                {isProfileLoading ? (
                   <div className="p-2 min-w-50">
                     <Skeleton className="h-4 w-28 rounded mb-2" />
                     <Skeleton className="h-3 w-40 rounded" />
@@ -143,7 +147,7 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
                 ) : (
                   <DropdownMenuLabel className="flex min-w-0 flex-col">
                     <span className="text-foreground truncate text-sm font-medium">
-                      {admin?.name || "user"}
+                      {admin?.fullName || "user"}
                     </span>
                     <span className="text-muted-foreground truncate text-xs font-normal">
                       {admin?.email || ""}
