@@ -1,16 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Download, Search } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AddAdminModal from "./add-modal";
+import { downloadExcel } from "@/lib/utils";
+import type { TAdmin } from "@/types/admin";
 
 interface AdminsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: TAdmin[];
 }
 
-export const AdminsFilter = ({ filter, setFilter }: AdminsFilterProps) => {
+export const AdminsFilter = ({ filter, setFilter, data = [] }: AdminsFilterProps) => {
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((admin: any) => ({
+      'Name': admin.fullName || 'N/A',
+      'Email': admin.email || 'N/A',
+      'Role': admin.role || 'N/A',
+      'Status': admin.status || 'N/A',
+      'Joined Date': admin.createdAt ? new Date(admin.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Admins", "Admins List");
+  };
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       
@@ -29,8 +45,13 @@ export const AdminsFilter = ({ filter, setFilter }: AdminsFilterProps) => {
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
-        <Download />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
 

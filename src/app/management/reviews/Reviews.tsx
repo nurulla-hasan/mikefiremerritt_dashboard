@@ -30,7 +30,7 @@ const Reviews = () => {
           description="Manage all system reviews"
           length={reviewsMeta?.total}
         />
-        <ReviewsFilter filter={filter} setFilter={setFilter} />
+        <ReviewsFilter filter={filter} setFilter={setFilter} data={reviewsData} />
       </div>
       <DataTable
         columns={reviewsColumns}

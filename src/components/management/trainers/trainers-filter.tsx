@@ -1,6 +1,12 @@
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Download, Search } from "lucide-react";
 
+
+import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialtyApis";
+import { downloadExcel } from "@/lib/utils";
+import type { ITrainer } from "@/types/trainer";
+import { Button } from "@/components/ui/button";
+import { Download, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -9,17 +15,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialtyApis";
-import { Button } from "@/components/ui/button";
 
 interface TrainersFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: ITrainer[];
 }
 
-export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
+export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterProps) => {
   const { data: specialtiesData, isLoading, isError } = useGetAllSpecialtiesQuery(undefined);
   const specialties = specialtiesData?.data || [];
+
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((trainer: any) => ({
+      'Trainer Name': trainer.fullName || 'N/A',
+      'Email': trainer.email || 'N/A',
+      'Specialty': trainer.specialty || 'N/A',
+      'Status': trainer.status || 'N/A',
+      'Joined Date': trainer.createdAt ? new Date(trainer.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Trainers", "Trainers List");
+  };
 
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
@@ -146,8 +165,13 @@ export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
           }
         />
       </div>
-      <Button variant="outline" className="rounded-full">
-        <Download className="h-4 w-4" />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

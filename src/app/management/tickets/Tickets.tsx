@@ -28,7 +28,7 @@ const Tickets = () => {
           description="View and manage all customer tickets"
           length={ticketsMeta?.total}
         />
-        <TicketsFilter filter={filter} setFilter={setFilter} />
+        <TicketsFilter filter={filter} setFilter={setFilter} data={ticketsData} />
       </div>
       <DataTable
         columns={ticketsColumns}

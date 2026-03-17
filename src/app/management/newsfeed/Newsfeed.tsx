@@ -19,7 +19,7 @@ const Newsfeed = () => {
     <PageLayout>
       <div className="flex flex-col md:flex-row md:justify-between">
         <PageHeader title="Newsfeed Moderation" description="Manage the newsfeed here" />
-        <NewsfeedFilter filter={filter} setFilter={setFilter} />
+        <NewsfeedFilter filter={filter} setFilter={setFilter} data={data} />
       </div>
       <DataTable
         columns={newsfeedColumns}

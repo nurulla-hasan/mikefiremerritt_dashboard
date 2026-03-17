@@ -14,14 +14,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { downloadExcel } from "@/lib/utils";
+import type { INewsfeed } from "@/types/newsfeed";
 
 interface NewsfeedFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: INewsfeed[];
 }
 
-export const NewsfeedFilter = ({ filter, setFilter }: NewsfeedFilterProps) => {
+export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterProps) => {
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
+
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((news: any) => ({
+      'Title': news.title || 'N/A',
+      'Author': news.user?.fullName || 'N/A',
+      'Views': news.views || 0,
+      'Date': news.createdAt ? new Date(news.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Newsfeed", "Newsfeed List");
+  };
 
   const handleViewsChange = (value: string) => {
     if (value === "all") {
@@ -129,8 +145,13 @@ export const NewsfeedFilter = ({ filter, setFilter }: NewsfeedFilterProps) => {
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
-        <Download />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

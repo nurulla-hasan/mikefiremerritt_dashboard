@@ -9,13 +9,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { IUser } from "@/types/user";
+import { downloadExcel } from "@/lib/utils";
 
 interface UsersFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: IUser[];
 }
 
-export const UsersFilter = ({ filter, setFilter }: UsersFilterProps) => {
+export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) => {
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    // Transform data for export
+    const exportData = data.map((user) => ({
+      'Full Name': user.fullName || 'N/A',
+      'Email': user.email || 'N/A',
+      'Role': user.role || 'N/A',
+      'Status': user.status || 'N/A',
+      'Joined Date': user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Users", "Users List");
+  };
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       <Select
@@ -70,7 +88,12 @@ export const UsersFilter = ({ filter, setFilter }: UsersFilterProps) => {
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
         <Download className="h-4 w-4" />
         Export
       </Button>

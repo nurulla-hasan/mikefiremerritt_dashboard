@@ -31,7 +31,7 @@ const Trainers = () => {
           length={meta?.total || 0}
         />
 
-        <TrainersFilter filter={filter} setFilter={setFilter} />
+        <TrainersFilter filter={filter} setFilter={setFilter} data={trainers} />
       </div>
 
       <DataTable

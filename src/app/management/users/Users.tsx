@@ -31,7 +31,7 @@ const Users = () => {
           length={meta?.total || 0}
         />
 
-        <UsersFilter filter={filter} setFilter={setFilter} />
+        <UsersFilter filter={filter} setFilter={setFilter} data={users} />
       </div>
 
       <DataTable

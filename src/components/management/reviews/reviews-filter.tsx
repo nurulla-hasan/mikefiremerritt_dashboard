@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
 import { Download, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,13 +9,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { downloadExcel } from "@/lib/utils";
+import type { TReview } from "@/types/review";
 
 interface ReviewsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: TReview[];
 }
 
-export const ReviewsFilter = ({ filter, setFilter }: ReviewsFilterProps) => {
+export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterProps) => {
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((review: any) => ({
+      'Reviewer': review.user?.fullName || 'N/A',
+      'Trainer/Class': review.trainer?.fullName || review.product?.name || 'N/A',
+      'Rating': review.rating || 0,
+      'Review Text': review.comment || 'N/A',
+      'Date': review.createdAt ? new Date(review.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Reviews", "Reviews List");
+  };
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-2">
@@ -69,8 +84,13 @@ export const ReviewsFilter = ({ filter, setFilter }: ReviewsFilterProps) => {
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
-        <Download className="h-4 w-4" />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

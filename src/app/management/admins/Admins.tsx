@@ -29,7 +29,7 @@ const Admins = () => {
           length={adminsMeta?.total}
         />
 
-        <AdminsFilter filter={filter} setFilter={setFilter} />
+        <AdminsFilter filter={filter} setFilter={setFilter} data={adminsData} />
       </div>
 
       <DataTable

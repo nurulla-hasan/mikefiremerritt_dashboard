@@ -1,9 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import * as XLSX from "xlsx";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const downloadExcel = <T extends Record<string, any>>(
+  data: T[],
+  filename: string = "Export",
+  sheetName: string = "Data"
+) => {
+  if (!data || data.length === 0) {
+    ErrorToast("No data available to export");
+    return;
+  }
+
+  try {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+    
+    const dateStr = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(workbook, `${filename}_${dateStr}.xlsx`);
+    SuccessToast(`${filename} exported successfully`);
+  } catch {
+    ErrorToast("Failed to export data");
+  }
+};
 
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -65,7 +90,6 @@ export const generateSlug = (title: string) => {
     .replace(/^-+|-+$/g, ""); // Always remove leading and trailing hyphens
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const buildQueryParams = (query: Record<string, any>) => {
   const params = new URLSearchParams();
 

@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-
 import { Download, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,13 +9,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { downloadExcel } from "@/lib/utils";
+import type { Ticket } from "@/types/ticket";
 
 interface TicketsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: Ticket[];
 }
 
-export const TicketsFilter = ({ filter, setFilter }: TicketsFilterProps) => {
+export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterProps) => {
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((ticket: any) => ({
+      'Ticket ID': ticket.ticketId || 'N/A',
+      'Subject': ticket.subject || 'N/A',
+      'User Email': ticket.user?.email || 'N/A',
+      'Status': ticket.status || 'N/A',
+      'Created Date': ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Support_Tickets", "Tickets List");
+  };
+
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
       <Select
@@ -54,8 +69,13 @@ export const TicketsFilter = ({ filter, setFilter }: TicketsFilterProps) => {
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
-        <Download />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

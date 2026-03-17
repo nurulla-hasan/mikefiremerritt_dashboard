@@ -53,7 +53,7 @@ const Products = () => {
 
         <TabsContent value="products" className="space-y-4">
           <div className="flex flex-col md:flex-row md:justify-end">
-            <ProductsFilter filter={filter} setFilter={setFilter} />
+            <ProductsFilter filter={filter} setFilter={setFilter} data={data} />
           </div>
           <DataTable
             columns={productsColumns}

@@ -16,16 +16,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialtyApis";
+import { downloadExcel } from "@/lib/utils";
+import type { IProduct } from "@/types/product";
 
 interface ProductsFilterProps {
   filter?: any;
   setFilter?: (update: any, config?: { debounce?: boolean }) => void;
+  data?: IProduct[];
 }
 
-export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
+export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterProps) => {
   const { data: specialtiesData, isLoading, isError } = useGetAllSpecialtiesQuery(undefined);
   const specialties = specialtiesData?.data || [];
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
+
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((product: any) => ({
+      'Product Name': product.name || 'N/A',
+      'Specialty': product.specialty?.specialtyName || 'N/A',
+      'Trainer': product.trainer?.fullName || 'N/A',
+      'Price': product.price || 0,
+      'Rating': product.rating || 0,
+      'Status': product.isActive ? 'Active' : 'Inactive',
+      'Date': product.createdAt ? new Date(product.createdAt).toLocaleDateString() : 'N/A',
+    }));
+
+    downloadExcel(exportData, "Products", "Products List");
+  };
 
   const handlePriceChange = (value: string) => {
     if (!setFilter) return;
@@ -218,8 +237,13 @@ export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
 
       <AddProgramModal />
 
-      <Button variant="outline" className="rounded-full">
-        <Download />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

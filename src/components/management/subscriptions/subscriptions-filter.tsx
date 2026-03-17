@@ -13,16 +13,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "react-router-dom";
+import { downloadExcel } from "@/lib/utils";
 
 interface SubscriptionsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
+  data?: any[];
 }
 
 export const SubscriptionsFilter = ({
   filter,
   setFilter,
+  data = []
 }: SubscriptionsFilterProps) => {
+  const handleExport = () => {
+    if (!data || data.length === 0) return;
+
+    const exportData = data.map((sub) => ({
+      'User Name': sub.user?.fullName || 'N/A',
+      'Email': sub.user?.email || 'N/A',
+      'Plan Type': sub.planType || 'N/A',
+      'Status': sub.status || 'N/A',
+      'Start Date': sub.startDate ? new Date(sub.startDate).toLocaleDateString() : 'N/A',
+      'End Date': sub.endDate ? new Date(sub.endDate).toLocaleDateString() : 'N/A',
+      'Amount': sub.amount || 0,
+    }));
+
+    downloadExcel(exportData, "Subscriptions", "Subscriptions List");
+  };
+
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
       <Button
@@ -128,8 +147,13 @@ export const SubscriptionsFilter = ({
         />
       </div>
 
-      <Button variant="outline" className="rounded-full">
-        <Download />
+      <Button 
+        variant="outline" 
+        className="rounded-full"
+        onClick={handleExport}
+        disabled={!data || data.length === 0}
+      >
+        <Download className="h-4 w-4 mr-2" />
         Export
       </Button>
     </div>

@@ -30,7 +30,7 @@ const Subscriptions = () => {
           description="View and manage all customer subscriptions"
           length={subscriptionsMeta?.total}
         />
-        <SubscriptionsFilter filter={filter} setFilter={setFilter} />
+        <SubscriptionsFilter filter={filter} setFilter={setFilter} data={subscriptionsData} />
       </div>
       <DataTable
         columns={subscriptionsColumns}
