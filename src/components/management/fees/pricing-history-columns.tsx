@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import type { TPricingRule } from "@/types/pricing-rule";
 import { format } from "date-fns";
+import { PricingRuleActionButtons } from "./pricing-rule-action-buttons";
 
 export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
   {
@@ -97,5 +98,10 @@ export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
         </div>
       );
     },
+  },
+  {
+    id: "actions",
+    header: () => <div className="text-right">Actions</div>,
+    cell: ({ row }) => <PricingRuleActionButtons pricingRule={row.original} />,
   },
 ];
