@@ -47,10 +47,10 @@ const EditProfileForm = ({ user }: EditProfileFormProps) => {
   useEffect(() => {
     if (user) {
       form.reset({
-        fullName: user.fullName,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        address: user.address,
+        fullName: user.fullName || "",
+        email: user.email || "",
+        phoneNumber: user.phoneNumber || "",
+        address: user.address || "",
       });
     }
   }, [user, form]);
