@@ -24,7 +24,7 @@ import type { ChartConfig } from "@/components/ui/chart";
 const chartConfig = {
   total: {
     label: "Total Earning",
-    color: "hsl(var(--primary))",
+    color: "var(--primary)",
   },
 } satisfies ChartConfig;
 

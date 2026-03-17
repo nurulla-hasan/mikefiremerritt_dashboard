@@ -24,11 +24,11 @@ import type { ChartConfig } from "@/components/ui/chart";
 const chartConfig = {
   member: {
     label: "Member",
-    color: "hsl(var(--primary))",
+    color: "var(--primary)",
   },
   trainer: {
     label: "Trainer",
-    color: "hsl(var(--primary) / 0.5)",
+    color: "var(--primary)",
   },
 } satisfies ChartConfig;
 
@@ -96,6 +96,7 @@ const UserGrowthChart = ({ data, year, onYearChange }: UserGrowthChartProps) => 
               dataKey="trainer"
               radius={[4, 4, 0, 0]}
               fill="var(--color-trainer)"
+              fillOpacity={0.5}
             />
           </BarChart>
         </ChartContainer>

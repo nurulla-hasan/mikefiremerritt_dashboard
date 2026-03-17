@@ -46,7 +46,7 @@ const Dashboard = () => {
   if (isStatsLoading || isUsersLoading) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center h-[80vh]">
           <Spinner className="size-8 text-primary" />
         </div>
       </PageLayout>
@@ -56,7 +56,7 @@ const Dashboard = () => {
   if (isError) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center text-destructive font-medium">
+        <div className="flex items-center justify-center text-destructive font-medium h-[80vh]">
           Failed to load dashboard statistics.
         </div>
       </PageLayout>
