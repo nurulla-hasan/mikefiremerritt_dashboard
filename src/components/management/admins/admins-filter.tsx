@@ -7,7 +7,7 @@ import AddAdminModal from "./add-modal";
 
 interface AdminsFilterProps {
   filter: any;
-  setFilter: (filter: any) => void;
+  setFilter: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const AdminsFilter = ({ filter, setFilter }: AdminsFilterProps) => {
@@ -20,7 +20,12 @@ export const AdminsFilter = ({ filter, setFilter }: AdminsFilterProps) => {
           placeholder="Search by name or email"
           className="pl-9 pr-3 rounded-full border-muted-foreground/30 bg-background"
           value={filter.searchTerm || ""}
-          onChange={(e) => setFilter({ searchTerm: e.target.value })}
+          onChange={(e) => 
+            setFilter(
+              (prev: any) => ({ ...prev, searchTerm: e.target.value }),
+              { debounce: true }
+            )
+          }
         />
       </div>
 

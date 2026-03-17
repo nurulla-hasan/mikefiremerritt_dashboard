@@ -17,7 +17,7 @@ import { useState } from "react";
 
 interface NewsfeedFilterProps {
   filter: any;
-  setFilter: (filter: any) => void;
+  setFilter: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const NewsfeedFilter = ({ filter, setFilter }: NewsfeedFilterProps) => {
@@ -53,16 +53,6 @@ export const NewsfeedFilter = ({ filter, setFilter }: NewsfeedFilterProps) => {
       return;
     }
     setFilter({ ...filter, role: value });
-  };
-
-  const handleSearchTermChange = (value: string) => {
-    setSearchTerm(value);
-    if (!value) {
-      const { searchTerm, ...rest } = filter;
-      setFilter(rest);
-      return;
-    }
-    setFilter({ ...filter, searchTerm: value });
   };
 
   return (
@@ -120,10 +110,22 @@ export const NewsfeedFilter = ({ filter, setFilter }: NewsfeedFilterProps) => {
       <div className="relative w-full md:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
-          placeholder="Search by name or content"
+          placeholder="Search by title"
           className="pl-9 rounded-full"
           value={searchTerm}
-          onChange={(e) => handleSearchTermChange(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setFilter(
+              (prev: any) => {
+                if (!e.target.value) {
+                  const { searchTerm: _, ...rest } = prev;
+                  return rest;
+                }
+                return { ...prev, searchTerm: e.target.value };
+              },
+              { debounce: true }
+            );
+          }}
         />
       </div>
 

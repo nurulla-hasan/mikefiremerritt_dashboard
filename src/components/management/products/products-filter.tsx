@@ -19,7 +19,7 @@ import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialty
 
 interface ProductsFilterProps {
   filter?: any;
-  setFilter?: (filter: any) => void;
+  setFilter?: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
@@ -80,17 +80,6 @@ export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
       return;
     }
     setFilter({ ...filter, isActive: value === "true" });
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-    if (!setFilter) return;
-    if (!value) {
-      const { searchTerm: _search, ...rest } = filter || {};
-      setFilter(rest);
-      return;
-    }
-    setFilter({ ...filter, searchTerm: value });
   };
 
   return (
@@ -210,7 +199,20 @@ export const ProductsFilter = ({ filter, setFilter }: ProductsFilterProps) => {
           placeholder="Search by name or specialty"
           className="pl-9 rounded-full"
           value={searchTerm}
-          onChange={(e) => handleSearchChange(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            if (!setFilter) return;
+            setFilter(
+              (prev: any) => {
+                if (!e.target.value) {
+                  const { searchTerm: _search, ...rest } = prev || {};
+                  return rest;
+                }
+                return { ...prev, searchTerm: e.target.value };
+              },
+              { debounce: true }
+            );
+          }}
         />
       </div>
 

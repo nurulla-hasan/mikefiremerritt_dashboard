@@ -14,9 +14,9 @@ const Users = () => {
   const {
     data: users,
     meta,
-    isLoading,
+    isInitialLoading,
+    isRefetching,
     isError,
-    isFetching,
     setPage,
     setFilter,
     filter,
@@ -38,9 +38,9 @@ const Users = () => {
         columns={usersColumns}
         data={users}
         meta={meta}
-        isLoading={isLoading}
+        isLoading={isInitialLoading}
         isError={isError}
-        isFetching={isFetching}
+        isFetching={isRefetching}
         onPageChange={setPage}
       />
     </PageLayout>

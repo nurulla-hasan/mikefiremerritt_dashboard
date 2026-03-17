@@ -14,7 +14,7 @@ import {
 
 interface ReviewsFilterProps {
   filter: any;
-  setFilter: (filter: any) => void;
+  setFilter: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const ReviewsFilter = ({ filter, setFilter }: ReviewsFilterProps) => {
@@ -60,7 +60,12 @@ export const ReviewsFilter = ({ filter, setFilter }: ReviewsFilterProps) => {
           placeholder="Search reviews..."
           className="pl-9 rounded-full"
           value={filter.searchTerm || ""}
-          onChange={(e) => setFilter({ searchTerm: e.target.value })}
+          onChange={(e) => 
+            setFilter(
+              (prev: any) => ({ ...prev, searchTerm: e.target.value }),
+              { debounce: true }
+            )
+          }
         />
       </div>
 

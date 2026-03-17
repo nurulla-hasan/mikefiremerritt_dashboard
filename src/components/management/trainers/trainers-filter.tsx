@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 
 interface TrainersFilterProps {
   filter: any;
-  setFilter: (filter: any) => void;
+  setFilter: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
@@ -135,11 +135,14 @@ export const TrainersFilter = ({ filter, setFilter }: TrainersFilterProps) => {
           className="pl-9 rounded-full"
           value={filter?.searchTerm || ""}
           onChange={(e) =>
-            setFilter((prev: any) => ({
-              ...prev,
-              searchTerm: e.target.value,
-              page: 1,
-            }))
+            setFilter(
+              (prev: any) => ({
+                ...prev,
+                searchTerm: e.target.value,
+                page: 1,
+              }),
+              { debounce: true }
+            )
           }
         />
       </div>

@@ -14,7 +14,7 @@ import {
 
 interface TicketsFilterProps {
   filter: any;
-  setFilter: (filter: any) => void;
+  setFilter: (update: any, config?: { debounce?: boolean }) => void;
 }
 
 export const TicketsFilter = ({ filter, setFilter }: TicketsFilterProps) => {
@@ -46,7 +46,10 @@ export const TicketsFilter = ({ filter, setFilter }: TicketsFilterProps) => {
           className="pl-9 rounded-full"
           value={filter?.searchTerm || ""}
           onChange={(e) =>
-            setFilter({ ...filter, searchTerm: e.target.value })
+            setFilter(
+              (prev: any) => ({ ...prev, searchTerm: e.target.value }),
+              { debounce: true }
+            )
           }
         />
       </div>

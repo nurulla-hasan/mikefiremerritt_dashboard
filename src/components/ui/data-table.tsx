@@ -11,7 +11,7 @@ import {
   type Updater,
 } from "@tanstack/react-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, ArrowUp, ArrowDown, AlertCircle } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, AlertCircle, Loader } from "lucide-react";
 
 import {
   Table,
@@ -22,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Spinner } from "@/components/ui/spinner";
 import { ScrollArea, ScrollBar } from "./scroll-area";
 import { DataTablePagination } from "./data-table-pagination";
 
@@ -117,7 +116,7 @@ export function DataTable<TData, TValue>({
       <div className="relative">
         {isFetching && !isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/10 backdrop-blur-[1px]">
-            <Spinner className="text-primary size-8" />
+            <Loader className="text-primary size-6 animate-spin" />
           </div>
         )}
         <ScrollArea className="w-[calc(100vw-42px)] lg:w-[calc(100vw-300px)] rounded-xl border whitespace-nowrap">
