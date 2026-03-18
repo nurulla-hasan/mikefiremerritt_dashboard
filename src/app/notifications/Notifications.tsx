@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PageLayout from "@/components/common/page-layout";
 import PageHeader from "@/components/ui/page-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -31,6 +32,7 @@ const Notifications = () => {
   const [markAsRead, { isLoading: isMarkingRead }] = useMarkAsReadMutation();
   const [markSingleAsRead] = useMarkSingleAsReadMutation();
   const [clearAll, { isLoading: isClearing }] = useClearAllNotificationsMutation();
+  const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const notifications = response?.data || [];
 
@@ -48,10 +50,13 @@ const Notifications = () => {
   const handleMarkSingleRead = async (id: string, isRead: boolean) => {
     if (isRead) return;
     try {
+      setLoadingId(id);
       await markSingleAsRead(id).unwrap();
     } catch (error) {
       const err = error as { data?: { message?: string } };
       ErrorToast(err?.data?.message || "Failed to mark notification as read");
+    } finally {
+      setLoadingId(null);
     }
   };
 
@@ -146,9 +151,14 @@ const Notifications = () => {
                             e.stopPropagation();
                             handleMarkSingleRead(notification.id, notification.isRead);
                           }}
+                          disabled={loadingId === notification.id}
                         >
-                          <CheckCircle2 className="h-3.5 w-3.5" />
-                          Mark as read
+                          {loadingId === notification.id ? (
+                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          ) : (
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                          )}
+                          {loadingId === notification.id ? "Marking..." : "Mark as read"}
                         </Button>
                       )}
                       <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
