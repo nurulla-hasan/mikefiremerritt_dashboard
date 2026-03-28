@@ -41,8 +41,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
 
   const handleViewsChange = (value: string) => {
     if (value === "all") {
-      const { minViews, maxViews, ...rest } = filter;
-      setFilter(rest);
+      setFilter({ minViews: undefined, maxViews: undefined });
       return;
     }
     const [min, max] = value.split("-");
@@ -55,8 +54,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
 
   const handleDatePresetChange = (value: string) => {
     if (value === "all") {
-      const { datePreset, ...rest } = filter;
-      setFilter(rest);
+      setFilter({datePreset: undefined });
       return;
     }
     setFilter({ ...filter, datePreset: value });
@@ -64,8 +62,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
 
   const handleRoleChange = (value: string) => {
     if (value === "all") {
-      const { role, ...rest } = filter;
-      setFilter(rest);
+      setFilter({ role: undefined });
       return;
     }
     setFilter({ ...filter, role: value });

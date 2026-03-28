@@ -6,7 +6,6 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import AddProgramModal from "./add-modal";
 import {
   Select,
   SelectContent,
@@ -242,8 +241,6 @@ export const ProductsFilter = ({
           }}
         />
       </div>
-
-      <AddProgramModal />
 
       <Button 
         variant="outline" 

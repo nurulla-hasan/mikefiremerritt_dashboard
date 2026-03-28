@@ -15,11 +15,11 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { IProduct } from "@/types/product";
 
-interface ProgramViewModalProps {
+interface ProductViewModalProps {
   data: IProduct;
 }
 
-const ProgramViewModal = ({ data }: ProgramViewModalProps) => {
+const ProductViewModal = ({ data }: ProductViewModalProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -80,7 +80,7 @@ const ProgramViewModal = ({ data }: ProgramViewModalProps) => {
   );
 };
 
-export default ProgramViewModal;
+export default ProductViewModal;
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
   <div className="space-y-1">

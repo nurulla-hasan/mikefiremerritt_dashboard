@@ -29,7 +29,7 @@ const Fees = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <PageHeader
           title="Fees Management"
-          description="Manage subscription fees, rewards, and referral programs."
+          description="Manage subscription fees, rewards, and referral Products."
         />
       </div>
 

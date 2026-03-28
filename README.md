@@ -9,7 +9,7 @@ A comprehensive management dashboard for VitaKinetic, built with React, TypeScri
 
 - **Dashboard**: Visualized stats for user growth and earnings.
 - **User Management**: Manage app users, trainers, and administrators.
-- **Program & Gym Management**: Handle fitness programs and gym listings.
+- **Product & Gym Management**: Handle fitness Products and gym listings.
 - **Subscription Management**: Monitor and manage user subscriptions.
 - **Fees & Financials**: Dedicated section for managing subscription fees and referral rewards.
 - **Content Moderation**: Newsfeed moderation and review management.

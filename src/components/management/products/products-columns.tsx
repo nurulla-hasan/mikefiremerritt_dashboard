@@ -2,7 +2,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import ProgramViewModal from "./view-modal";
+import ProductViewModal from "./view-modal";
 import type { IProduct } from "@/types/product";
 import StatusAction from "./status-action";
 
@@ -30,7 +30,7 @@ export const productsColumns: ColumnDef<IProduct>[] = [
   },
   {
     accessorKey: "productName",
-    header: "Program Name",
+    header: "Product Name",
     cell: ({ row }) => (
       <span className="text-sm text-foreground">
         {row.original.productName}
@@ -93,7 +93,7 @@ export const productsColumns: ColumnDef<IProduct>[] = [
     header: () => <div className="text-right pr-3">Actions</div>,
     cell: ({ row }) => (
       <div className="flex items-center justify-end gap-1">
-        <ProgramViewModal data={row.original} />
+        <ProductViewModal data={row.original} />
         <StatusAction product={row.original} />
       </div>
     ),
