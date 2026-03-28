@@ -29,6 +29,23 @@ export const pricingRuleApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.pricingRule],
     }),
+
+    getAllSubscriptionPlans: builder.query({
+      query: () => ({
+        url: "/subscription-plans",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.pricingRule],
+    }),
+
+    updateSubscriptionPlan: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/subscription-plans/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.pricingRule],
+    }),
   }),
 });
 
@@ -36,4 +53,6 @@ export const {
   useGetAllPricingRulesQuery,
   useAddPricingRuleMutation,
   useDeletePricingRuleMutation,
+  useGetAllSubscriptionPlansQuery,
+  useUpdateSubscriptionPlanMutation,
 } = pricingRuleApis;

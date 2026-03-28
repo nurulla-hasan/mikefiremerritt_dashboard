@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import PageHeader from "@/components/ui/page-header";
 import PageLayout from "@/components/common/page-layout";
 import { DataTable } from "@/components/ui/data-table";
@@ -13,7 +12,6 @@ import TimePeriodForm from "@/components/management/fees/TimePeriodForm";
 import FirstComeFirstServeForm from "@/components/management/fees/FirstComeFirstServeForm";
 
 const Fees = () => {
-  const [standardFee, setStandardFee] = useState("");
 
   const {
     data: pricingData,
@@ -36,10 +34,7 @@ const Fees = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         <div className="space-y-6">
           {/* Manage Subscriptions Section */}
-          <StandardSubscriptionFee
-            standardFee={standardFee}
-            setStandardFee={setStandardFee}
-          />
+          <StandardSubscriptionFee />
           {/* Referral Rewards */}
           <ReferralRewards />
         </div>
