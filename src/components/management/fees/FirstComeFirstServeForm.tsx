@@ -9,13 +9,8 @@ import type { DateRange } from "react-day-picker";
 import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rule/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
-interface FirstComeFirstServeFormProps {
-  standardFee: string;
-}
 
-const FirstComeFirstServeForm = ({
-  standardFee,
-}: FirstComeFirstServeFormProps) => {
+const FirstComeFirstServeForm = () => {
   const [rewardLimit, setRewardLimit] = useState("");
   const [rewardFee, setRewardFee] = useState("");
   const [firstComeRuleName, setFirstComeRuleName] = useState("");
@@ -32,7 +27,7 @@ const FirstComeFirstServeForm = ({
     const payload: any = {
       subscriptionOfferId: "69803d34443d74ebcf780365",
       type: "FIRST_COME",
-      discountAmount: Number(standardFee) - Number(rewardFee),
+      discountAmount: Number(rewardFee),
       maxSubscribers: Number(rewardLimit),
       startDate: rewardDates.from.toISOString(),
       endDate: rewardDates.to.toISOString(),

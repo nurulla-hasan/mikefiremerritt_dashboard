@@ -46,9 +46,9 @@ const Fees = () => {
 
         <div className="space-y-6">
           {/* Time Period Section */}
-          <TimePeriodForm standardFee={standardFee} />
+          <TimePeriodForm />
           {/* First Come First Serve Section */}
-          <FirstComeFirstServeForm standardFee={standardFee} />
+          <FirstComeFirstServeForm />
         </div>
       </div>
 

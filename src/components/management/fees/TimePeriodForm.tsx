@@ -9,29 +9,33 @@ import type { DateRange } from "react-day-picker";
 import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rule/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
-interface TimePeriodFormProps {
-  standardFee: string;
-}
 
-const TimePeriodForm = ({ standardFee }: TimePeriodFormProps) => {
+const TimePeriodForm = () => {
   const [discountFee, setDiscountFee] = useState("");
-  const [duration, setDuration] = useState("");
+  // const [duration, setDuration] = useState("");
   const [timeBasedRuleName, setTimeBasedRuleName] = useState("");
   const [discountDates, setDiscountDates] = useState<DateRange | undefined>();
 
   const [addPricingRule, { isLoading: isAdding }] = useAddPricingRuleMutation();
 
   const handleSaveTimeBased = async () => {
-    if (!discountDates?.from || !discountDates?.to || !duration || !discountFee) {
+    if (!discountDates?.from || !discountDates?.to || !discountFee) {
       ErrorToast("Please fill all fields for Time Period");
+      return;
+    }
+
+    const numericDiscountFee = Number(discountFee);
+
+    if (numericDiscountFee <= 0) {
+      ErrorToast("Subscription fee must be greater than 0");
       return;
     }
 
     const payload: any = {
       subscriptionOfferId: "69803d34443d74ebcf780365",
       type: "TIME_BASED",
-      discountAmount: Number(standardFee) - Number(discountFee),
-      durationMonths: Number(duration),
+      discountAmount: numericDiscountFee,
+      // durationMonths: Number(duration),
       startDate: discountDates.from.toISOString(),
       endDate: discountDates.to.toISOString(),
       isActive: true,
@@ -43,7 +47,7 @@ const TimePeriodForm = ({ standardFee }: TimePeriodFormProps) => {
       await addPricingRule(payload).unwrap();
       SuccessToast("Time Period rule added successfully");
       // Reset form
-      setDuration("3");
+      // setDuration("3");
       setDiscountDates(undefined);
       setTimeBasedRuleName("");
     } catch (error: any) {
@@ -78,14 +82,20 @@ const TimePeriodForm = ({ standardFee }: TimePeriodFormProps) => {
             </span>
             <Input
               value={discountFee}
-              onChange={(e) => setDiscountFee(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val === "" || /^\d*\.?\d*$/.test(val)) {
+                  setDiscountFee(val);
+                }
+              }}
               className="pl-7"
               placeholder="50"
+              type="text"
             />
           </div>
         </div>
 
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Label className="text-sm font-medium">
             Duration (Months)
           </Label>
@@ -94,7 +104,7 @@ const TimePeriodForm = ({ standardFee }: TimePeriodFormProps) => {
             onChange={(e) => setDuration(e.target.value)}
             placeholder="e.g. 3"
           />
-        </div>
+        </div> */}
 
         <div className="space-y-2">
           <Label className="text-sm font-medium font-crimson">

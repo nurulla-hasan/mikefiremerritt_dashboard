@@ -53,15 +53,15 @@ export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
       </span>
     ),
   },
-  {
-    accessorKey: "durationMonths",
-    header: "Duration",
-    cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        {row.original.durationMonths ? `${row.original.durationMonths} Months` : "-"}
-      </span>
-    ),
-  },
+  // {
+  //   accessorKey: "durationMonths",
+  //   header: "Duration",
+  //   cell: ({ row }) => (
+  //     <span className="text-sm text-muted-foreground">
+  //       {row.original.durationMonths ? `${row.original.durationMonths} Months` : "-"}
+  //     </span>
+  //   ),
+  // },
   {
     accessorKey: "subscriptionOffer.price",
     header: "Price",
