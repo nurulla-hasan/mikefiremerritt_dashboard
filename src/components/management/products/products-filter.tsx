@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
@@ -21,12 +20,23 @@ import type { IProduct } from "@/types/product";
 
 interface ProductsFilterProps {
   filter?: any;
-  setFilter?: (update: any, config?: { debounce?: boolean }) => void;
+  setFilter?: (
+    update: any,
+    config?: { resetPage?: boolean; debounce?: boolean }
+  ) => void;
   data?: IProduct[];
 }
 
-export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterProps) => {
-  const { data: specialtiesData, isLoading, isError } = useGetAllSpecialtiesQuery(undefined);
+export const ProductsFilter = ({
+  filter,
+  setFilter,
+  data = [],
+}: ProductsFilterProps) => {
+  const {
+    data: specialtiesData,
+    isLoading,
+    isError,
+  } = useGetAllSpecialtiesQuery(undefined);
   const specialties = specialtiesData?.data || [];
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
 
@@ -34,13 +44,15 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
     if (!data || data.length === 0) return;
 
     const exportData = data.map((product: any) => ({
-      'Product Name': product.name || 'N/A',
-      'Specialty': product.specialty?.specialtyName || 'N/A',
-      'Trainer': product.trainer?.fullName || 'N/A',
-      'Price': product.price || 0,
-      'Rating': product.rating || 0,
-      'Status': product.isActive ? 'Active' : 'Inactive',
-      'Date': product.createdAt ? new Date(product.createdAt).toLocaleDateString() : 'N/A',
+      "Product Name": product.name || "N/A",
+      Specialty: product.specialty?.specialtyName || "N/A",
+      Trainer: product.trainer?.fullName || "N/A",
+      Price: product.price || 0,
+      Rating: product.rating || 0,
+      Status: product.isActive ? "Active" : "Inactive",
+      Date: product.createdAt
+        ? new Date(product.createdAt).toLocaleDateString()
+        : "N/A",
     }));
 
     downloadExcel(exportData, "Products", "Products List");
@@ -49,13 +61,14 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
   const handlePriceChange = (value: string) => {
     if (!setFilter) return;
     if (value === "all") {
-      const { priceMin: _min, priceMax: _max, ...rest } = filter || {};
-      setFilter(rest);
+      setFilter({
+        priceMin: undefined,
+        priceMax: undefined,
+      });
       return;
     }
     const [min, max] = value.split("-");
     setFilter({
-      ...filter,
       priceMin: Number(min),
       priceMax: max === "plus" ? undefined : Number(max),
     });
@@ -64,13 +77,14 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
   const handleViewsChange = (value: string) => {
     if (!setFilter) return;
     if (value === "all") {
-      const { minViews: _min, maxViews: _max, ...rest } = filter || {};
-      setFilter(rest);
+      setFilter({
+        minViews: undefined,
+        maxViews: undefined,
+      });
       return;
     }
     const [min, max] = value.split("-");
     setFilter({
-      ...filter,
       minViews: Number(min),
       maxViews: max === "plus" ? undefined : Number(max),
     });
@@ -79,13 +93,14 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
   const handleRatingChange = (value: string) => {
     if (!setFilter) return;
     if (value === "all") {
-      const { minRating: _min, maxRating: _max, ...rest } = filter || {};
-      setFilter(rest);
+      setFilter({
+        minRating: undefined,
+        maxRating: undefined,
+      });
       return;
     }
     const [min, max] = value.split("-");
     setFilter({
-      ...filter,
       minRating: Number(min),
       maxRating: Number(max),
     });
@@ -94,11 +109,12 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
   const handleStatusChange = (value: string) => {
     if (!setFilter) return;
     if (value === "all") {
-      const { isActive: _active, ...rest } = filter || {};
-      setFilter(rest);
+      setFilter({
+        isActive: undefined,
+      });
       return;
     }
-    setFilter({ ...filter, isActive: value === "true" });
+    setFilter({ isActive: value === "true" });
   };
 
   return (
@@ -147,11 +163,9 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
         value={filter?.specialtyName || "all"}
         onValueChange={(value) => {
           if (!setFilter) return;
-          setFilter((prev: any) => ({
-            ...prev,
+          setFilter({
             specialtyName: value === "all" ? undefined : value,
-            page: 1,
-          }));
+          });
         }}
       >
         <SelectTrigger className="w-fit rounded-full">
@@ -222,13 +236,7 @@ export const ProductsFilter = ({ filter, setFilter, data = [] }: ProductsFilterP
             setSearchTerm(e.target.value);
             if (!setFilter) return;
             setFilter(
-              (prev: any) => {
-                if (!e.target.value) {
-                  const { searchTerm: _search, ...rest } = prev || {};
-                  return rest;
-                }
-                return { ...prev, searchTerm: e.target.value };
-              },
+              { searchTerm: e.target.value || undefined },
               { debounce: true }
             );
           }}
