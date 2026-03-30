@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
  
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
@@ -83,20 +83,24 @@ export const trainersColumns: ColumnDef<ITrainer>[] = [
     ),
   },
   {
-    accessorKey: "isProfileComplete",
-    header: "Profile Status",
-    cell: ({ row }) => {
-      const isProfileComplete = row.original.isProfileComplete;
-      let variant = "outline";
-      if (isProfileComplete === true) variant = "accepted";
-      if (isProfileComplete === false) variant = "rejected";
-
-      return (
-        <Badge variant={variant as any}>
-          {isProfileComplete === true ? "Complete" : "Incomplete"}
-        </Badge>
-      );
-    },
+    accessorKey: "serviceTypes",
+    header: "Service Types",
+    cell: ({ row }) => (
+      <div className="flex flex-wrap gap-1 max-w-60">
+        {row.original.serviceTypes?.map((service) => (
+          <Badge
+            key={service.id}
+            variant="outline"
+            className="text-[10px] px-1.5 py-0 whitespace-nowrap"
+          >
+            {service.serviceName}
+          </Badge>
+        ))}
+        {(!row.original.serviceTypes || row.original.serviceTypes.length === 0) && (
+          <span className="text-xs text-muted-foreground">N/A</span>
+        )}
+      </div>
+    ),
   },
   {
     id: "actions",
