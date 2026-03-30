@@ -6,7 +6,7 @@ import TrainerViewModal from "./view-modal";
 import type { ITrainer } from "@/types/trainer";
 import { Ban } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useUpdateTrainerProfileStatusMutation } from "@/redux/feature/trainer/trainerApis";
+import { useUpdateTrainerProfileStatusMutation } from "@/redux/feature/trainers/trainerApis";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 import { useState } from "react";
 import { ErrorToast, SuccessToast } from "@/lib/utils";

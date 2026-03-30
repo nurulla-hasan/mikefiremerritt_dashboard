@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
-import { useDeleteAdminMutation } from "@/redux/feature/admin/adminApis";
+import { useDeleteAdminMutation } from "@/redux/feature/admins/adminApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
 import type { TAdmin } from "@/types/admin";

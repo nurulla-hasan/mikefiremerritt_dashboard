@@ -12,7 +12,7 @@ import {
 import type { IUser } from "@/types/user";
 import { downloadExcel } from "@/lib/utils";
 
-import { useLazyGetAllUsersQuery } from "@/redux/feature/user/userApis";
+import { useLazyGetAllUsersQuery } from "@/redux/feature/users/userApis";
 import { useState } from "react";
 
 interface UsersFilterProps {

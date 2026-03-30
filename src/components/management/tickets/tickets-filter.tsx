@@ -12,7 +12,7 @@ import {
 import { downloadExcel } from "@/lib/utils";
 import type { Ticket } from "@/types/ticket";
 
-import { useLazyGetAllSupportTicketsQuery } from "@/redux/feature/support/supportApis";
+import { useLazyGetAllSupportTicketsQuery } from "@/redux/feature/tickets/supportApis";
 import { useState } from "react";
 
 interface TicketsFilterProps {

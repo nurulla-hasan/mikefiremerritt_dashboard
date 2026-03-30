@@ -13,7 +13,7 @@ import TiptapEditor from "@/components/ui/tiptap-editor";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import PageHeader from "@/components/ui/page-header";
-import { useGetAboutUsQuery, useUpdateAboutUsMutation } from "@/redux/feature/settings/settingsApis";
+import { useGetAboutUsQuery, useUpdateAboutUsMutation } from "@/redux/feature/settings-api/settingsApis";
 import type { TError } from "@/types/global.types";
 
 type FormValues = {

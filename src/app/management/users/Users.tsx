@@ -7,7 +7,7 @@ import { UsersFilter } from "@/components/management/users/users-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
-import { useGetAllUsersQuery } from "@/redux/feature/user/userApis";
+import { useGetAllUsersQuery } from "@/redux/feature/users/userApis";
 import type { IUser } from "@/types/user";
 
 const Users = () => {

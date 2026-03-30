@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { TFaq } from "@/types/faq.types";
-import { useCreateFaqMutation, useUpdateFaqMutation } from "@/redux/feature/faq/faqApis";
+import { useCreateFaqMutation, useUpdateFaqMutation } from "@/redux/feature/faqs/faqApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
 

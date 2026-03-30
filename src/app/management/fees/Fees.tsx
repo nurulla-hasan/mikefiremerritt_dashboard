@@ -4,7 +4,7 @@ import PageLayout from "@/components/common/page-layout";
 import { DataTable } from "@/components/ui/data-table";
 import { pricingHistoryColumns } from "@/components/management/fees/pricing-history-columns";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
-import { useGetAllPricingRulesQuery } from "@/redux/feature/pricing-rule/pricingRuleApis";
+import { useGetAllPricingRulesQuery } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import type { TPricingRule } from "@/types/pricing-rule";
 import StandardSubscriptionFee from "@/components/management/fees/StandardSubscriptionFee";
 import ReferralRewards from "@/components/management/fees/ReferralRewards";

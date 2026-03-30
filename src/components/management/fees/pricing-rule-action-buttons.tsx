@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
-import { useDeletePricingRuleMutation } from "@/redux/feature/pricing-rule/pricingRuleApis";
+import { useDeletePricingRuleMutation } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TPricingRule } from "@/types/pricing-rule";
 

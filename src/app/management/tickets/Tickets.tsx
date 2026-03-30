@@ -5,7 +5,7 @@ import { TicketsFilter } from "@/components/management/tickets/tickets-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
-import { useGetAllSupportTicketsQuery } from "@/redux/feature/support/supportApis";
+import { useGetAllSupportTicketsQuery } from "@/redux/feature/tickets/supportApis";
 import type { Ticket } from "@/types/ticket";
 
 const Tickets = () => {

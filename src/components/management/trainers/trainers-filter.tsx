@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useLazyGetAllTrainersQuery } from "@/redux/feature/trainer/trainerApis";
+import { useLazyGetAllTrainersQuery } from "@/redux/feature/trainers/trainerApis";
 import { useState } from "react";
 
 interface TrainersFilterProps {

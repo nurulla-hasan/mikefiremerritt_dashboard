@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
-import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rule/pricingRuleApis";
+import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 

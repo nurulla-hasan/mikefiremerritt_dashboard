@@ -5,7 +5,7 @@ import { Ban } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserViewModal from "./view-modal";
 import type { IUser } from "@/types/user";
-import { useUpdateUserStatusMutation } from "@/redux/feature/user/userApis";
+import { useUpdateUserStatusMutation } from "@/redux/feature/users/userApis";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 import { useState } from "react";
 import { ErrorToast, SuccessToast } from "@/lib/utils";

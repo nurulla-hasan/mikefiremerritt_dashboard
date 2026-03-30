@@ -13,7 +13,7 @@ import { CheckCircle2, MinusCircle, Plus, Loader2 } from "lucide-react";
 import { 
   useUpdateSubscriptionPlanMutation, 
   useGetAllSubscriptionPlansQuery 
-} from "@/redux/feature/pricing-rule/pricingRuleApis";
+} from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 

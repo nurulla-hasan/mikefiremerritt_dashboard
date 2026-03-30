@@ -5,7 +5,7 @@ import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AddFAQModal from "./add-faq-modal";
 import type { TFaq } from "@/types/faq.types";
-import { useDeleteFaqMutation } from "@/redux/feature/faq/faqApis";
+import { useDeleteFaqMutation } from "@/redux/feature/faqs/faqApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";

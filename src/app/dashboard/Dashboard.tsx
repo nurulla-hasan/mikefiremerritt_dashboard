@@ -4,8 +4,8 @@ import EarningGrowthChart from "@/components/dashboard/earning-growth";
 import UserGrowthChart from "@/components/dashboard/user-growth";
 import { DataTable } from "@/components/ui/data-table";
 import { usersColumns } from "@/components/management/users/users-columns";
-import { useGetDashboardStatsQuery } from "@/redux/feature/dashboard/dashboardApi";
-import { useGetAllUsersQuery } from "@/redux/feature/user/userApis";
+import { useGetDashboardStatsQuery } from "@/redux/feature/dashboards/dashboardApi";
+import { useGetAllUsersQuery } from "@/redux/feature/users/userApis";
 import { useMemo, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 

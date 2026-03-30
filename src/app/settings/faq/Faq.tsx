@@ -3,7 +3,7 @@ import { faqColumns } from "@/components/settings/faq/faq-columns";
 import { FAQFilter } from "@/components/settings/faq/faq-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
-import { useGetAllFaqsQuery } from "@/redux/feature/faq/faqApis";
+import { useGetAllFaqsQuery } from "@/redux/feature/faqs/faqApis";
 
 const FAQPage = () => {
   const { data: faqData, isLoading, isError } = useGetAllFaqsQuery({});

@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import type { Ticket } from "@/types/ticket";
-import { useReplyToSupportTicketMutation } from "@/redux/feature/support/supportApis";
+import { useReplyToSupportTicketMutation } from "@/redux/feature/tickets/supportApis";
 import { toast } from "sonner";
 
 interface TicketResponseModalProps {

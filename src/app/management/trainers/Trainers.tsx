@@ -7,7 +7,7 @@ import { TrainersFilter } from "@/components/management/trainers/trainers-filter
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
-import { useGetAllTrainersQuery } from "@/redux/feature/trainer/trainerApis";
+import { useGetAllTrainersQuery } from "@/redux/feature/trainers/trainerApis";
 import type { ITrainer } from "@/types/trainer";
 
 const Trainers = () => {

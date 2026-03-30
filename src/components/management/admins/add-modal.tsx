@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAddNewAdminMutation } from "@/redux/feature/admin/adminApis";
+import { useAddNewAdminMutation } from "@/redux/feature/admins/adminApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 import type { TError } from "@/types/global.types";
 

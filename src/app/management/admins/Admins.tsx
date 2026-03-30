@@ -5,7 +5,7 @@ import { AdminsFilter } from "@/components/management/admins/admins-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
-import { useGetAllAdminsQuery } from "@/redux/feature/admin/adminApis";
+import { useGetAllAdminsQuery } from "@/redux/feature/admins/adminApis";
 import type { TAdmin } from "@/types/admin";
 
 const Admins = () => {

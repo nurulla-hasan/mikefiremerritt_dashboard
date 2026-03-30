@@ -6,7 +6,7 @@ import AddAdminModal from "./add-modal";
 import { downloadExcel } from "@/lib/utils";
 import type { TAdmin } from "@/types/admin";
 
-import { useLazyGetAllAdminsQuery } from "@/redux/feature/admin/adminApis";
+import { useLazyGetAllAdminsQuery } from "@/redux/feature/admins/adminApis";
 import { useState } from "react";
 
 interface AdminsFilterProps {
