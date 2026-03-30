@@ -72,14 +72,18 @@ export const SubscriptionsFilter = ({
       </Button>
 
       <Select
-        value={filter?.amountRange || "all"}
+        value={
+          filter?.priceMin !== undefined || filter?.priceMax !== undefined
+            ? `${filter.priceMin}-${filter.priceMax || "plus"}`
+            : "all"
+        }
         onValueChange={(value) => {
           if (!setFilter) return;
           if (value === "all") {
             setFilter({
-              amountRange: undefined,
               priceMin: undefined,
               priceMax: undefined,
+              amount: undefined,
             });
             return;
           }
@@ -96,54 +100,57 @@ export const SubscriptionsFilter = ({
           } else if (value === "501-1000") {
             priceMin = 501;
             priceMax = 1000;
-          } else if (value === "1000+") {
+          } else if (value === "1000-plus") {
             priceMin = 1000;
             priceMax = undefined;
           }
 
-          setFilter({ amountRange: value, priceMin, priceMax });
+          setFilter({ priceMin, priceMax, amount: undefined });
         }}
       >
         <SelectTrigger className="w-fit rounded-full">
-          <SelectValue placeholder="Amount" />
+          <SelectValue placeholder="Amount Range" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Amounts</SelectItem>
+          <SelectItem value="all">All Range</SelectItem>
           <SelectItem value="0-100">0 - 100</SelectItem>
           <SelectItem value="101-500">101 - 500</SelectItem>
           <SelectItem value="501-1000">501 - 1000</SelectItem>
-          <SelectItem value="1000+">1000+</SelectItem>
+          <SelectItem value="1000-plus">1000+</SelectItem>
         </SelectContent>
       </Select>
 
       <Select
-        value={filter?.referralRange || "all"}
+        value={
+          filter?.totalReferralsMin !== undefined || filter?.totalReferralsMax !== undefined
+            ? `${filter.totalReferralsMin}-${filter.totalReferralsMax || "plus"}`
+            : "all"
+        }
         onValueChange={(value) => {
           if (!setFilter) return;
           if (value === "all") {
             setFilter({
-              referralRange: undefined,
               totalReferralsMin: undefined,
               totalReferralsMax: undefined,
             });
             return;
           }
 
-          let totalReferralsMin: number | undefined = undefined;
-          let totalReferralsMax: number | undefined = undefined;
+          let min: number | undefined = undefined;
+          let max: number | undefined = undefined;
 
           if (value === "0-5") {
-            totalReferralsMin = 0;
-            totalReferralsMax = 5;  
+            min = 0;
+            max = 5;
           } else if (value === "6-10") {
-            totalReferralsMin = 6;
-            totalReferralsMax = 10; 
+            min = 6;
+            max = 10;
           } else if (value === "11+") {
-            totalReferralsMin = 11;
-            totalReferralsMax = undefined;
+            min = 11;
+            max = undefined;
           }
 
-          setFilter({ referralRange: value, totalReferralsMin, totalReferralsMax });
+          setFilter({ totalReferralsMin: min, totalReferralsMax: max });
         }}
       >
         <SelectTrigger className="w-fit rounded-full">
