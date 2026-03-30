@@ -72,23 +72,35 @@ export const SubscriptionsFilter = ({
       </Button>
 
       <Select
-        value={filter.amountRange || "all"}
+        value={filter?.amountRange || "all"}
         onValueChange={(value) => {
-          let priceMin = "";
-          let priceMax = "";
-          if (value === "0-100") {
-            priceMin = "0";
-            priceMax = "100";
-          } else if (value === "101-500") {
-            priceMin = "101";
-            priceMax = "500";
-          } else if (value === "501-1000") {
-            priceMin = "501";
-            priceMax = "1000";
-          } else if (value === "1000+") {
-            priceMin = "1000";
-            priceMax = "";
+          if (!setFilter) return;
+          if (value === "all") {
+            setFilter({
+              amountRange: undefined,
+              priceMin: undefined,
+              priceMax: undefined,
+            });
+            return;
           }
+
+          let priceMin: number | undefined = undefined;
+          let priceMax: number | undefined = undefined;
+
+          if (value === "0-100") {
+            priceMin = 0;
+            priceMax = 100;
+          } else if (value === "101-500") {
+            priceMin = 101;
+            priceMax = 500;
+          } else if (value === "501-1000") {
+            priceMin = 501;
+            priceMax = 1000;
+          } else if (value === "1000+") {
+            priceMin = 1000;
+            priceMax = undefined;
+          }
+
           setFilter({ amountRange: value, priceMin, priceMax });
         }}
       >
@@ -105,20 +117,32 @@ export const SubscriptionsFilter = ({
       </Select>
 
       <Select
-        value={filter.referralRange || "all"}
+        value={filter?.referralRange || "all"}
         onValueChange={(value) => {
-          let totalReferralsMin = "";
-          let totalReferralsMax = "";
-          if (value === "0-5") {
-            totalReferralsMin = "0";
-            totalReferralsMax = "5";
-          } else if (value === "6-10") {
-            totalReferralsMin = "6";
-            totalReferralsMax = "10";
-          } else if (value === "11+") {
-            totalReferralsMin = "11";
-            totalReferralsMax = "";
+          if (!setFilter) return;
+          if (value === "all") {
+            setFilter({
+              referralRange: undefined,
+              totalReferralsMin: undefined,
+              totalReferralsMax: undefined,
+            });
+            return;
           }
+
+          let totalReferralsMin: number | undefined = undefined;
+          let totalReferralsMax: number | undefined = undefined;
+
+          if (value === "0-5") {
+            totalReferralsMin = 0;
+            totalReferralsMax = 5;  
+          } else if (value === "6-10") {
+            totalReferralsMin = 6;
+            totalReferralsMax = 10; 
+          } else if (value === "11+") {
+            totalReferralsMin = 11;
+            totalReferralsMax = undefined;
+          }
+
           setFilter({ referralRange: value, totalReferralsMin, totalReferralsMax });
         }}
       >

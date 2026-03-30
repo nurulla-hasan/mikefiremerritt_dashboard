@@ -55,32 +55,34 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
   };
 
   const handleViewsChange = (value: string) => {
+    if (!setFilter) return;
     if (value === "all") {
       setFilter({ minViews: undefined, maxViews: undefined });
       return;
     }
     const [min, max] = value.split("-");
     setFilter({
-      ...filter,
       minViews: Number(min),
       maxViews: max === "plus" ? undefined : Number(max),
     });
   };
 
   const handleDatePresetChange = (value: string) => {
+    if (!setFilter) return;
     if (value === "all") {
-      setFilter({datePreset: undefined });
+      setFilter({ datePreset: undefined });
       return;
     }
-    setFilter({ ...filter, datePreset: value });
+    setFilter({ datePreset: value });
   };
 
   const handleRoleChange = (value: string) => {
+    if (!setFilter) return;
     if (value === "all") {
       setFilter({ role: undefined });
       return;
     }
-    setFilter({ ...filter, role: value });
+    setFilter({ role: value });
   };
 
   return (

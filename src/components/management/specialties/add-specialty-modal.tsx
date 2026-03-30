@@ -110,11 +110,11 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
           </DialogHeader>
 
           <div className="space-y-6 py-4">
-            <div className="space-y-2 text-center">
-              <p className="text-sm font-medium">Specialty Image</p>
+            <div className="space-y-2 flex flex-col items-center">
+              <p className="text-sm font-medium self-start">Specialty Image</p>
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="relative h-40 w-full border-2 border-dashed rounded-xl flex items-center justify-center bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors overflow-hidden"
+                className="relative aspect-square w-40 border-2 border-dashed rounded-xl flex items-center justify-center bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors overflow-hidden"
               >
                 {image ? (
                   <>
@@ -123,16 +123,17 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
                       onClick={(e) => { e.stopPropagation(); removeImage(); }}
                       className="absolute top-2 right-2 p-1 bg-destructive text-destructive-foreground rounded-full shadow-lg"
                     >
-                      <X className="h-4 w-4" />
+                      <X className="h-3 w-3" />
                     </button>
                   </>
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                    <ImagePlus className="h-10 w-10" />
-                    <span className="text-xs">Click to upload image</span>
+                  <div className="flex flex-col items-center gap-2 text-muted-foreground p-4">
+                    <ImagePlus className="h-8 w-8" />
+                    <span className="text-[10px] text-center">Click to upload square image</span>
                   </div>
                 )}
               </div>
+              <p className="text-[10px] text-muted-foreground">Recommended ratio 1:1 (Square)</p>
               <input 
                 type="file" 
                 ref={fileInputRef} 
