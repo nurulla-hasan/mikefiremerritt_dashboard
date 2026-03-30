@@ -17,4 +17,7 @@ export const subscriptionApis = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllSubscriptionsQuery } = subscriptionApis;
+export const { 
+  useGetAllSubscriptionsQuery,
+  useLazyGetAllSubscriptionsQuery
+} = subscriptionApis;

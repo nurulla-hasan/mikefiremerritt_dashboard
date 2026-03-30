@@ -27,4 +27,8 @@ const reviewsApis = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllReviewsQuery, useDeleteReviewMutation } = reviewsApis;
+export const { 
+  useGetAllReviewsQuery, 
+  useLazyGetAllReviewsQuery,
+  useDeleteReviewMutation 
+} = reviewsApis;

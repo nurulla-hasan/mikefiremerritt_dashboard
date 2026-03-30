@@ -16,6 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { useLazyGetAllTrainersQuery } from "@/redux/feature/trainer/trainerApis";
+import { useState } from "react";
+
 interface TrainersFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -25,24 +28,37 @@ interface TrainersFilterProps {
 export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterProps) => {
   const { data: specialtiesData, isLoading, isError } = useGetAllSpecialtiesQuery(undefined);
   const specialties = specialtiesData?.data || [];
+  const [triggerExport] = useLazyGetAllTrainersQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    const exportData = data.map((trainer: any) => ({
-      'Trainer Name': trainer.fullName || 'N/A',
-      'Email': trainer.email || 'N/A',
-      'Specialty': trainer.specialty || 'N/A',
-      'Status': trainer.status || 'N/A',
-      'Joined Date': trainer.createdAt ? new Date(trainer.createdAt).toLocaleDateString() : 'N/A',
-    }));
+      const exportData = allData.map((trainer: any) => ({
+        'Trainer Name': trainer.fullName || 'N/A',
+        'Email': trainer.email || 'N/A',
+        'Specialty': trainer.specialty || 'N/A',
+        'Status': trainer.status || 'N/A',
+        'Joined Date': trainer.createdAt ? new Date(trainer.createdAt).toLocaleDateString() : 'N/A',
+      }));
 
-    downloadExcel(exportData, "Trainers", "Trainers List");
+      downloadExcel(exportData, "Trainers", "Trainers List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
-      {/* View Count Range */}
+      {/* ... (Existing Filter components) */}
       <div className="flex items-center gap-2">
         <Input
           type="number"
@@ -165,13 +181,16 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
           }
         />
       </div>
+
       <Button 
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

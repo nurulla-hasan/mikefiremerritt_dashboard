@@ -15,6 +15,9 @@ import {
 import { Link } from "react-router-dom";
 import { downloadExcel } from "@/lib/utils";
 
+import { useLazyGetAllSubscriptionsQuery } from "@/redux/feature/subscriptions/subscriptionApis";
+import { useState } from "react";
+
 interface SubscriptionsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -26,20 +29,34 @@ export const SubscriptionsFilter = ({
   setFilter,
   data = []
 }: SubscriptionsFilterProps) => {
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const [triggerExport] = useLazyGetAllSubscriptionsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-    const exportData = data.map((sub) => ({
-      'User Name': sub.user?.fullName || 'N/A',
-      'Email': sub.user?.email || 'N/A',
-      'Plan Type': sub.planType || 'N/A',
-      'Status': sub.status || 'N/A',
-      'Start Date': sub.startDate ? new Date(sub.startDate).toLocaleDateString() : 'N/A',
-      'End Date': sub.endDate ? new Date(sub.endDate).toLocaleDateString() : 'N/A',
-      'Amount': sub.amount || 0,
-    }));
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    downloadExcel(exportData, "Subscriptions", "Subscriptions List");
+      const exportData = allData.map((sub: any) => ({
+        'User Name': sub.user?.fullName || 'N/A',
+        'Email': sub.user?.email || 'N/A',
+        'Plan Type': sub.planType || 'N/A',
+        'Status': sub.status || 'N/A',
+        'Start Date': sub.startDate ? new Date(sub.startDate).toLocaleDateString() : 'N/A',
+        'End Date': sub.endDate ? new Date(sub.endDate).toLocaleDateString() : 'N/A',
+        'Amount': sub.amount || 0,
+      }));
+
+      downloadExcel(exportData, "Subscriptions", "Subscriptions List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -116,7 +133,7 @@ export const SubscriptionsFilter = ({
         </SelectContent>
       </Select>
 
-      <Select
+      {/* <Select
         value={filter.duration || "all"}
         onValueChange={(value) =>
           setFilter({ duration: value === "all" ? "" : value })
@@ -130,7 +147,7 @@ export const SubscriptionsFilter = ({
           <SelectItem value="MONTHLY">Monthly</SelectItem>
           <SelectItem value="YEARLY">Yearly</SelectItem>
         </SelectContent>
-      </Select>
+      </Select> */}
 
       <div className="relative w-full md:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -151,9 +168,11 @@ export const SubscriptionsFilter = ({
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

@@ -17,6 +17,8 @@ import { useState } from "react";
 import { downloadExcel } from "@/lib/utils";
 import type { INewsfeed } from "@/types/newsfeed";
 
+import { useLazyGetAllNewsfeedsQuery } from "@/redux/feature/newsfeed/newsfeedApis";
+
 interface NewsfeedFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -25,18 +27,31 @@ interface NewsfeedFilterProps {
 
 export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterProps) => {
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
+  const [triggerExport] = useLazyGetAllNewsfeedsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    const exportData = data.map((news: any) => ({
-      'Title': news.title || 'N/A',
-      'Author': news.user?.fullName || 'N/A',
-      'Views': news.views || 0,
-      'Date': news.createdAt ? new Date(news.createdAt).toLocaleDateString() : 'N/A',
-    }));
+      const exportData = allData.map((news: any) => ({
+        'Title': news.title || 'N/A',
+        'Author': news.user?.fullName || 'N/A',
+        'Views': news.views || 0,
+        'Date': news.createdAt ? new Date(news.createdAt).toLocaleDateString() : 'N/A',
+      }));
 
-    downloadExcel(exportData, "Newsfeed", "Newsfeed List");
+      downloadExcel(exportData, "Newsfeed", "Newsfeed List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handleViewsChange = (value: string) => {
@@ -146,9 +161,11 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

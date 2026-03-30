@@ -12,6 +12,9 @@ import {
 import type { IUser } from "@/types/user";
 import { downloadExcel } from "@/lib/utils";
 
+import { useLazyGetAllUsersQuery } from "@/redux/feature/user/userApis";
+import { useState } from "react";
+
 interface UsersFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -19,23 +22,38 @@ interface UsersFilterProps {
 }
 
 export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) => {
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const [triggerExport] = useLazyGetAllUsersQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-    // Transform data for export
-    const exportData = data.map((user) => ({
-      'Full Name': user.fullName || 'N/A',
-      'Email': user.email || 'N/A',
-      'Role': user.role || 'N/A',
-      'Status': user.status || 'N/A',
-      'Joined Date': user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A',
-    }));
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database by passing a very large limit
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    downloadExcel(exportData, "Users", "Users List");
+      // Transform data for export
+      const exportData = allData.map((user: IUser) => ({
+        'Full Name': user.fullName || 'N/A',
+        'Email': user.email || 'N/A',
+        'Role': user.role || 'N/A',
+        'Status': user.status || 'N/A',
+        'Joined Date': user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A',
+      }));
+
+      downloadExcel(exportData, "Users", "Users List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
+      {/* ... (Select components remain same) */}
       <Select
         value={filter?.role || "all"}
         onValueChange={(value) =>
@@ -92,9 +110,11 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4" />
+        <Download />
         Export
       </Button>
     </div>

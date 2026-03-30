@@ -32,6 +32,7 @@ export const adminApis = baseApi.injectEndpoints({
 
 export const {
   useGetAllAdminsQuery,
+  useLazyGetAllAdminsQuery,
   useAddNewAdminMutation,
   useDeleteAdminMutation,
 } = adminApis;

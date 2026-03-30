@@ -30,5 +30,6 @@ const trainerApis = baseApi.injectEndpoints({
 
 export const {
     useGetAllTrainersQuery,
+    useLazyGetAllTrainersQuery,
     useUpdateTrainerProfileStatusMutation,
 } = trainerApis;

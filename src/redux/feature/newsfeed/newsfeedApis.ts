@@ -30,5 +30,6 @@ const newsfeedApis = baseApi.injectEndpoints({
 
 export const {
     useGetAllNewsfeedsQuery,
+    useLazyGetAllNewsfeedsQuery,
     useUpdateNewsfeedStatusMutation,
 } = newsfeedApis;

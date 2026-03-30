@@ -12,6 +12,9 @@ import {
 import { downloadExcel } from "@/lib/utils";
 import type { Ticket } from "@/types/ticket";
 
+import { useLazyGetAllSupportTicketsQuery } from "@/redux/feature/support/supportApis";
+import { useState } from "react";
+
 interface TicketsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -19,18 +22,32 @@ interface TicketsFilterProps {
 }
 
 export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterProps) => {
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const [triggerExport] = useLazyGetAllSupportTicketsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-    const exportData = data.map((ticket: any) => ({
-      'Ticket ID': ticket.ticketId || 'N/A',
-      'Subject': ticket.subject || 'N/A',
-      'User Email': ticket.user?.email || 'N/A',
-      'Status': ticket.status || 'N/A',
-      'Created Date': ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : 'N/A',
-    }));
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    downloadExcel(exportData, "Support_Tickets", "Tickets List");
+      const exportData = allData.map((ticket: any) => ({
+        'Ticket ID': ticket.ticketId || 'N/A',
+        'Subject': ticket.subject || 'N/A',
+        'User Email': ticket.user?.email || 'N/A',
+        'Status': ticket.status || 'N/A',
+        'Created Date': ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : 'N/A',
+      }));
+
+      downloadExcel(exportData, "Support_Tickets", "Tickets List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -73,9 +90,11 @@ export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterPro
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

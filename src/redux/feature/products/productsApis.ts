@@ -30,5 +30,6 @@ const productsApis = baseApi.injectEndpoints({
 
 export const {
     useGetAllProductsQuery,
+    useLazyGetAllProductsQuery,
     useUpdateProductStatusMutation,
 } = productsApis;

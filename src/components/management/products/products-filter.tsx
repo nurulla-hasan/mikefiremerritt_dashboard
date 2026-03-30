@@ -17,6 +17,8 @@ import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialty
 import { downloadExcel } from "@/lib/utils";
 import type { IProduct } from "@/types/product";
 
+import { useLazyGetAllProductsQuery } from "@/redux/feature/products/productsApis";
+
 interface ProductsFilterProps {
   filter?: any;
   setFilter?: (
@@ -38,23 +40,36 @@ export const ProductsFilter = ({
   } = useGetAllSpecialtiesQuery(undefined);
   const specialties = specialtiesData?.data || [];
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
+  const [triggerExport] = useLazyGetAllProductsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    const exportData = data.map((product: any) => ({
-      "Product Name": product.name || "N/A",
-      Specialty: product.specialty?.specialtyName || "N/A",
-      Trainer: product.trainer?.fullName || "N/A",
-      Price: product.price || 0,
-      Rating: product.rating || 0,
-      Status: product.isActive ? "Active" : "Inactive",
-      Date: product.createdAt
-        ? new Date(product.createdAt).toLocaleDateString()
-        : "N/A",
-    }));
+      const exportData = allData.map((product: any) => ({
+        "Product Name": product.name || "N/A",
+        Specialty: product.specialty?.specialtyName || "N/A",
+        Trainer: product.trainer?.fullName || "N/A",
+        Price: product.price || 0,
+        Rating: product.rating || 0,
+        Status: product.isActive ? "Active" : "Inactive",
+        Date: product.createdAt
+          ? new Date(product.createdAt).toLocaleDateString()
+          : "N/A",
+      }));
 
-    downloadExcel(exportData, "Products", "Products List");
+      downloadExcel(exportData, "Products", "Products List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handlePriceChange = (value: string) => {
@@ -246,9 +261,11 @@ export const ProductsFilter = ({
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

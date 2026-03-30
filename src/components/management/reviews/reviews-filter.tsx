@@ -12,6 +12,9 @@ import {
 import { downloadExcel } from "@/lib/utils";
 import type { TReview } from "@/types/review";
 
+import { useLazyGetAllReviewsQuery } from "@/redux/feature/reviews/reviewsApis";
+import { useState } from "react";
+
 interface ReviewsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -19,18 +22,32 @@ interface ReviewsFilterProps {
 }
 
 export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterProps) => {
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const [triggerExport] = useLazyGetAllReviewsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-    const exportData = data.map((review: any) => ({
-      'Reviewer': review.user?.fullName || 'N/A',
-      'Trainer/Class': review.trainer?.fullName || review.product?.name || 'N/A',
-      'Rating': review.rating || 0,
-      'Review Text': review.comment || 'N/A',
-      'Date': review.createdAt ? new Date(review.createdAt).toLocaleDateString() : 'N/A',
-    }));
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    downloadExcel(exportData, "Reviews", "Reviews List");
+      const exportData = allData.map((review: any) => ({
+        'Reviewer': review.user?.fullName || 'N/A',
+        'Trainer/Class': review.trainer?.fullName || review.product?.name || 'N/A',
+        'Rating': review.rating || 0,
+        'Review Text': review.comment || 'N/A',
+        'Date': review.createdAt ? new Date(review.createdAt).toLocaleDateString() : 'N/A',
+      }));
+
+      downloadExcel(exportData, "Reviews", "Reviews List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -88,9 +105,11 @@ export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterPro
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
     </div>

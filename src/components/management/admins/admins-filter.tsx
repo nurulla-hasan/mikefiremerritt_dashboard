@@ -6,6 +6,9 @@ import AddAdminModal from "./add-modal";
 import { downloadExcel } from "@/lib/utils";
 import type { TAdmin } from "@/types/admin";
 
+import { useLazyGetAllAdminsQuery } from "@/redux/feature/admin/adminApis";
+import { useState } from "react";
+
 interface AdminsFilterProps {
   filter: any;
   setFilter: (update: any, config?: { debounce?: boolean }) => void;
@@ -13,18 +16,32 @@ interface AdminsFilterProps {
 }
 
 export const AdminsFilter = ({ filter, setFilter, data = [] }: AdminsFilterProps) => {
-  const handleExport = () => {
-    if (!data || data.length === 0) return;
+  const [triggerExport] = useLazyGetAllAdminsQuery();
+  const [isExporting, setIsExporting] = useState(false);
 
-    const exportData = data.map((admin: any) => ({
-      'Name': admin.fullName || 'N/A',
-      'Email': admin.email || 'N/A',
-      'Role': admin.role || 'N/A',
-      'Status': admin.status || 'N/A',
-      'Joined Date': admin.createdAt ? new Date(admin.createdAt).toLocaleDateString() : 'N/A',
-    }));
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      // Fetch all data from database
+      const res = await triggerExport({ ...filter, limit: 999999, page: 1 }).unwrap();
+      const allData = res?.data || [];
+      
+      if (allData.length === 0) return;
 
-    downloadExcel(exportData, "Admins", "Admins List");
+      const exportData = allData.map((admin: any) => ({
+        'Name': admin.fullName || 'N/A',
+        'Email': admin.email || 'N/A',
+        'Role': admin.role || 'N/A',
+        'Status': admin.status || 'N/A',
+        'Joined Date': admin.createdAt ? new Date(admin.createdAt).toLocaleDateString() : 'N/A',
+      }));
+
+      downloadExcel(exportData, "Admins", "Admins List");
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -49,9 +66,11 @@ export const AdminsFilter = ({ filter, setFilter, data = [] }: AdminsFilterProps
         variant="outline" 
         className="rounded-full"
         onClick={handleExport}
+        loading={isExporting}
+        loadingText="Exporting..."
         disabled={!data || data.length === 0}
       >
-        <Download className="h-4 w-4 mr-2" />
+        <Download />
         Export
       </Button>
 

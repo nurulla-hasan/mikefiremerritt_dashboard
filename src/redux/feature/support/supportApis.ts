@@ -31,5 +31,6 @@ const supportApis = baseApi.injectEndpoints({
 
 export const {
     useGetAllSupportTicketsQuery,
+    useLazyGetAllSupportTicketsQuery,
     useReplyToSupportTicketMutation,
 } = supportApis;
