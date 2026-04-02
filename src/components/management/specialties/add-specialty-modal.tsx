@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { ImagePlus, X } from "lucide-react";
 import { useCreateSpecialtyMutation, useUpdateSpecialtyMutation } from "@/redux/feature/specialties/specialtyApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
@@ -23,6 +25,7 @@ interface AddSpecialtyModalProps {
 const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
   const [open, setOpen] = useState(false);
   const [specialtyName, setSpecialtyName] = useState("");
+  const [isActive, setIsActive] = useState(true);
   const [image, setImage] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,9 +37,11 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
     if (specialty) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setSpecialtyName(specialty.specialtyName);
+      setIsActive(specialty.isActive);
       setImage(specialty.specialtyImage);
     } else {
       setSpecialtyName("");
+      setIsActive(true);
       setImage(null);
     }
   }, [specialty, open]);
@@ -77,7 +82,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
       formData.append("specialtyImage", imageFile);
     }
     
-    formData.append("bodyData", JSON.stringify({ specialtyName }));
+    formData.append("bodyData", JSON.stringify({ specialtyName, isActive }));
 
     try {
       if (specialty) {
@@ -90,6 +95,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
       setOpen(false);
       removeImage();
       setSpecialtyName("");
+      setIsActive(true);
     } catch (error: any) {
       ErrorToast(error?.data?.message || `Failed to ${specialty ? "update" : "add"} specialty`);
     }
@@ -149,6 +155,20 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
                 placeholder="e.g. Yoga, CrossFit, HIIT" 
                 value={specialtyName}
                 onChange={(e) => setSpecialtyName(e.target.value)}
+              />
+            </div>
+
+            <div className="flex items-center justify-between p-3 border rounded-xl bg-muted/20">
+              <div className="space-y-0.5">
+                <Label htmlFor="status" className="text-sm font-medium">Status</Label>
+                <p className="text-[10px] text-muted-foreground">
+                  {isActive ? "Specialty is currently active" : "Specialty is currently inactive"}
+                </p>
+              </div>
+              <Switch 
+                id="status" 
+                checked={isActive} 
+                onCheckedChange={setIsActive}
               />
             </div>
 

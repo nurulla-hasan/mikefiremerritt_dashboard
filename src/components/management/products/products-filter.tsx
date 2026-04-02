@@ -38,10 +38,12 @@ export const ProductsFilter = ({
     isLoading,
     isError,
   } = useGetAllSpecialtiesQuery(undefined);
+  console.log(specialtiesData)
   const specialties = specialtiesData?.data || [];
   const [searchTerm, setSearchTerm] = useState(filter?.searchTerm || "");
   const [triggerExport] = useLazyGetAllProductsQuery();
   const [isExporting, setIsExporting] = useState(false);
+
 
   const handleExport = async () => {
     try {
@@ -53,12 +55,13 @@ export const ProductsFilter = ({
       if (allData.length === 0) return;
 
       const exportData = allData.map((product: any) => ({
-        "Product Name": product.name || "N/A",
-        Specialty: product.specialty?.specialtyName || "N/A",
-        Trainer: product.trainer?.fullName || "N/A",
+        "Product Name": product.productName || "N/A",
+        // "Product Description": product.productDescription || "N/A",
+        Trainer: product.trainer?.trainerName || "N/A",
         Price: product.price || 0,
+        Views: product.views || 0,
         Rating: product.rating || 0,
-        Status: product.isActive ? "Active" : "Inactive",
+        Status: product.productStatus || "N/A",
         Date: product.createdAt
           ? new Date(product.createdAt).toLocaleDateString()
           : "N/A",

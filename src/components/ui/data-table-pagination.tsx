@@ -53,8 +53,8 @@ export function DataTablePagination<TData>({
   }
 
   return (
-    <div className="flex items-center justify-between px-2">
-      <div className="text-muted-foreground flex-1 text-sm">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
+      <div className="text-muted-foreground text-sm text-center sm:text-left">
         {meta && (
           <>
             Showing {(meta.page - 1) * meta.limit + 1} to{" "}
@@ -64,7 +64,7 @@ export function DataTablePagination<TData>({
         )}
       </div>
 
-      <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex items-center">
         <Pagination>
           <PaginationContent>
             {/* Previous */}
@@ -77,7 +77,7 @@ export function DataTablePagination<TData>({
                   }
                 }}
                 className={cn(
-                  "rounded-full cursor-pointer",
+                  "rounded-lg cursor-pointer",
                   !table.getCanPreviousPage() &&
                     "pointer-events-none opacity-50"
                 )}
@@ -105,7 +105,8 @@ export function DataTablePagination<TData>({
                       handlePageChange(pageNum);
                     }}
                     isActive={isActive}
-                    className="rounded-full cursor-pointer"
+                    size="icon-sm"
+                    className="rounded-lg cursor-pointer"
                   >
                     {pageNum}
                   </PaginationLink>
@@ -122,8 +123,9 @@ export function DataTablePagination<TData>({
                     handlePageChange(currentPage + 1);
                   }
                 }}
+                size="icon-sm"
                 className={cn(
-                  "rounded-full cursor-pointer",
+                  "rounded-lg cursor-pointer",
                   !table.getCanNextPage() && "pointer-events-none opacity-50"
                 )}
               />

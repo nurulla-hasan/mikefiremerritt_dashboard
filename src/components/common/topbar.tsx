@@ -24,7 +24,6 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
   const { setTheme, theme } = useTheme();
   const dispatch = useDispatch();
   const { data: profileResponse, isLoading: isProfileLoading } = useGetMeQuery(undefined);
-  console.log(profileResponse)
   const { data: notificationsResponse } = useGetNotificationsQuery();
   
   const admin = profileResponse?.data;

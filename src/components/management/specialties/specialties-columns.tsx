@@ -1,10 +1,12 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import SpecialtyAction from "./specialty-action";
+import { Badge } from "@/components/ui/badge";
 
 export type Specialty = {
   id: string;
   specialtyName: string;
   specialtyImage: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -29,6 +31,18 @@ export const specialtiesColumns: ColumnDef<Specialty>[] = [
   {
     accessorKey: "specialtyName",
     header: "Specialty Name",
+  },
+  {
+    accessorKey: "isActive",
+    header: "Status",
+    cell: ({ row }) => {
+      const isActive = row.getValue("isActive") as boolean;
+      return (
+        <Badge variant={isActive ? "accepted" : "rejected"}>
+          {isActive ? "Active" : "Inactive"}
+        </Badge>
+      );
+    },
   },
   {
     id: "actions",
