@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
-import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rules/pricingRuleApis";
+import { useAddPricingRuleMutation, useGetAllSubscriptionPlansQuery } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 
@@ -17,6 +17,7 @@ const TimePeriodForm = () => {
   const [discountDates, setDiscountDates] = useState<DateRange | undefined>();
 
   const [addPricingRule, { isLoading: isAdding }] = useAddPricingRuleMutation();
+  const { data: plansData } = useGetAllSubscriptionPlansQuery(undefined);
 
   const handleSaveTimeBased = async () => {
     if (!discountDates?.from || !discountDates?.to || !discountFee) {
@@ -28,6 +29,14 @@ const TimePeriodForm = () => {
 
     if (numericDiscountFee <= 0) {
       ErrorToast("Subscription fee must be greater than 0");
+      return;
+    }
+
+    const initialPlan = plansData?.data?.find((plan: any) => plan.initialPlan === true);
+    const standardPrice = initialPlan?.price || 0;
+
+    if (numericDiscountFee > standardPrice) {
+      ErrorToast("Discount fee cannot exceed the standard subscription price");
       return;
     }
 
@@ -47,6 +56,7 @@ const TimePeriodForm = () => {
       await addPricingRule(payload).unwrap();
       SuccessToast("Time Period rule added successfully");
       // Reset form
+      setDiscountFee("");
       // setDuration("3");
       setDiscountDates(undefined);
       setTimeBasedRuleName("");

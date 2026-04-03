@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
-import { useAddPricingRuleMutation } from "@/redux/feature/pricing-rules/pricingRuleApis";
+import { useAddPricingRuleMutation, useGetAllSubscriptionPlansQuery } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 
@@ -17,10 +17,19 @@ const FirstComeFirstServeForm = () => {
   const [rewardDates, setRewardDates] = useState<DateRange | undefined>();
 
   const [addPricingRule, { isLoading: isAdding }] = useAddPricingRuleMutation();
+  const { data: plansData } = useGetAllSubscriptionPlansQuery(undefined);
 
   const handleSaveFirstCome = async () => {
     if (!rewardDates?.from || !rewardDates?.to || !rewardLimit || !rewardFee) {
       ErrorToast("Please fill all fields for First Come First Serve");
+      return;
+    }
+
+    const initialPlan = plansData?.data?.find((plan: any) => plan.initialPlan === true);
+    const standardPrice = initialPlan?.price || 0;
+
+    if (Number(rewardFee) > standardPrice) {
+      ErrorToast("Reward fee cannot exceed the standard subscription price");
       return;
     }
 
@@ -41,6 +50,7 @@ const FirstComeFirstServeForm = () => {
       SuccessToast("First Come First Serve rule added successfully");
       // Reset form
       setRewardLimit("");
+      setRewardFee("");
       setRewardDates(undefined);
       setFirstComeRuleName("");
     } catch (error: any) {
@@ -83,7 +93,12 @@ const FirstComeFirstServeForm = () => {
               </span>
               <Input
                 value={rewardFee}
-                onChange={(e) => setRewardFee(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === "" || /^\d*\.?\d*$/.test(val)) {
+                    setRewardFee(val);
+                  }
+                }}
                 placeholder="45"
                 className="pl-7"
               />

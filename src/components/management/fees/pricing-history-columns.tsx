@@ -30,7 +30,11 @@ export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
       const { discountAmount, discountPercent } = row.original;
       return (
         <span className="text-sm text-muted-foreground">
-          {discountAmount ? `$${discountAmount}` : discountPercent ? `${discountPercent}%` : "0"}
+          {discountAmount
+            ? `$${discountAmount}`
+            : discountPercent
+              ? `${discountPercent}%`
+              : "0"}
         </span>
       );
     },
@@ -49,27 +53,40 @@ export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
     header: "Date Range",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
-        {format(new Date(row.original.startDate), "MMM dd")} - {format(new Date(row.original.endDate), "MMM dd, yyyy")}
+        {format(new Date(row.original.startDate), "MMM dd")} -{" "}
+        {format(new Date(row.original.endDate), "MMM dd, yyyy")}
       </span>
     ),
   },
-  // {
-  //   accessorKey: "durationMonths",
-  //   header: "Duration",
-  //   cell: ({ row }) => (
-  //     <span className="text-sm text-muted-foreground">
-  //       {row.original.durationMonths ? `${row.original.durationMonths} Months` : "-"}
-  //     </span>
-  //   ),
-  // },
   {
     accessorKey: "subscriptionOffer.price",
-    header: "Price",
+    header: "Original Price",
     cell: ({ row }) => (
       <span className="text-sm text-muted-foreground">
         ${row.original.subscriptionOffer.price}
       </span>
     ),
+  },
+  {
+    id: "newPrice",
+    header: "New Price",
+    cell: ({ row }) => {
+      const { subscriptionOffer, discountAmount, discountPercent } =
+        row.original;
+      let finalPrice = subscriptionOffer.price;
+
+      if (discountAmount) {
+        finalPrice -= discountAmount;
+      } else if (discountPercent) {
+        finalPrice -= (finalPrice * discountPercent) / 100;
+      }
+
+      return (
+        <span className="text-sm font-medium text-foreground">
+          ${finalPrice.toFixed(2)}
+        </span>
+      );
+    },
   },
   {
     id: "status",
