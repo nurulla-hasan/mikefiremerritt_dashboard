@@ -61,6 +61,15 @@ export const trainersColumns: ColumnDef<ITrainer>[] = [
     ),
   },
   {
+    accessorKey: "totalRevenue",
+    header: "Total Revenue",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        ${row.original.totalRevenue?.toFixed(2)}
+      </span>
+    ),
+  },
+  {
     accessorKey: "viewCount",
     header: "Views",
     cell: ({ row }) => (

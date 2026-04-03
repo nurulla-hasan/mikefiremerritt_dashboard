@@ -27,6 +27,7 @@ export interface ITrainer {
   viewCount: number;
   specialty: ISpecialty[];
   serviceTypes: IServiceType[];
+  totalRevenue?: number;
   subscription?: {
     isSubscribed: boolean;
     plan: string;
