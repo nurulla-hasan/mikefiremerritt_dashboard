@@ -15,7 +15,7 @@ const MainLayout = () => {
                 <Topbar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
                 <div className="flex-1 min-h-0 mt-20">
                     <ScrollArea
-                        className="h-full p-4 bg-card lg:rounded-tl-2xl"
+                        className="h-full p-4 bg-background lg:rounded-tl-2xl"
                         onClick={() => isSidebarOpen && setIsSidebarOpen(false)}>
                         <div className="min-h-full">
                             <Outlet />

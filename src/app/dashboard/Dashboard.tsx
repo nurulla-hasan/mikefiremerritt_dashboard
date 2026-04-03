@@ -73,6 +73,7 @@ const Dashboard = () => {
               totalTrainers: stats.totalTrainers,
               totalProducts: stats.totalProducts,
               totalEarnings: stats.totalEarnings,
+              totalVisitors: stats.totalVisitors,
             }}
           />
         )}

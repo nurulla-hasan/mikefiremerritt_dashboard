@@ -6,15 +6,17 @@ interface StatsProps {
     totalTrainers: number;
     totalProducts: number;
     totalEarnings: number;
+    totalVisitors: number;
   };
 }
 
 const Stats = ({ data }: StatsProps) => {
   const items = [
-    { label: "Total User", value: data.totalUsers.toLocaleString() },
-    { label: "Total Trainer", value: data.totalTrainers.toLocaleString() },
-    { label: "Total Product", value: data.totalProducts.toLocaleString() },
-    { label: "Total Earning", value: `$${data.totalEarnings.toLocaleString()}` },
+    { label: "Total Users", value: data.totalUsers.toLocaleString() },
+    { label: "Total Trainers", value: data.totalTrainers.toLocaleString() },
+    { label: "Total Products", value: data.totalProducts.toLocaleString() },
+    { label: "Total Earnings", value: `$${data.totalEarnings.toLocaleString()}` },
+    { label: "Total Visitors", value: data.totalVisitors.toLocaleString() },
   ];
 
   return (

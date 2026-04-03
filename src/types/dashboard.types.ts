@@ -14,6 +14,7 @@ export interface IDashboardStats {
   totalTrainers: number;
   totalProducts: number;
   totalEarnings: number;
+  totalVisitors: number;
   earningGrowth: IEarningGrowth[];
   userGrowthByMonth: IUserGrowthByMonth[];
 }
