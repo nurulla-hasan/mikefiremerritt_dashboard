@@ -75,7 +75,7 @@ const FirstComeFirstServeForm = () => {
           </div>
           <div className="space-y-2">
             <Label className="text-sm font-medium">
-              Subscription Fee (Monthly)
+              Discount Amount
             </Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
