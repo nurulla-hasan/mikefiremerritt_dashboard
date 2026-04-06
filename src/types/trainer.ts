@@ -8,6 +8,15 @@ export interface IServiceType {
   serviceName: string;
 }
 
+export interface ICertification {
+  id: string;
+  userId: string;
+  certificationUrl: string;
+  orgName: string;
+  credentialNo: string;
+  acceptance: boolean;
+}
+
 export interface ITrainer {
   id: string;
   userId: string;
@@ -20,7 +29,7 @@ export interface ITrainer {
   isProfileComplete: boolean;
   specialtyId: string | null;
   portfolio: string[];
-  certifications: string[];
+  certifications: ICertification[] | string[];
   orgName: string | null;
   credentialNo: string | null;
   experienceYears: number;

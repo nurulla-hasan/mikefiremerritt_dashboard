@@ -38,7 +38,7 @@ const Trainers = () => {
         columns={trainersColumns}
         data={trainers}
         meta={meta}
-        isLoading={isLoading}
+        isLoading={isLoading} 
         isFetching={isFetching}
         isError={isError}
         onPageChange={setPage}

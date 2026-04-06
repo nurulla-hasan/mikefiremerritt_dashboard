@@ -25,6 +25,18 @@ const trainerApis = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.trainer],
         }),
 
+        updateCertificationAcceptance: builder.mutation({
+            query: ({ userId, certificationId, acceptance }) => ({
+                url: `/admin/trainers/certification/${userId}`,
+                method: "PATCH",
+                body: {
+                    certificationId,
+                    acceptance,
+                },
+            }),
+            invalidatesTags: [tagTypes.trainer],
+        }),
+
     }),
 });
 
@@ -32,4 +44,5 @@ export const {
     useGetAllTrainersQuery,
     useLazyGetAllTrainersQuery,
     useUpdateTrainerProfileStatusMutation,
+    useUpdateCertificationAcceptanceMutation,
 } = trainerApis;
