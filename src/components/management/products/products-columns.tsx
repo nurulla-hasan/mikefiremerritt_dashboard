@@ -89,6 +89,19 @@ export const productsColumns: ColumnDef<IProduct>[] = [
     },
   },
   {
+    accessorKey: "isApproved",
+    header: "Trainer Approval Status",
+    cell: ({ row }) => {
+      const isApproved = row.original.isApproved;
+      const variant = isApproved ? "accepted" : "rejected";
+      return (
+        <Badge variant={variant as any}>
+          {isApproved ? "ACTIVE" : "INACTIVE"}
+        </Badge>
+      );
+    },
+  },
+  {
     id: "actions",
     header: () => <div className="text-right pr-3">Actions</div>,
     cell: ({ row }) => (
