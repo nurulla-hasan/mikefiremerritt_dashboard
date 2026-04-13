@@ -53,7 +53,7 @@ const TicketResponseModal = ({ ticket }: TicketResponseModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon-sm">
+        <Button variant="ghost" size="icon-sm" disabled={ticket.status === "CLOSED"}>
           <Reply />
         </Button>
       </DialogTrigger>
