@@ -16,6 +16,7 @@ export const tagTypes = {
   pricingRule: "PricingRule",
   subscription: "Subscription",
   referral: "Referral",
+  serviceType: "ServiceType",
   // Add other tags here as needed
 };
 

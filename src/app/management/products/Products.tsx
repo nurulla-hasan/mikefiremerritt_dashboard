@@ -7,12 +7,18 @@ import {
   type Specialty,
 } from "@/components/management/specialties/specialties-columns";
 import { SpecialtiesFilter } from "@/components/management/specialties/specialties-filter";
+import {
+  serviceTypesColumns,
+  type ServiceType,
+} from "@/components/management/service-types/service-types-columns";
+import { ServiceTypesFilter } from "@/components/management/service-types/service-types-filter";
 import { DataTable } from "@/components/ui/data-table";
 import PageHeader from "@/components/ui/page-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useSmartFetchHook from "@/hooks/useSmartFetchHook";
 import { useGetAllProductsQuery } from "@/redux/feature/products/productsApis";
 import { useGetAllSpecialtiesQuery } from "@/redux/feature/specialties/specialtyApis";
+import { useGetAllServiceTypesQuery } from "@/redux/feature/service-types/serviceTypesApis";
 import type { IProduct } from "@/types/product";
 
 const Products = () => {
@@ -36,6 +42,15 @@ const Products = () => {
     setPage: setSpecPage,
   } = useSmartFetchHook<any, Specialty>(useGetAllSpecialtiesQuery);
 
+  const {
+    data: serviceTypesData,
+    meta: serviceTypesMeta,
+    isLoading: isServiceTypeLoading,
+    isError: isServiceTypeError,
+    isFetching: isServiceTypeFetching,
+    setPage: setServiceTypePage,
+  } = useSmartFetchHook<any, ServiceType>(useGetAllServiceTypesQuery);
+
 
   return (
     <PageLayout>
@@ -48,6 +63,7 @@ const Products = () => {
           <TabsList>
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="specialties">Specialties</TabsTrigger>
+            <TabsTrigger value="service-types">Service Types</TabsTrigger>
           </TabsList>
         </div>
 
@@ -78,6 +94,21 @@ const Products = () => {
             isFetching={isSpecFetching}
             isError={isSpecError}
             onPageChange={setSpecPage}
+          />
+        </TabsContent>
+
+        <TabsContent value="service-types" className="space-y-4">
+          <div className="flex flex-col md:flex-row md:justify-end">
+            <ServiceTypesFilter />
+          </div>
+          <DataTable
+            columns={serviceTypesColumns}
+            data={serviceTypesData}
+            meta={serviceTypesMeta}
+            isLoading={isServiceTypeLoading}
+            isFetching={isServiceTypeFetching}
+            isError={isServiceTypeError}
+            onPageChange={setServiceTypePage}
           />
         </TabsContent>
       </Tabs>
