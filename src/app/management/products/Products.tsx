@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import PageLayout from "@/components/common/page-layout";
 import { productsColumns } from "@/components/management/products/products-columns";
 import { ProductsFilter } from "@/components/management/products/products-filter";
@@ -22,6 +23,8 @@ import { useGetAllServiceTypesQuery } from "@/redux/feature/service-types/servic
 import type { IProduct } from "@/types/product";
 
 const Products = () => {
+  const [activeTab, setActiveTab] = useState("products");
+
   const {
     data,
     meta,
@@ -33,6 +36,7 @@ const Products = () => {
     setFilter,
   } = useSmartFetchHook<any, IProduct>(useGetAllProductsQuery);
 
+  // Lazy loading: only fetch when tab is active
   const {
     data: specialtiesData,
     meta: specialtiesMeta,
@@ -40,7 +44,9 @@ const Products = () => {
     isError: isSpecError,
     isFetching: isSpecFetching,
     setPage: setSpecPage,
-  } = useSmartFetchHook<any, Specialty>(useGetAllSpecialtiesQuery);
+  } = useSmartFetchHook<any, Specialty>(useGetAllSpecialtiesQuery, {
+    skip: activeTab !== "specialties",
+  });
 
   const {
     data: serviceTypesData,
@@ -48,13 +54,14 @@ const Products = () => {
     isLoading: isServiceTypeLoading,
     isError: isServiceTypeError,
     isFetching: isServiceTypeFetching,
-    setPage: setServiceTypePage,
-  } = useSmartFetchHook<any, ServiceType>(useGetAllServiceTypesQuery);
+  } = useSmartFetchHook<any, ServiceType>(useGetAllServiceTypesQuery, {
+    skip: activeTab !== "service-types",
+  });
 
 
   return (
     <PageLayout>
-      <Tabs defaultValue="products">
+      <Tabs defaultValue="products" value={activeTab} onValueChange={setActiveTab}>
         <div className="flex flex-col md:flex-row md:justify-between gap-2">
           <PageHeader
             title="Product Management"
@@ -108,7 +115,6 @@ const Products = () => {
             isLoading={isServiceTypeLoading}
             isFetching={isServiceTypeFetching}
             isError={isServiceTypeError}
-            onPageChange={setServiceTypePage}
           />
         </TabsContent>
       </Tabs>

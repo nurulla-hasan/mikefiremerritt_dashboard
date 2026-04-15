@@ -1,3 +1,4 @@
+   
 import { 
   useState, 
   useMemo, 
@@ -40,6 +41,13 @@ type BaseParams = {
 };
 
 /**
+ * Hook Configuration Options
+ */
+type SmartFetchOptions<P> = Partial<P> & {
+  skip?: boolean; // Added skip support
+};
+
+/**
  * The interface for the hook's return values
  */
 export type UseSmartFetchReturn<P extends BaseParams, T> = {
@@ -62,10 +70,11 @@ export type UseSmartFetchReturn<P extends BaseParams, T> = {
 };
 
 /**
- * Type definition for the query function (usually from RTK Query or custom fetch)
+ * Type definition for the query function (updated to accept skip)
  */
 type QueryHook<P extends BaseParams, T> = (
-  params: P
+  params: P,
+  options?: { skip?: boolean } // Accept skip in query hook options
 ) => {
   data?: ApiListResponse<T>;
   isLoading: boolean;
@@ -75,66 +84,51 @@ type QueryHook<P extends BaseParams, T> = (
 };
 
 /**
- * useSmartFetchHook - Optimized for React 19
- * A highly flexible hook for managing paginated data with smart debouncing, 
- * automatic page resets, and non-blocking state transitions.
+ * useSmartFetchHook - Optimized for React 18/19
+ * Now supports dynamic 'skip' to conditionally pause API requests.
  */
 const useSmartFetchHook = <P extends BaseParams, T>(
   queryHook: QueryHook<P, T>,
-  options: Partial<P> = {} as Partial<P>,
+  options: SmartFetchOptions<P> = {} as SmartFetchOptions<P>,
   initialParams: Partial<P> = {} as Partial<P>
 ): UseSmartFetchReturn<P, T> => {
+
+  const skip = options.skip ?? false;
+  const optionLimit = options.limit;
 
   // Memoize default values to maintain reference stability
   const defaultValues = useMemo(() => ({
     page: 1,
-    limit: options.limit ?? 10,
-    ...initialParams,
-    ...options
-  }), [initialParams, options]);
+    limit: optionLimit ?? 10,
+    ...initialParams
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
+  }), [initialParams, optionLimit]);
 
-  // 'filter' state handles instant UI updates (e.g., input field values)
   const [filter, setFilterState] = useState<Partial<P>>(defaultValues);
-  
-  // 'queryParams' state triggers the actual API request
   const [queryParams, setQueryParams] = useState<Partial<P>>(defaultValues);
-  
-  // React 19 Transition for non-blocking UI during large re-renders
   const [isPending, startTransition] = useTransition();
-  
-  // Ref to track the debounce timer for cleanup
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Cleanup timer on unmount to prevent memory leaks
   useEffect(() => {
     return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     };
   }, []);
 
-  // Execute the provided query hook with current query parameters
   const {
     data,
     isLoading,
     isError,
     isFetching,
     refetch: originalRefetch
-  } = queryHook(queryParams as P);
+  } = queryHook(queryParams as P, { skip });
 
-  /**
-   * Updates filters with optional debouncing and smart pagination reset.
-   * @param update - The new partial filter state or a functional updater.
-   * @param config - Options to control debounce and page reset behavior.
-   */
   const setFilter = useCallback((
     update: SetStateAction<Partial<P>>, 
     config?: { resetPage?: boolean; debounce?: boolean }
   ) => {
     const isDebounceRequired = config?.debounce ?? false;
 
-    // First, resolve what the new state should be
     const resolveNewState = (prev: Partial<P>) => {
       const next = typeof update === 'function' 
         ? (update as (prev: Partial<P>) => Partial<P>)(prev) 
@@ -149,14 +143,11 @@ const useSmartFetchHook = <P extends BaseParams, T>(
       };
     };
 
-    // Update the UI state immediately
     setFilterState(prev => {
       const newState = resolveNewState(prev);
       
       if (isDebounceRequired) {
-        if (debounceTimerRef.current) {
-          clearTimeout(debounceTimerRef.current);
-        }
+        if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
         
         debounceTimerRef.current = setTimeout(() => {
           startTransition(() => {
@@ -171,38 +162,27 @@ const useSmartFetchHook = <P extends BaseParams, T>(
       
       return newState;
     });
-  }, []);
+  }, [setQueryParams, startTransition, setFilterState]);
 
-  /**
-   * Specifically updates the current page (always instant)
-   */
   const setPage = useCallback((page: number) => {
     setFilter({ page } as Partial<P>, { resetPage: false, debounce: false });
   }, [setFilter]);
 
-  /**
-   * Resets all filters and pagination to original initial state
-   */
   const resetFilters = useCallback(() => {
     startTransition(() => {
       setFilterState(defaultValues);
       setQueryParams(defaultValues);
     });
-  }, [defaultValues]);
+  }, [defaultValues, startTransition, setFilterState, setQueryParams]);
 
-  /**
-   * Manually triggers a data refetch
-   */
   const refetch = useCallback(() => {
     if (originalRefetch) {
       originalRefetch();
     } else {
-      // Fallback: Trigger a state-based refetch if original refetch isn't available
       setQueryParams(prev => ({ ...prev }));
     }
-  }, [originalRefetch]);
+  }, [originalRefetch, setQueryParams]);
 
-  // Memoize the data list to prevent unnecessary downstream re-renders
   const list = useMemo(() => data?.data ?? [], [data?.data]);
   const meta = data?.meta;
 
