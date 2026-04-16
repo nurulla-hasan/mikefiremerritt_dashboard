@@ -46,9 +46,15 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
     }
   }, [specialty, open]);
 
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        ErrorToast("Image size must be less than 2MB");
+        return;
+      }
       setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -139,7 +145,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
                   </div>
                 )}
               </div>
-              <p className="text-[10px] text-muted-foreground">Recommended ratio 1:1 (Square)</p>
+              <p className="text-[10px] text-muted-foreground">Recommended ratio 1:1 (Square) • Max 2MB</p>
               <input 
                 type="file" 
                 ref={fileInputRef} 
