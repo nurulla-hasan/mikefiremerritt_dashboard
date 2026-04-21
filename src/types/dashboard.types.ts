@@ -9,10 +9,16 @@ export interface IUserGrowthByMonth {
   count: number;
 }
 
+export interface IProductStats {
+  purchasable: number;
+  nonPurchasable: number;
+  message?: string;
+}
+
 export interface IDashboardStats {
   totalUsers: number;
   totalTrainers: number;
-  totalProducts: number;
+  productStats: IProductStats;
   totalEarnings: number;
   totalVisitors: number;
   earningGrowth: IEarningGrowth[];

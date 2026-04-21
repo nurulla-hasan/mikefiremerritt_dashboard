@@ -71,7 +71,7 @@ const Dashboard = () => {
             data={{
               totalUsers: stats.totalUsers,
               totalTrainers: stats.totalTrainers,
-              totalProducts: stats.totalProducts,
+              productStats: stats.productStats,
               totalEarnings: stats.totalEarnings,
               totalVisitors: stats.totalVisitors,
             }}
