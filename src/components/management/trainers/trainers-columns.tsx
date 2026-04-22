@@ -5,6 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ActionButtons } from "./action-buttons";
 import type { ITrainer } from "@/types/trainer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const trainersColumns: ColumnDef<ITrainer>[] = [
   {
@@ -81,15 +87,41 @@ export const trainersColumns: ColumnDef<ITrainer>[] = [
   {
     accessorKey: "specialty",
     header: "Specialty",
-    cell: ({ row }) => (
-      <div className="flex flex-wrap gap-1 max-w-50">
-        {row.original.specialty?.map((s) => (
-          <Badge key={s.id} variant="outline" className="text-[10px] px-1.5 py-0">
-            {s.specialtyName}
-          </Badge>
-        ))}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const specialties = row.original.specialty || [];
+      const visibleSpecialties = specialties.slice(0, 2);
+      const hasMore = specialties.length > 2;
+
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex flex-wrap gap-1 max-w-50 cursor-help">
+                {visibleSpecialties.map((s) => (
+                  <Badge key={s.id} variant="outline" className="text-[10px] px-1.5 py-0">
+                    {s.specialtyName}
+                  </Badge>
+                ))}
+                {hasMore && (
+                  <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                    +{specialties.length - 2}
+                  </Badge>
+                )}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="bg-background border text-foreground shadow-md">
+              <div className="flex flex-wrap gap-1 max-w-xs p-1">
+                {specialties.map((s) => (
+                  <Badge key={s.id} className="text-[10px] px-1.5 py-0">
+                    {s.specialtyName}
+                  </Badge>
+                ))}
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
   },
   {
     accessorKey: "serviceTypes",
