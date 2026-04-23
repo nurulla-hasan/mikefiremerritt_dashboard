@@ -26,8 +26,8 @@ interface RefreshTokenResponse {
 }
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "https://mikefire-backend.vercel.app/api/v1",
-  baseUrl: "http://10.10.20.34:6080/api/v1",
+  baseUrl: "https://api.vitakinetic.com/api/v1",
+  // baseUrl: "http://10.10.20.34:6080/api/v1",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
     // If authorization header is already set (e.g. for refresh token call), don't overwrite it
