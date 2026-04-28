@@ -8,38 +8,27 @@ import { useGetReferralRewardQuery, useUpdateReferralRewardMutation } from "@/re
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 const ReferralRewards = () => {
-  const [userAmount, setUserAmount] = useState<string | null>(null);
+  const [amount, setAmount] = useState<string>("");
   const { data, isLoading: isFetching } = useGetReferralRewardQuery(undefined);
   const [updateReferralReward, { isLoading: isUpdating }] = useUpdateReferralRewardMutation();
 
-  // Derived state: Use user input if they typed something, otherwise use data from API
-  const apiAmount = data?.data && Array.isArray(data.data) && data.data.length > 0
-    ? data.data[0].rewardAmount.toString()
-    : data?.data?.rewardAmount?.toString() || "";
-
-  const rewardAmount = userAmount !== null ? userAmount : apiAmount;
   const rewardId = data?.data && Array.isArray(data.data) && data.data.length > 0
     ? data.data[0].id
     : data?.data?.id;
 
   const handleSave = async () => {
-    if (!rewardAmount) {
-      ErrorToast("Please enter a reward amount");
-      return;
-    }
-
-    if (!rewardId) {
-      ErrorToast("Unable to identify referral reward record");
+    if (!amount || Number(amount) <= 0) {
+      ErrorToast("Please enter a valid amount greater than 0");
       return;
     }
 
     try {
       await updateReferralReward({ 
         id: rewardId, 
-        rewardAmount: Number(rewardAmount) 
+        rewardAmount: Number(amount) 
       }).unwrap();
       SuccessToast("Referral rewards updated successfully");
-      setUserAmount(null); // Reset local state after success to sync with API again
+      setAmount("");
     } catch (error: any) {
       ErrorToast(error?.data?.message || "Failed to update referral rewards");
     }
@@ -60,8 +49,8 @@ const ReferralRewards = () => {
               $
             </span>
             <Input
-              value={rewardAmount}
-              onChange={(e) => setUserAmount(e.target.value)}
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               className="pl-7"
               placeholder="10"
               disabled={isFetching}
