@@ -24,14 +24,16 @@ const Users = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between gap-2">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader
           title="User Management"
-          description="User all Platform Users"
+          description="Manage all platform users"
           length={meta?.total || 0}
         />
 
-        <UsersFilter filter={filter} setFilter={setFilter} data={users} />
+        <div className="w-full lg:w-auto">
+          <UsersFilter filter={filter} setFilter={setFilter} data={users} />
+        </div>
       </div>
 
       <DataTable

@@ -135,7 +135,7 @@ export const ProductsFilter = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       <Select
         value={
           filter?.priceMin !== undefined
@@ -144,7 +144,7 @@ export const ProductsFilter = ({
         }
         onValueChange={handlePriceChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Price Range" />
         </SelectTrigger>
         <SelectContent>
@@ -164,7 +164,7 @@ export const ProductsFilter = ({
         }
         onValueChange={handleViewsChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Views" />
         </SelectTrigger>
         <SelectContent>
@@ -185,7 +185,7 @@ export const ProductsFilter = ({
           });
         }}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Specialty" />
         </SelectTrigger>
         <SelectContent className="max-h-62.5">
@@ -216,7 +216,7 @@ export const ProductsFilter = ({
         }
         onValueChange={handleRatingChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Ratings" />
         </SelectTrigger>
         <SelectContent>
@@ -233,7 +233,7 @@ export const ProductsFilter = ({
         }
         onValueChange={handleStatusChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Select Status" />
         </SelectTrigger>
         <SelectContent>
@@ -243,11 +243,11 @@ export const ProductsFilter = ({
         </SelectContent>
       </Select>
 
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or specialty"
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -262,7 +262,7 @@ export const ProductsFilter = ({
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

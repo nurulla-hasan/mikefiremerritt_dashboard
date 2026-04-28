@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
 import { Download, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -86,12 +85,12 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       <Select
         value={filter?.datePreset || "all"}
         onValueChange={handleDatePresetChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Date Created" />
         </SelectTrigger>
         <SelectContent>
@@ -111,7 +110,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
         }
         onValueChange={handleViewsChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Views" />
         </SelectTrigger>
         <SelectContent>
@@ -127,7 +126,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
         value={filter?.role || "all"}
         onValueChange={handleRoleChange}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Account type" />
         </SelectTrigger>
         <SelectContent>
@@ -137,11 +136,11 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
         </SelectContent>
       </Select>
 
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by title"
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
@@ -161,7 +160,7 @@ export const NewsfeedFilter = ({ filter, setFilter, data = [] }: NewsfeedFilterP
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

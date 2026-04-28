@@ -52,8 +52,7 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
   };
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
-      {/* ... (Select components remain same) */}
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       <Select
         value={filter?.role || "all"}
         onValueChange={(value) =>
@@ -63,7 +62,7 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
           }))
         }
       >
-        <SelectTrigger className="w-fit rounded-full border-muted-foreground/30">
+        <SelectTrigger className="w-full sm:w-35  border-muted-foreground/30">
           <SelectValue placeholder="Role" />
         </SelectTrigger>
         <SelectContent>
@@ -82,7 +81,7 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
           }))
         }
       >
-        <SelectTrigger className="w-fit rounded-full border-muted-foreground/30">
+        <SelectTrigger className="w-full sm:w-35  border-muted-foreground/30">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
@@ -92,11 +91,11 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
         </SelectContent>
       </Select>
 
-      <div className="relative w-full md:w-65">
+      <div className="relative w-full sm:w-65">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or email"
-          className="pl-9 pr-3 rounded-full border-muted-foreground/30 bg-background"
+          className="pl-9 pr-3  border-muted-foreground/30 bg-background w-full"
           value={filter?.searchTerm || ""}
           onChange={(e) =>
             setFilter(() => ({searchTerm: e.target.value,}),
@@ -108,7 +107,7 @@ export const UsersFilter = ({ filter, setFilter, data = [] }: UsersFilterProps) 
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

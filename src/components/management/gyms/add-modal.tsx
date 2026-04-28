@@ -18,7 +18,7 @@ const AddGymModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+ Add Gym</Button>
+        <Button>+ Add Gym</Button>
       </DialogTrigger>
 
       <DialogPortal>

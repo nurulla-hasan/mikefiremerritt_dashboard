@@ -24,14 +24,16 @@ const Trainers = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between gap-2">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader
           title="Trainer Management"
           description="Manage your trainers here"
           length={meta?.total || 0}
         />
 
-        <TrainersFilter filter={filter} setFilter={setFilter} data={trainers} />
+        <div className="w-full lg:w-auto">
+          <TrainersFilter filter={filter} setFilter={setFilter} data={trainers} />
+        </div>
       </div>
 
       <DataTable

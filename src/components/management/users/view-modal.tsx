@@ -30,9 +30,9 @@ const UserViewModal = ({ user }: UserViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-md p-0 overflow-hidden border">
           <div className="bg-primary/5 px-6 pb-6 pt-8 flex flex-col items-center">
-            <div className="h-24 w-24 rounded-full border-4 border-background shadow-md overflow-hidden bg-background">
+            <div className="h-24 w-24 border-4 border-background shadow-md overflow-hidden bg-background">
               <img
                 src={user.image || "https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=400"}
                 alt={user.fullName}

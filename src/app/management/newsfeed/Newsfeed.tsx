@@ -17,9 +17,11 @@ const Newsfeed = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader title="Newsfeed Moderation" description="Manage the newsfeed here" />
-        <NewsfeedFilter filter={filter} setFilter={setFilter} data={data} />
+        <div className="w-full lg:w-auto">
+          <NewsfeedFilter filter={filter} setFilter={setFilter} data={data} />
+        </div>
       </div>
       <DataTable
         columns={newsfeedColumns}

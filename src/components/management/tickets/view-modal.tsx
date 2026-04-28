@@ -39,7 +39,7 @@ const TicketViewModal = ({ ticket }: TicketViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border">
           <div className="h-1.5 w-full bg-linear-to-r from-primary via-emerald-400 to-sky-400" />
 
           <div className="px-8 py-7 space-y-6">
@@ -65,7 +65,7 @@ const TicketViewModal = ({ ticket }: TicketViewModalProps) => {
               </div>
               <div className="grid grid-cols-[120px_1fr] gap-4 items-center">
                 <p className="text-sm font-medium">Status</p>
-                <Badge variant={statusVariant as any} className="rounded-full px-3 py-1">
+                <Badge variant={statusVariant as any} className="px-3 py-1">
                   {ticket.status}
                 </Badge>
               </div>

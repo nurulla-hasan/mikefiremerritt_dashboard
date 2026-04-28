@@ -78,7 +78,7 @@ const GymViewModal = () => {
               <p className="text-xs font-medium text-muted-foreground">Facilities</p>
               <div className="flex flex-wrap gap-2">
                 {fakeGym.amenities.map((a) => (
-                  <Badge key={a} variant="success" className="rounded-full px-3">
+                  <Badge key={a} variant="success" className="px-3">
                     {a}
                   </Badge>
                 ))}

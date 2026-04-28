@@ -22,13 +22,15 @@ const Tickets = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader
           title="Manage Ticket"
           description="View and manage all customer tickets"
           length={ticketsMeta?.total}
         />
-        <TicketsFilter filter={filter} setFilter={setFilter} data={ticketsData} />
+        <div className="w-full lg:w-auto">
+          <TicketsFilter filter={filter} setFilter={setFilter} data={ticketsData} />
+        </div>
       </div>
       <DataTable
         columns={ticketsColumns}

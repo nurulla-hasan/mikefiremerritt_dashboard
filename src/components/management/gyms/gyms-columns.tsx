@@ -94,7 +94,7 @@ export const gymsColumns: ColumnDef<Gym>[] = [
       const active = row.original.status === "Active";
       const variant = active ? "success" : "destructive";
       return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1">
+        <Badge variant={variant as any} className="px-3 py-1">
           {row.original.status}
         </Badge>
       );

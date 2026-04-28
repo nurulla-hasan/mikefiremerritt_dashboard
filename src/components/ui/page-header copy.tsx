@@ -6,7 +6,7 @@ const PageHeader = ({ title, description, length }: { title: string, description
             <div className="flex items-center gap-3">
                 <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
                 {length && (
-                    <span className="inline-flex items-center justify-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary border border-primary/20">
+                    <span className="inline-flex items-center justify-center bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary border border-primary/20">
                         {length}
                     </span>
                 )}

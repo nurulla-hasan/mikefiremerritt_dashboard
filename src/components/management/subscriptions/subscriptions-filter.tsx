@@ -60,12 +60,12 @@ export const SubscriptionsFilter = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       <Button
         asChild
-        className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+        className=" bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto"
       >
-        <Link to="/management/fees" className="flex items-center">
+        <Link to="/management/fees" className="flex items-center justify-center">
           <Settings2 />
           Fees
         </Link>
@@ -108,7 +108,7 @@ export const SubscriptionsFilter = ({
           setFilter({ priceMin, priceMax, amount: undefined });
         }}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Amount Range" />
         </SelectTrigger>
         <SelectContent>
@@ -153,7 +153,7 @@ export const SubscriptionsFilter = ({
           setFilter({ totalReferralsMin: min, totalReferralsMax: max });
         }}
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Referrals" />
         </SelectTrigger>
         <SelectContent>
@@ -164,27 +164,11 @@ export const SubscriptionsFilter = ({
         </SelectContent>
       </Select>
 
-      {/* <Select
-        value={filter.duration || "all"}
-        onValueChange={(value) =>
-          setFilter({ duration: value === "all" ? "" : value })
-        }
-      >
-        <SelectTrigger className="w-fit rounded-full">
-          <SelectValue placeholder="Plan" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Plans</SelectItem>
-          <SelectItem value="MONTHLY">Monthly</SelectItem>
-          <SelectItem value="YEARLY">Yearly</SelectItem>
-        </SelectContent>
-      </Select> */}
-
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or email"
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={filter.searchTerm || ""}
           onChange={(e) => 
             setFilter(
@@ -197,7 +181,7 @@ export const SubscriptionsFilter = ({
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

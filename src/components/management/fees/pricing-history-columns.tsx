@@ -109,7 +109,7 @@ export const pricingHistoryColumns: ColumnDef<TPricingRule>[] = [
 
       return (
         <div className="text-right">
-          <Badge variant={variant} className="rounded-full px-3 capitalize">
+          <Badge variant={variant} className="px-3 capitalize">
             {status}
           </Badge>
         </div>

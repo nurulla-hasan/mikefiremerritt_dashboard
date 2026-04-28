@@ -57,7 +57,7 @@ const AddAdminModal = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-full">+ Add Admin</Button>
+        <Button>+ Add Admin</Button>
       </DialogTrigger>
 
       <DialogPortal>
@@ -107,7 +107,7 @@ const AddAdminModal = () => {
             <div className="flex justify-center">
               <Button 
                 type="submit" 
-                className="min-w-40 rounded-full"
+                className="min-w-40"
                 loading={isLoading}
                 loadingText="Saving..."
               >

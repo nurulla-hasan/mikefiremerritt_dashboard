@@ -51,13 +51,13 @@ export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterPro
   };
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
+      <div className="flex items-center gap-2 w-full sm:w-auto">
         <Select
           value={filter.sortOrder || "desc"}
           onValueChange={(value) => setFilter({ sortOrder: value })}
         >
-          <SelectTrigger className="w-fit rounded-full">
+          <SelectTrigger className="w-full sm:w-fit ">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
           <SelectContent>
@@ -72,7 +72,7 @@ export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterPro
             setFilter({ rating: value === "all" ? "" : value })
           }
         >
-          <SelectTrigger className="w-30 rounded-full">
+          <SelectTrigger className="w-full sm:w-30 ">
             <SelectValue placeholder="Rating" />
           </SelectTrigger>
           <SelectContent>
@@ -86,11 +86,11 @@ export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterPro
         </Select>
       </div>
 
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search reviews..."
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={filter.searchTerm || ""}
           onChange={(e) => 
             setFilter(
@@ -103,7 +103,7 @@ export const ReviewsFilter = ({ filter, setFilter, data = [] }: ReviewsFilterPro
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

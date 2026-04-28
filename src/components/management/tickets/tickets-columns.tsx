@@ -98,7 +98,7 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
       const status = row.original.status;
       const variant = status === "CLOSED" ? "success" : "warning";
       return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1">
+        <Badge variant={variant as any} className="px-3 py-1">
           {status}
         </Badge>
       );

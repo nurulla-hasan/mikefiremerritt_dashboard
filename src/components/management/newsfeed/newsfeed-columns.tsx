@@ -73,7 +73,7 @@ export const newsfeedColumns: ColumnDef<INewsfeed>[] = [
       return (
         <Badge
           variant="outline"
-          className="rounded-full px-3 py-1 capitalize border-border"
+          className="px-3 py-1 capitalize border-border"
         >
           {role.toLowerCase()}
         </Badge>
@@ -88,7 +88,7 @@ export const newsfeedColumns: ColumnDef<INewsfeed>[] = [
       return (
         <Badge
           variant={isPublished ? "accepted" : "rejected"}
-          className="rounded-full px-3 py-1"
+          className="px-3 py-1"
         >
           {isPublished ? "Published" : "Unpublished"}
         </Badge>

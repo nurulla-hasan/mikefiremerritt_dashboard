@@ -52,7 +52,7 @@ const UserGrowthChart = ({ data, year, onYearChange }: UserGrowthChartProps) => 
           User Growth
         </CardTitle>
         <Select value={year} onValueChange={onYearChange}>
-          <SelectTrigger className="h-8 w-25 rounded-full border-muted bg-transparent text-xs">
+          <SelectTrigger className="h-8 w-25 border-muted bg-transparent text-xs">
             <SelectValue placeholder="Year" />
           </SelectTrigger>
           <SelectContent>

@@ -32,7 +32,7 @@ const NewsfeedViewModal = ({ data }: NewsfeedViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden shadow-2xl border-none">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border-none">
           <ScrollArea className="h-[80vh]">
             <div className="w-full h-64 md:h-80 bg-muted relative">
               {data.video ? (

@@ -24,13 +24,15 @@ const Reviews = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between gap-2">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader
           title="Reviews"
           description="Manage all system reviews"
           length={reviewsMeta?.total}
         />
-        <ReviewsFilter filter={filter} setFilter={setFilter} data={reviewsData} />
+        <div className="w-full lg:w-auto">
+          <ReviewsFilter filter={filter} setFilter={setFilter} data={reviewsData} />
+        </div>
       </div>
       <DataTable
         columns={reviewsColumns}

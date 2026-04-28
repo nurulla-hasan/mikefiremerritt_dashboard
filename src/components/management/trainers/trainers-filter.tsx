@@ -57,13 +57,13 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       {/* ... (Existing Filter components) */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full sm:w-auto">
         <Input
-          type="number"
+          // type="number"
           placeholder="Min Views"
-          className="w-24 rounded-full"
+          className="w-full sm:w-24"
           value={filter?.minViews || ""}
           onChange={(e) =>
             setFilter((prev: any) => ({
@@ -74,9 +74,9 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
           }
         />
         <Input
-          type="number"
+          // type="number"
           placeholder="Max Views"
-          className="w-24 rounded-full"
+          className="w-full sm:w-24"
           value={filter?.maxViews || ""}
           onChange={(e) =>
             setFilter((prev: any) => ({
@@ -98,7 +98,7 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
           }))
         }
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Subscription" />
         </SelectTrigger>
         <SelectContent>
@@ -118,7 +118,7 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
           }))
         }
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Specialty" />
         </SelectTrigger>
         <SelectContent className="max-h-62.5">
@@ -151,7 +151,7 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
           }))
         }
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Certifications" />
         </SelectTrigger>
         <SelectContent>
@@ -163,11 +163,11 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
       </Select>
 
       {/* Search with Filter Icon */}
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name..."
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={filter?.searchTerm || ""}
           onChange={(e) =>
             setFilter(
@@ -184,7 +184,7 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

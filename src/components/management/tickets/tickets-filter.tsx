@@ -51,7 +51,7 @@ export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterPro
   };
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-end">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
       <Select
         value={filter?.status || "all"}
         onValueChange={(value) =>
@@ -61,7 +61,7 @@ export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterPro
           })
         }
       >
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-full sm:w-fit ">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
@@ -71,11 +71,11 @@ export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterPro
         </SelectContent>
       </Select>
 
-      <div className="relative w-full md:w-64">
+      <div className="relative w-full sm:w-64">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or email"
-          className="pl-9 rounded-full"
+          className="pl-9  w-full"
           value={filter?.searchTerm || ""}
           onChange={(e) =>
             setFilter(
@@ -88,7 +88,7 @@ export const TicketsFilter = ({ filter, setFilter, data = [] }: TicketsFilterPro
 
       <Button 
         variant="outline" 
-        className="rounded-full"
+        className=" w-full sm:w-auto"
         onClick={handleExport}
         loading={isExporting}
         loadingText="Exporting..."

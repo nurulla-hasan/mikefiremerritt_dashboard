@@ -62,12 +62,12 @@ const Products = () => {
   return (
     <PageLayout>
       <Tabs defaultValue="products" value={activeTab} onValueChange={setActiveTab}>
-        <div className="flex flex-col md:flex-row md:justify-between gap-2">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <PageHeader
             title="Product Management"
             description="Manage your products and specialties here"
           />
-          <TabsList>
+          <TabsList className="w-full lg:w-auto">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="specialties">Specialties</TabsTrigger>
             <TabsTrigger value="service-types">Service Types</TabsTrigger>
@@ -75,8 +75,10 @@ const Products = () => {
         </div>
 
         <TabsContent value="products" className="space-y-4">
-          <div className="flex flex-col md:flex-row md:justify-end">
-            <ProductsFilter filter={filter} setFilter={setFilter} data={data} />
+          <div className="flex flex-col lg:flex-row lg:justify-end">
+            <div className="w-full lg:w-auto">
+              <ProductsFilter filter={filter} setFilter={setFilter} data={data} />
+            </div>
           </div>
           <DataTable
             columns={productsColumns}
@@ -90,8 +92,10 @@ const Products = () => {
         </TabsContent>
 
         <TabsContent value="specialties" className="space-y-4">
-          <div className="flex flex-col md:flex-row md:justify-end">
-            <SpecialtiesFilter />
+          <div className="flex flex-col lg:flex-row lg:justify-end">
+            <div className="w-full lg:w-auto">
+              <SpecialtiesFilter />
+            </div>
           </div>
           <DataTable
             columns={specialtiesColumns}
@@ -105,8 +109,10 @@ const Products = () => {
         </TabsContent>
 
         <TabsContent value="service-types" className="space-y-4">
-          <div className="flex flex-col md:flex-row md:justify-end">
-            <ServiceTypesFilter />
+          <div className="flex flex-col lg:flex-row lg:justify-end">
+            <div className="w-full lg:w-auto">
+              <ServiceTypesFilter />
+            </div>
           </div>
           <DataTable
             columns={serviceTypesColumns}

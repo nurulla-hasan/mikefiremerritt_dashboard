@@ -24,13 +24,15 @@ const Subscriptions = () => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col md:flex-row md:justify-between gap-2">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <PageHeader
           title="Subscription Management"
           description="View and manage all customer subscriptions"
           length={subscriptionsMeta?.total}
         />
-        <SubscriptionsFilter filter={filter} setFilter={setFilter} data={subscriptionsData} />
+        <div className="w-full lg:w-auto">
+          <SubscriptionsFilter filter={filter} setFilter={setFilter} data={subscriptionsData} />
+        </div>
       </div>
       <DataTable
         columns={subscriptionsColumns}

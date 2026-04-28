@@ -57,9 +57,9 @@ const TrainerViewModal = ({ trainer }: TrainerViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-md p-0 overflow-hidden border">
           <div className="bg-primary/20 px-6 pb-8 pt-8 flex flex-col items-center shrink-0">
-            <div className="h-28 w-28 rounded-full border-[6px] border-background shadow-lg overflow-hidden bg-background">
+            <div className="h-28 w-28 border-[6px] border-background shadow-lg overflow-hidden bg-background">
               <img
                 src={trainer.image || "https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=400"}
                 alt={trainer.fullName}

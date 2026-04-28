@@ -59,7 +59,7 @@ const TicketResponseModal = ({ ticket }: TicketResponseModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-md p-0 overflow-hidden border">
           <div className="h-1.5 w-full bg-linear-to-r from-primary via-emerald-400 to-sky-400" />
 
           <div className="px-8 py-7 space-y-6">
@@ -92,14 +92,13 @@ const TicketResponseModal = ({ ticket }: TicketResponseModalProps) => {
               <Button 
                 variant="outline" 
                 onClick={() => setOpen(false)} 
-                className="rounded-full"
                 disabled={isLoading}
               >
                 Cancel
               </Button>
               <Button 
                 onClick={handleSendResponse} 
-                className="rounded-full px-8"
+                className="px-8"
                 disabled={isLoading}
               >
                 {isLoading ? "Sending..." : "Send Response"}

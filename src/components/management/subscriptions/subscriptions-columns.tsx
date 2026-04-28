@@ -91,7 +91,7 @@ export const subscriptionsColumns: ColumnDef<TSubscription>[] = [
       const status = row.original.subscriptionState;
       const variant = status === "active" ? "accepted" : "rejected";
       return (
-        <Badge variant={variant as any} className="rounded-full px-3 py-1 capitalize">
+        <Badge variant={variant as any} className="px-3 py-1 capitalize">
           {status}
         </Badge>
       );

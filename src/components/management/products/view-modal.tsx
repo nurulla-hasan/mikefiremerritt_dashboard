@@ -31,7 +31,7 @@ const ProductViewModal = ({ data }: ProductViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-2xl p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden border">
           <div className="w-full h-44 md:h-60 bg-muted">
             <img
               src={data.productImage || ""}
@@ -59,7 +59,7 @@ const ProductViewModal = ({ data }: ProductViewModalProps) => {
                   <InfoRow label="Rating" value={`⭐ ${data.avgRating || 0} (${data.ratingCount || 0})`} />
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</p>
-                    <Badge variant={data.isActive ? "accepted" : "rejected"} className="rounded-full px-3 py-0.5">
+                    <Badge variant={data.isActive ? "accepted" : "rejected"} className="px-3 py-0.5">
                       {data.isActive ? "Active" : "Blocked"}
                     </Badge>
                   </div>

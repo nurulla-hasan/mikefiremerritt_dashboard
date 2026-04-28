@@ -29,7 +29,7 @@ const ReviewViewModal = ({ review }: ReviewViewModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-xl p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-xl p-0 overflow-hidden border">
           <div className="h-1.5 w-full bg-linear-to-r from-primary via-amber-400 to-rose-400" />
 
           <div className="px-8 py-7 space-y-5">

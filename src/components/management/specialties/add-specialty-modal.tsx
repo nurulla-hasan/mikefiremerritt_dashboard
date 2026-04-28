@@ -110,7 +110,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {trigger || <Button className="rounded-full">+ Add Specialty</Button>}
+        {trigger || <Button>Add Specialty</Button>}
       </DialogTrigger>
 
       <DialogPortal>
@@ -180,7 +180,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
 
             <div className="flex justify-center pt-2">
               <Button 
-                className="w-full rounded-full" 
+                className="w-full" 
                 onClick={handleSubmit}
                 disabled={isCreating || isUpdating}
               >

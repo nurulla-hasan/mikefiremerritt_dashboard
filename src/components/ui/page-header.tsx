@@ -6,10 +6,10 @@ const PageHeader = ({title, description, length}: {title: string, description: s
     return (
         <div className="grid gap-1">
             <div className="flex items-center gap-4">
-                <h1 className="text-2xl font-bold font-crimson">{title}</h1>
-                {length && <Badge className="rounded-full">{length}</Badge>}
+                <h1 className="text-2xl font-semibold uppercase font-crimson">{title}</h1>
+                {length && <Badge>{length}</Badge>}
             </div>
-            <p className="text-muted-foreground font-crimson">
+            <p className="text-muted-foreground">
                 {description}
             </p>
         </div>

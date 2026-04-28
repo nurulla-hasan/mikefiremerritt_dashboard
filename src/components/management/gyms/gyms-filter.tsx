@@ -18,7 +18,7 @@ export const GymsFilter = () => {
   return (
     <div className="flex flex-wrap gap-3 items-center justify-end">
       <Select>
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-fit ">
           <SelectValue placeholder="State" />
         </SelectTrigger>
         <SelectContent>
@@ -30,7 +30,7 @@ export const GymsFilter = () => {
       </Select>
 
       <Select>
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-fit ">
           <SelectValue placeholder="Views" />
         </SelectTrigger>
         <SelectContent>
@@ -42,7 +42,7 @@ export const GymsFilter = () => {
       </Select>
 
       <Select>
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-fit ">
           <SelectValue placeholder="Rating" />
         </SelectTrigger>
         <SelectContent>
@@ -53,7 +53,7 @@ export const GymsFilter = () => {
       </Select>
 
       <Select>
-        <SelectTrigger className="w-fit rounded-full">
+        <SelectTrigger className="w-fit ">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
@@ -66,13 +66,13 @@ export const GymsFilter = () => {
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           placeholder="Search by name or specialty"
-          className="pl-9 rounded-full"
+          className="pl-9 "
         />
       </div>
 
       <AddGymModal />
 
-      <Button variant="outline" className="rounded-full">
+      <Button variant="outline">
         <Download />
         Export
       </Button>

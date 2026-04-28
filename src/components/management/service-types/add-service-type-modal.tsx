@@ -62,7 +62,7 @@ const AddServiceTypeModal = ({ serviceType, trigger }: AddServiceTypeModalProps)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {trigger || <Button className="rounded-full">+ Add Service Type</Button>}
+        {trigger || <Button>Add Service Type</Button>}
       </DialogTrigger>
 
       <DialogPortal>
@@ -85,7 +85,7 @@ const AddServiceTypeModal = ({ serviceType, trigger }: AddServiceTypeModalProps)
 
             <div className="flex justify-center pt-2">
               <Button 
-                className="w-full rounded-full" 
+                className="w-full" 
                 loading={isCreating || isUpdating}
                 loadingText={serviceType ? "Updating..." : "Saving..."}
                 onClick={handleSubmit}
