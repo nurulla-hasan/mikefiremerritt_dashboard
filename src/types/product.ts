@@ -28,7 +28,7 @@ export interface IProduct {
   productVideo: string | null;
   agreementPdf: string | null;
   isActive: boolean;
-  isApproved: boolean;
+  isApprovedByTrainer: "ACTIVE" | "INACTIVE";
   createdAt: string;
   updatedAt: string;
   trainer: IProductTrainer;

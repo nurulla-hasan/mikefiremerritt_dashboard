@@ -56,7 +56,7 @@ const Products = () => {
     isFetching: isServiceTypeFetching,
   } = useSmartFetchHook<any, ServiceType>(useGetAllServiceTypesQuery, {
     skip: activeTab !== "service-types",
-  });
+  }); 
 
 
   return (
