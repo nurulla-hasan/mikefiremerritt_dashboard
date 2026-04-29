@@ -1,5 +1,5 @@
- 
- 
+
+
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -142,6 +142,24 @@ export const trainersColumns: ColumnDef<ITrainer>[] = [
         )}
       </div>
     ),
+  },
+  {
+    accessorKey: "certifications",
+    header: "Cert. Status",
+    cell: ({ row }) => {
+      const certifications = row.original.certifications || [];
+      const isPending = certifications.some((cert) =>
+        typeof cert !== "string" && cert.acceptance === false
+      );
+
+      return (
+        <Badge
+          variant={isPending ? "rejected" : "accepted"}
+        >
+          {isPending ? "Pending" : "Verified"}
+        </Badge>
+      );
+    },
   },
   {
     id: "actions",

@@ -43,9 +43,13 @@ export const TrainersFilter = ({ filter, setFilter, data = [] }: TrainersFilterP
       const exportData = allData.map((trainer: any) => ({
         'Trainer Name': trainer.fullName || 'N/A',
         'Email': trainer.email || 'N/A',
-        'Specialty': trainer.specialty || 'N/A',
-        'Status': trainer.status || 'N/A',
-        'Joined Date': trainer.createdAt ? new Date(trainer.createdAt).toLocaleDateString() : 'N/A',
+        'Phone': trainer.phoneNumber || 'N/A',
+        'Experience': trainer.experienceYears ? `${trainer.experienceYears} years` : 'N/A',
+        'Total Revenue': trainer.totalRevenue || 0,
+        'Views': trainer.viewCount || 0,
+        'Specialty': trainer.specialty?.map((s: any) => s.specialtyName).join(', ') || 'N/A',
+        'Service Types': trainer.serviceTypes?.map((s: any) => s.serviceName).join(', ') || 'N/A',
+        'Cert. Status': trainer.certifications?.some((cert: any) => typeof cert !== 'string' && cert.acceptance === false) ? 'Pending' : 'Verified',
       }));
 
       downloadExcel(exportData, "Trainers", "Trainers List");

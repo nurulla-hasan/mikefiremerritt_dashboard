@@ -127,11 +127,11 @@ export const ProductsFilter = ({
     if (!setFilter) return;
     if (value === "all") {
       setFilter({
-        isActive: undefined,
+        status: undefined,
       });
       return;
     }
-    setFilter({ isActive: value === "true" });
+    setFilter({ status: value === "ACTIVE" ? "ACTIVE" : "INACTIVE" });
   };
 
   return (
@@ -229,7 +229,7 @@ export const ProductsFilter = ({
 
       <Select
         value={
-          filter?.isActive !== undefined ? filter.isActive.toString() : "all"
+          filter?.status !== undefined ? (filter.status ? "ACTIVE" : "INACTIVE") : "all"
         }
         onValueChange={handleStatusChange}
       >
@@ -238,8 +238,8 @@ export const ProductsFilter = ({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Status</SelectItem>
-          <SelectItem value="true">Active</SelectItem>
-          <SelectItem value="false">Inactive</SelectItem>
+          <SelectItem value="ACTIVE">Active</SelectItem>
+          <SelectItem value="INACTIVE">Inactive</SelectItem>
         </SelectContent>
       </Select>
 

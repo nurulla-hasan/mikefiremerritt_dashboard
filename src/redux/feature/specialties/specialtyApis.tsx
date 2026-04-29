@@ -10,7 +10,7 @@ const specialtyApis = baseApi.injectEndpoints({
             query: (query) => {
                 const params = buildQueryParams(query);
                 return {
-                    url: "/specialties/all-specialties",
+                    url: "/specialties",
                     method: "GET",
                     params: params,
                 };
