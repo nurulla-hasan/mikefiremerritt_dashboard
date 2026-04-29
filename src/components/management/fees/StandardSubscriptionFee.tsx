@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, MinusCircle, Plus, Loader2 } from "lucide-react";
+import { CheckCircle2, MinusCircle, Plus } from "lucide-react";
+import Lottie from "lottie-react";
+import loadingAnimation from "@/assets/loading.json";
 import { 
   useUpdateSubscriptionPlanMutation, 
   useGetAllSubscriptionPlansQuery 
@@ -192,7 +194,7 @@ const StandardSubscriptionFee = () => {
   if (isFetchingPlans) {
     return (
       <Card className="flex items-center justify-center p-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Lottie animationData={loadingAnimation} className="w-24 h-24" />
       </Card>
     );
   }

@@ -17,6 +17,7 @@ export const tagTypes = {
   subscription: "Subscription",
   referral: "Referral",
   serviceType: "ServiceType",
+  contact: "Contact",
   // Add other tags here as needed
 };
 

@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import TiptapEditor from "@/components/ui/tiptap-editor";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import Lottie from "lottie-react";
+import loadingAnimation from "@/assets/loading.json";
 import PageHeader from "@/components/ui/page-header";
 import { useGetTermsConditionsQuery, useUpdateTermsConditionsMutation } from "@/redux/feature/settings-api/settingsApis";
 import type { TError } from "@/types/global.types";
@@ -68,8 +69,8 @@ const Terms = () => {
   if (isFetching) {
     return (
       <PageLayout>
-        <div className="flex h-100 items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+          <Lottie animationData={loadingAnimation} className="w-50 h-50" />
         </div>
       </PageLayout>
     );

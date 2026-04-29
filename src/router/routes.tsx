@@ -14,6 +14,7 @@ const Disclaimers = lazy(() => import("@/app/settings/disclimers/Disclimers"));
 const Terms = lazy(() => import("@/app/settings/terms/Terms"));
 const About = lazy(() => import("@/app/settings/about-us/About"));
 const FAQ = lazy(() => import("@/app/settings/faq/Faq"));
+const Contact = lazy(() => import("@/app/settings/contact/Contact"));
 const Users = lazy(() => import("@/app/management/users/Users"));
 const Admins = lazy(() => import("@/app/management/admins/Admins"));
 const Trainers = lazy(() => import("@/app/management/trainers/Trainers"));
@@ -56,6 +57,7 @@ export const router = createBrowserRouter([
             { path: "notifications", element: <Notifications /> },
             // Settings
             { path: "settings/profile", element: <Profile /> },
+            { path: "settings/contact", element: <Contact /> },
             { path: "settings/about", element: <About /> },
             { path: "settings/terms", element: <Terms /> },
             { path: "settings/disclaimers", element: <Disclaimers /> },

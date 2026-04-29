@@ -17,13 +17,13 @@ import {
   ListOrdered,
   Users,
   Layers,
-  // Dumbbell,
   BadgeCheck,
   Newspaper,
   Wallet,
   Ticket,
   MessageSquareQuote,
   MessageCircleQuestion,
+  Phone,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -39,7 +39,6 @@ const MANAGEMENT_ITEMS = [
   { name: "Admin Management", icon: GlobeLock, href: "/management/admins" },
   { name: "Trainer Management", icon: BadgeCheck, href: "/management/trainers" },
   { name: "Product Management", icon: Layers, href: "/management/products" },
-  // { name: "Gym Management", icon: Dumbbell, href: "/management/gyms" },
   { name: "Newsfeed Moderation", icon: Newspaper, href: "/management/newsfeed" },
   { name: "Manage Subscription", icon: Wallet, href: "/management/subscriptions" },
   { name: "Manage Ticket", icon: Ticket, href: "/management/tickets" },
@@ -48,6 +47,7 @@ const MANAGEMENT_ITEMS = [
 
 const SETTINGS_SUB_ITEMS = [
   { name: "Profile", icon: UserRoundPen, href: "/settings/profile" },
+  { name: "Contact", icon: Phone, href: "/settings/contact" },
   { name: "About", icon: BadgeInfo, href: "/settings/about" },
   { name: "Terms", icon: ReceiptText, href: "/settings/terms" },
   { name: "Disclaimers", icon: ListOrdered, href: "/settings/disclaimers" },

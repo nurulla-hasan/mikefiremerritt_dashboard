@@ -6,6 +6,9 @@ import { Bell, CheckCircle2, Info, AlertTriangle, Clock, Trash2, Loader2 } from 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn, timeAgo, SuccessToast, ErrorToast } from "@/lib/utils";
+import Lottie from "lottie-react";
+import loadingAnimation from "@/assets/loading.json";
+
 import { 
   useGetNotificationsQuery, 
   useMarkAsReadMutation, 
@@ -74,8 +77,8 @@ const Notifications = () => {
   if (isLoading) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center h-[80vh]">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+          <Lottie animationData={loadingAnimation} className="w-50 h-50" />
         </div>
       </PageLayout>
     );

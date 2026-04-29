@@ -65,6 +65,21 @@ const settingsApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.about],
     }),
+    getContactUsInfo: builder.query({
+      query: () => ({
+        url: "/contact-us-info",
+        method: "GET",
+      }),
+      providesTags: [tagTypes.contact],
+    }),
+    updateContactUsInfo: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/contact-us-info/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.contact],
+    }),
   }),
 });
 
@@ -77,4 +92,6 @@ export const {
   useUpdateAboutUsMutation,
   useGetDisclimerQuery,
   useUpdateDisclaimerMutation,
+  useGetContactUsInfoQuery,
+  useUpdateContactUsInfoMutation,
 } = settingsApis;

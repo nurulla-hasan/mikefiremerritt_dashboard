@@ -7,7 +7,8 @@ import { usersColumns } from "@/components/management/users/users-columns";
 import { useGetDashboardStatsQuery } from "@/redux/feature/dashboards/dashboardApi";
 import { useGetAllUsersQuery } from "@/redux/feature/users/userApis";
 import { useMemo, useState } from "react";
-import { Spinner } from "@/components/ui/spinner";
+import Lottie from "lottie-react";
+import loadingAnimation from "@/assets/loading.json";
 
 const Dashboard = () => {
   const currentYear = new Date().getFullYear().toString();
@@ -45,9 +46,9 @@ const Dashboard = () => {
 
   if (isStatsLoading || isUsersLoading) {
     return (
-      <PageLayout>
-        <div className="flex items-center justify-center h-[80vh]">
-          <Spinner className="size-8 text-primary" />
+     <PageLayout>
+        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+          <Lottie animationData={loadingAnimation} className="w-50 h-50" />
         </div>
       </PageLayout>
     );
@@ -56,7 +57,7 @@ const Dashboard = () => {
   if (isError) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center text-destructive font-medium h-[80vh]">
+        <div className="flex items-center justify-center text-destructive font-medium h-[calc(100vh-200px)]">
           Failed to load dashboard statistics.
         </div>
       </PageLayout>
