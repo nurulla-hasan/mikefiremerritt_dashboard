@@ -114,7 +114,7 @@ const AddSpecialtyModal = ({ specialty, trigger }: AddSpecialtyModalProps) => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-md p-6 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-md p-6 overflow-hidden border">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold font-crimson text-center">
               {specialty ? "Update Specialty" : "Add New Specialty"}
