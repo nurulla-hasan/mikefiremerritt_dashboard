@@ -75,10 +75,10 @@ const FirstComeFirstServeForm = () => {
       await addPricingRule(payload).unwrap();
       SuccessToast("First Come First Serve rule added successfully");
       // Reset form
-      setRewardLimit("");
-      setRewardFee("");
-      setRewardDates(undefined);
-      setFirstComeRuleName("");
+      // setRewardLimit("");
+      // setRewardFee("");
+      // setRewardDates(undefined);
+      // setFirstComeRuleName("");
     } catch (error: any) {
       ErrorToast(error?.data?.message || "Failed to add pricing rule");
     }

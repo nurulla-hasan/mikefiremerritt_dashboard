@@ -80,10 +80,9 @@ const TimePeriodForm = () => {
       await addPricingRule(payload).unwrap();
       SuccessToast("Time Period rule added successfully");
       // Reset form
-      setDiscountFee("");
-      // setDuration("3");
-      setDiscountDates(undefined);
-      setTimeBasedRuleName("");
+      // setDiscountFee("");
+      // setDiscountDates(undefined);
+      // setTimeBasedRuleName("");
     } catch (error: any) {
       ErrorToast(error?.data?.message || "Failed to add pricing rule");
     }
