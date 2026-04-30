@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,23 @@ const ReferralRewards = () => {
   const [amount, setAmount] = useState<string>("");
   const { data, isLoading: isFetching } = useGetReferralRewardQuery(undefined);
   const [updateReferralReward, { isLoading: isUpdating }] = useUpdateReferralRewardMutation();
+  const hasInitialized = useRef(false);
+
+  // Set rewardAmount from API to input when data loads (only once)
+   
+  useEffect(() => {
+    if (!hasInitialized.current && data?.data) {
+      if (Array.isArray(data.data) && data.data.length > 0) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setAmount(data.data[0].rewardAmount?.toString() || "");
+        hasInitialized.current = true;
+      } else if (data.data?.rewardAmount) {
+         
+        setAmount(data.data.rewardAmount.toString());
+        hasInitialized.current = true;
+      }
+    }
+  }, [data]);
 
   const rewardId = data?.data && Array.isArray(data.data) && data.data.length > 0
     ? data.data[0].id
@@ -28,7 +45,7 @@ const ReferralRewards = () => {
         rewardAmount: Number(amount) 
       }).unwrap();
       SuccessToast("Referral rewards updated successfully");
-      setAmount("");
+      setAmount(amount);
     } catch (error: any) {
       ErrorToast(error?.data?.message || "Failed to update referral rewards");
     }
