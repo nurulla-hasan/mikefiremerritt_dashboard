@@ -61,7 +61,7 @@ const AddAdminModal = () => {
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="max-w-xl p-0 overflow-hidden border shadow-2xl">
+        <DialogContent className="max-w-xl p-0 overflow-hidden border">
           <form onSubmit={handleSubmit(onSubmit)} className="px-8 py-6 space-y-6">
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold font-crimson text-center">
