@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
 import type { DateRange } from "react-day-picker";
-import { useAddPricingRuleMutation, useGetAllSubscriptionPlansQuery } from "@/redux/feature/pricing-rules/pricingRuleApis";
+import { useAddPricingRuleMutation, useGetAllSubscriptionPlansQuery, useGetAllPricingRulesQuery } from "@/redux/feature/pricing-rules/pricingRuleApis";
 import { ErrorToast, SuccessToast } from "@/lib/utils";
 
 
@@ -18,6 +18,32 @@ const FirstComeFirstServeForm = () => {
 
   const [addPricingRule, { isLoading: isAdding }] = useAddPricingRuleMutation();
   const { data: plansData } = useGetAllSubscriptionPlansQuery(undefined);
+  const { data: pricingRulesData } = useGetAllPricingRulesQuery(undefined);
+  const hasInitialized = useRef(false);
+
+  // Populate form fields from existing FIRST_COME pricing rule data
+   
+  useEffect(() => {
+    if (!hasInitialized.current && pricingRulesData?.data) {
+      const firstComeRule = pricingRulesData.data.find((rule: any) => rule.type === "FIRST_COME");
+      if (firstComeRule) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setFirstComeRuleName(firstComeRule.name || "");
+         
+        setRewardFee(firstComeRule.discountAmount?.toString() || "");
+         
+        setRewardLimit(firstComeRule.maxSubscribers?.toString() || "");
+        if (firstComeRule.startDate && firstComeRule.endDate) {
+           
+          setRewardDates({
+            from: new Date(firstComeRule.startDate),
+            to: new Date(firstComeRule.endDate),
+          });
+        }
+        hasInitialized.current = true;
+      }
+    }
+  }, [pricingRulesData]);
 
   const handleSaveFirstCome = async () => {
     if (!rewardDates?.from || !rewardDates?.to || !rewardLimit || !rewardFee) {
@@ -34,7 +60,7 @@ const FirstComeFirstServeForm = () => {
     }
 
     const payload: any = {
-      subscriptionOfferId: "69803d34443d74ebcf780365",
+      subscriptionOfferId: initialPlan?.id,
       type: "FIRST_COME",
       discountAmount: Number(rewardFee),
       maxSubscribers: Number(rewardLimit),
