@@ -46,6 +46,15 @@ export const pricingRuleApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.pricingRule],
     }),
+
+    overrideSubscriptionPrice: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/subscription-admin-overrides/override-price/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.subscription],
+    }),
   }),
 });
 
@@ -55,4 +64,5 @@ export const {
   useDeletePricingRuleMutation,
   useGetAllSubscriptionPlansQuery,
   useUpdateSubscriptionPlanMutation,
+  useOverrideSubscriptionPriceMutation,
 } = pricingRuleApis;

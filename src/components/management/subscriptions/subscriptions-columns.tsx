@@ -2,6 +2,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { EditableAmountCell } from "./editable-amount-cell";
 import type { TSubscription } from "@/types/subscription";
 
 export const subscriptionsColumns: ColumnDef<TSubscription>[] = [
@@ -69,11 +70,7 @@ export const subscriptionsColumns: ColumnDef<TSubscription>[] = [
   {
     accessorKey: "subscriptionOffer.price",
     header: "Amount",
-    cell: ({ row }) => (
-      <span className="text-sm text-muted-foreground">
-        ${row.original.subscriptionOffer.price}
-      </span>
-    ),
+    cell: ({ row }) => <EditableAmountCell subscription={row.original} />,
   },
   {
     accessorKey: "trainerInfo.totalReferrals",
