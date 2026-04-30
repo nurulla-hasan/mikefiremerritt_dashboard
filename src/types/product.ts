@@ -15,6 +15,7 @@ export interface IProduct {
   id: string;
   productName: string;
   productStatus: "ACTIVE" | "INACTIVE";
+  status: "ACTIVE" | "INACTIVE";
   description: string;
   durationWeeks: number;
   bulletPoints: string[];

@@ -77,7 +77,7 @@ export const productsColumns: ColumnDef<IProduct>[] = [
   },
   {
     accessorKey: "isActive",
-    header: "Status",
+    header: "Admin Access",
     cell: ({ row }) => {
       const isActive = row.original.isActive;
       const variant = isActive ? "accepted" : "rejected";
@@ -89,11 +89,24 @@ export const productsColumns: ColumnDef<IProduct>[] = [
     },
   },
   {
+    accessorKey: "status",
+    header: "Product Status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+      const variant = status === "ACTIVE" ? "accepted" : "progress";
+      return (
+        <Badge variant={variant as any}>
+          {status === "ACTIVE" ? "Active" : "Inactive"}
+        </Badge>
+      );
+    },
+  },
+  {
     accessorKey: "isApprovedByTrainer",
-    header: "Trainer Approval Status",
+    header: "Trainer Approval",
     cell: ({ row }) => {
       const isApproved = row.original.isApprovedByTrainer;
-      const variant = isApproved === "ACTIVE" ? "accepted" : "rejected";
+      const variant = isApproved === "ACTIVE" ? "accepted" : "progress";
       return (
         <Badge variant={variant as any}>
           {isApproved === "ACTIVE" ? "Approved" : "Not Approved"}

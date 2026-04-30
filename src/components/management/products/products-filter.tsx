@@ -228,9 +228,7 @@ export const ProductsFilter = ({
       </Select>
 
       <Select
-        value={
-          filter?.status !== undefined ? (filter.status ? "ACTIVE" : "INACTIVE") : "all"
-        }
+        value={filter?.status || "all"}
         onValueChange={handleStatusChange}
       >
         <SelectTrigger className="w-full sm:w-fit ">
